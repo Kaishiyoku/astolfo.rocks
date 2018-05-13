@@ -1,0 +1,52 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  color: #ddd;
+  background-image: url("../img/cover.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  font-size: 12pt;
+}
+
+a {
+  color: #dfa0ad;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+a.lg {
+  font-size: 2em;
+}
+
+.custom-container {
+  padding-top: 4em;
+  padding-bottom: 4em;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing:border-box;
+  height: 100vh;
+}
+
+.credits {
+  position: absolute;
+  right: 1em;
+  font-size: 0.75em;
+}
