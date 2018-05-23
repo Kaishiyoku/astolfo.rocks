@@ -178,7 +178,7 @@ class CrawlImages extends Command
                 });
             }
 
-            if ($imageUrl != null) {
+            if (!$isTest && $imageUrl != null) {
                 if ($image) {
                     $image->fill($values);
                 } else {
