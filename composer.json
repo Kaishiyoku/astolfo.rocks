@@ -11,7 +11,8 @@
         "laravel/framework": "5.6.23",
         "laravel/tinker": "1.0.7",
         "laravelcollective/html": "5.6.8",
-        "symfony/dom-crawler": "4.0.10"
+        "symfony/dom-crawler": "4.0.10",
+        "webup/laravel-sendinblue": "1.1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "3.1.4",

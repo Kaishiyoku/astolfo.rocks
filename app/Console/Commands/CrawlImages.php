@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\CrawlerTestFailed;
 use App\Models\Image;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlImages extends Command
@@ -14,7 +16,7 @@ class CrawlImages extends Command
      *
      * @var string
      */
-    protected $signature = 'astolfo:crawl';
+    protected $signature = 'astolfo:crawl {--test}';
 
     /**
      * The console command description.
@@ -22,6 +24,11 @@ class CrawlImages extends Command
      * @var string
      */
     protected $description = 'Crawls for Astolfo images';
+
+    /**
+     * @var int
+     */
+    private $errorCount = 0;
 
     /**
      * Create a new command instance.
@@ -40,6 +47,8 @@ class CrawlImages extends Command
      */
     public function handle()
     {
+        $isTest = $this->option('test');
+
         $start = microtime(true);
 
         $this->line('Crawling images...this will take some time.');
@@ -56,22 +65,34 @@ class CrawlImages extends Command
         // get first page
         $this->line('Page 1');
 
-        $this->getImages(collect($this->getFullImageUris($crawler)));
+        $this->getImages(collect($this->getFullImageUris($crawler)), $isTest);
 
         // get remaining pages
-        $pages->each(function ($page) {
-            $this->line('Page ' . $page);
+        if (!$isTest) {
+            $pages->each(function ($page) {
+                $this->line('Page ' . $page);
 
-            $crawler = new Crawler($this->getListContent($page));
+                $crawler = new Crawler($this->getListContent($page));
 
-            $this->getImages(collect($this->getFullImageUris($crawler)));
-        });
+                $this->getImages(collect($this->getFullImageUris($crawler)));
+            });
+        }
 
         $timeElapsedInSeconds = microtime(true) - $start;
 
         $this->line('');
         $this->line('...finished. Duration: ' . number_format($timeElapsedInSeconds, 2) . ' seconds.');
         $this->line('');
+
+        if ($isTest) {
+            if ($this->errorCount == 0) {
+                $this->line('No errors occurred.');
+            } else {
+                $this->error($this->errorCount . ' errors occurred.');
+
+                Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed());
+            }
+        }
     }
 
     private function getContent($uri)
@@ -117,9 +138,9 @@ class CrawlImages extends Command
         return preg_replace("/\n|\t/", '', $content);
     }
 
-    private function getImages(Collection $uris)
+    private function getImages(Collection $uris, $isTest = false)
     {
-        $uris->each(function ($uri) {
+        $uris->each(function ($uri) use ($isTest) {
             $externalId = $this->getExternalIdByUri($uri);
 
             $crawler = new Crawler($this->getContent($uri));
@@ -147,6 +168,16 @@ class CrawlImages extends Command
                 'url' => $imageUrl,
             ];
 
+            if ($isTest) {
+                collect($values)->each(function ($value, $key) {
+                    if (empty($value)) {
+                        $this->error($key . ' is empty');
+
+                        $this->incrementErrorCount();
+                    }
+                });
+            }
+
             if ($imageUrl != null) {
                 if ($image) {
                     $image->fill($values);
@@ -171,5 +202,10 @@ class CrawlImages extends Command
         if ($this->option('verbose')) {
             $closure();
         }
+    }
+
+    private function incrementErrorCount()
+    {
+        $this->errorCount++;
     }
 }

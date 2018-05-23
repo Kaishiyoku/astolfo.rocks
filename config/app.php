@@ -151,6 +151,7 @@ return [
          * Package Service Providers...
          */
         Collective\Html\HtmlServiceProvider::class,
+        Webup\LaravelSendinBlue\SendinBlueServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c3a6ac9d750ecacce29620e6e651eb2",
+    "content-hash": "30c30c0d01771b81b82e1e9291143d63",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1163,6 +1163,48 @@
                 "storage"
             ],
             "time": "2018-05-07T08:44:23+00:00"
+        },
+        {
+            "name": "mailin-api/mailin-api-php",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mailin-api/mailin-api-php.git",
+                "reference": "ee0ce5b75771e07c0b282b28ee9f667ca5c781d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mailin-api/mailin-api-php/zipball/ee0ce5b75771e07c0b282b28ee9f667ca5c781d6",
+                "reference": "ee0ce5b75771e07c0b282b28ee9f667ca5c781d6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Sendinblue": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SendinBlue",
+                    "homepage": "https://www.sendinblue.com/"
+                }
+            ],
+            "description": "Official SendinBlue provided API V2 wrapper",
+            "homepage": "https://github.com/mailin-api/mailin-api-php",
+            "time": "2016-02-26T08:48:44+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2760,6 +2802,56 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "webup/laravel-sendinblue",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agence-webup/laravel-sendinblue.git",
+                "reference": "bf35d8f054dbbc57a6a3bcaa9cb2532cea80b267"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/agence-webup/laravel-sendinblue/zipball/bf35d8f054dbbc57a6a3bcaa9cb2532cea80b267",
+                "reference": "bf35d8f054dbbc57a6a3bcaa9cb2532cea80b267",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/mail": "5.5.*|5.6.*",
+                "mailin-api/mailin-api-php": "1.0.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Webup\\LaravelSendinBlue\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Ducatel",
+                    "email": "baptiste@agence-webup.com",
+                    "homepage": "http://agence-webup.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel's mail transport for SendinBlue",
+            "keywords": [
+                "laravel",
+                "laravel5",
+                "lumen",
+                "mailing",
+                "sendinblue",
+                "stmp"
+            ],
+            "time": "2018-02-12T18:01:43+00:00"
         }
     ],
     "packages-dev": [
