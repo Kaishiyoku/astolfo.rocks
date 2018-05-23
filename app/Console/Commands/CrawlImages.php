@@ -8,15 +8,6 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlImages extends Command
 {
-    private $baseUrl = 'http://unlimitedastolfo.works';
-
-    private $ratings = [
-        'Unknown',
-        'Safe',
-        'Questionable',
-        'Explicit',
-    ];
-
     /**
      * The name and signature of the console command.
      *
@@ -53,7 +44,7 @@ class CrawlImages extends Command
         $this->line('Crawling images...this will take some time.');
         $this->line('');
 
-        $content = file_get_contents($this->baseUrl . '/post/list');
+        $content = file_get_contents(env('CRAWLER_BASE_URL') . '/post/list');
 
         $crawler = new Crawler($content);
 
@@ -77,7 +68,7 @@ class CrawlImages extends Command
 
         // get remaining pages
         for ($i = 2; $i <= $numberOfPages; $i++) {
-            $curContent = file_get_contents($this->baseUrl . '/post/list/' . $i);
+            $curContent = file_get_contents(env('CRAWLER_BASE_URL') . '/post/list/' . $i);
 
             $curCrawler = new Crawler($curContent);
 
@@ -101,7 +92,7 @@ class CrawlImages extends Command
     {
         foreach ($urls as $url) {
             $externalId = collect(explode('/', $url))->last();
-            $curContent = file_get_contents($this->baseUrl . $url);
+            $curContent = file_get_contents(env('CRAWLER_BASE_URL') . $url);
 
             $curCrawler = new Crawler($curContent);
 
@@ -112,7 +103,7 @@ class CrawlImages extends Command
                         return preg_replace("/\n|\t/", '', $node->text());
                     })
             )->filter(function ($value) {
-                return in_array($value, $this->ratings);
+                return in_array($value, $this->getRatings());
             })->first();
 
             $imageNode = $curCrawler
@@ -122,7 +113,7 @@ class CrawlImages extends Command
             // only save not yet crawled images
             $image = Image::find($externalId);
 
-            $imageUrl = $imageNode->count() > 0 ? $this->baseUrl . $imageNode->attr('src') : null;
+            $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
             $values = [
                 'external_id' => $externalId,
@@ -142,6 +133,10 @@ class CrawlImages extends Command
 
             $this->line('  #' . $externalId);
         }
+    }
 
+    private function getRatings()
+    {
+        return explode(',', env('CRAWLER_RATINGS'));
     }
 }
