@@ -97,7 +97,18 @@ class CrawlImages extends Command
 
     private function getContent($uri)
     {
-        return file_get_contents(env('CRAWLER_BASE_URL') . $uri);
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+        curl_setopt($ch, CURLOPT_URL, env('CRAWLER_BASE_URL') . $uri);
+
+        $content = curl_exec($ch);
+
+        curl_close($ch);
+
+        return $content;
     }
 
     private function getListContent($pageNumber = null)
@@ -145,15 +156,17 @@ class CrawlImages extends Command
 
             $crawler = new Crawler($this->getContent($uri));
 
-            $rating = collect(
-                $crawler
-                    ->filterXPath('//table/tr/td')
-                    ->each(function (Crawler $node) {
-                        return $this->replaceNewLines($node->text());
-                    })
-            )->filter(function ($value) {
-                return in_array($value, $this->getRatings());
-            })->first();
+            $rating = collect($crawler
+                ->filterXPath('//table[@class="image_info form"]/tr')
+                ->each(function (Crawler $node) {
+                    $label = $this->replaceNewLines($node->children()->getNode(0)->textContent);
+                    $value = $this->replaceNewLines($node->children()->getNode(1)->textContent);
+
+                    return compact('label', 'value');
+                })
+            )->filter(function ($item) {
+                return $item['label'] == 'Rating' && in_array($item['value'], $this->getRatings());
+            })->first()['value'];
 
             $imageNode = $crawler->filter('img#main_image')->first();
 
@@ -188,7 +201,7 @@ class CrawlImages extends Command
                 $image->save();
             }
 
-            $this->verbose(function () use ($externalId) {$this->line('  #' . $externalId);});
+            $this->verbose(function () use ($externalId, $rating) {$this->line('  #' . $externalId . '|' . $rating);});
         });
     }
 

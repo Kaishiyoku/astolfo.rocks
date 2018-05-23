@@ -16,12 +16,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->unsignedInteger('external_id')->unique();
             $table->string('url', 1528);
-            $table->enum('rating', [
-                'Unknown',
-                'Safe',
-                'Questionable',
-                'Explicit',
-            ]);
+            $table->enum('rating', explode(',', env('CRAWLER_RATINGS')));
             $table->timestamps();
 
             $table->primary('external_id');
