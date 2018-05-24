@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>{{ env('APP_NAME') }}</title>
 
@@ -36,7 +36,15 @@
 </div>
 
 <div class="container">
-    <h1>Welcome to my page! ^__^</h1>
+    <div class="row pb-5">
+        <div class="col-sm-6 order-1 order-sm-0">
+            <h1>Welcome ^__^</h1>
+        </div>
+
+        <div class="col-sm-6 order-0 order-sm-1 text-center pb-3">
+            <img src="img/astolfo.png" class="img-fluid" style="max-height: 400px"/>
+        </div>
+    </div>
 
     <p>
         <a href="https://mangas.astolfo.rocks" class="btn btn-dark btn-lg">Manga list</a>
