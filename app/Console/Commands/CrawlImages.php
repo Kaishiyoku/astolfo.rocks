@@ -6,6 +6,7 @@ use App\Mail\CrawlerTestFailed;
 use App\Models\Image;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -51,7 +52,7 @@ class CrawlImages extends Command
 
         $start = microtime(true);
 
-        $this->line('Crawling images...this will take some time.');
+        $this->logInfo('Crawling images...this will take some time.');
         $this->line('');
 
         $crawler = new Crawler($this->getListContent());
@@ -59,18 +60,18 @@ class CrawlImages extends Command
         $lastPageNumber = $this->getLastPageNumber($crawler);
         $pages = collect(range(2, $lastPageNumber));
 
-        $this->line('Number of pages: ' . $lastPageNumber);
+        $this->logInfo('Number of pages: ' . $lastPageNumber);
         $this->line('');
 
         // get first page
-        $this->line('Page 1');
+        $this->logInfo('Page 1');
 
         $this->getImages(collect($this->getFullImageUris($crawler)), $isTest);
 
         // get remaining pages
         if (!$isTest) {
             $pages->each(function ($page) {
-                $this->line('Page ' . $page);
+                $this->logInfo('Page ' . $page);
 
                 $crawler = new Crawler($this->getListContent($page));
 
@@ -81,14 +82,14 @@ class CrawlImages extends Command
         $timeElapsedInSeconds = microtime(true) - $start;
 
         $this->line('');
-        $this->line('...finished. Duration: ' . number_format($timeElapsedInSeconds, 2) . ' seconds.');
+        $this->logInfo('...finished. Duration: ' . number_format($timeElapsedInSeconds, 2) . ' seconds.');
         $this->line('');
 
         if ($isTest) {
             if ($this->errorCount == 0) {
-                $this->line('No errors occurred.');
+                $this->logInfo('No errors occurred.');
             } else {
-                $this->error($this->errorCount . ' errors occurred.');
+                $this->logError($this->errorCount . ' errors occurred.');
 
                 Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed());
             }
@@ -184,7 +185,7 @@ class CrawlImages extends Command
             if ($isTest) {
                 collect($values)->each(function ($value, $key) {
                     if (empty($value)) {
-                        $this->error($key . ' is empty');
+                        $this->logError($key . ' is empty');
 
                         $this->incrementErrorCount();
                     }
@@ -201,7 +202,7 @@ class CrawlImages extends Command
                 $image->save();
             }
 
-            $this->verbose(function () use ($externalId, $rating) {$this->line('  #' . $externalId . '|' . $rating);});
+            $this->verbose(function () use ($externalId, $rating) {$this->logInfo('  #' . $externalId . '|' . $rating);});
         });
     }
 
@@ -220,5 +221,17 @@ class CrawlImages extends Command
     private function incrementErrorCount()
     {
         $this->errorCount++;
+    }
+
+    private function logInfo($message)
+    {
+        $this->line($message);
+        Log::info($message);
+    }
+
+    private function logError($message)
+    {
+        $this->error($message);
+        Log::error($message);
     }
 }
