@@ -20,6 +20,11 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUrl($value)
+ * @property int $views
+ * @property string|null $source
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereViews($value)
  */
 class Image extends Model
 {
@@ -33,7 +38,7 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'external_id', 'url', 'rating', 'views', 'tags', 'source',
+        'external_id', 'url', 'rating', 'views', 'source',
     ];
 
     /**
@@ -44,4 +49,9 @@ class Image extends Model
     protected $hidden = [
         //
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class)->orderBy('name', 'asc');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\CrawlerTestFailed;
 use App\Models\Image;
+use App\Models\Tag;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -182,7 +183,7 @@ class CrawlImages extends Command
                 $value = $item[$key];
 
                 if ($key == 'tags') {
-                    $item[$key] = strtolower(str_replace(' ', ',', $value));
+                    $item[$key] = explode(' ', strtolower($value));
                 }
 
                 if ($key == 'source' && $value == 'Unknown') {
@@ -203,12 +204,18 @@ class CrawlImages extends Command
 
             $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
+            $tags = collect($imageInfoFields['tags']);
+
+            $tagIds = $tags->map(function ($name) {
+                return Tag::whereName($name)->firstOrCreate(compact('name'))->id;
+            });
+
             $values = array_merge([
                 'external_id' => $externalId,
                 'url' => $imageUrl,
-            ], $imageInfoFields->toArray());
-
-//            dd($values);
+            ], $imageInfoFields->reject(function ($item, $key) {
+                return $key == 'tags';
+            })->toArray());
 
             if ($isTest) {
                 collect($values)->each(function ($value, $key) {
@@ -228,6 +235,7 @@ class CrawlImages extends Command
                 }
 
                 $image->save();
+                $image->tags()->sync($tagIds);
             }
 
             $this->verbose(function () use ($externalId) {$this->logInfo('  #' . $externalId);});
