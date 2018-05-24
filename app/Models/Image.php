@@ -33,7 +33,7 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'external_id', 'url', 'rating',
+        'external_id', 'url', 'rating', 'views', 'tags', 'source',
     ];
 
     /**

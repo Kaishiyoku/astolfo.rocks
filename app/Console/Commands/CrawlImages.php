@@ -32,6 +32,16 @@ class CrawlImages extends Command
     private $errorCount = 0;
 
     /**
+     * @var array
+     */
+    private $imageInfoFields = [
+        'views',
+        'tags',
+        'source',
+        'rating',
+    ];
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -157,17 +167,34 @@ class CrawlImages extends Command
 
             $crawler = new Crawler($this->getContent($uri));
 
-            $rating = collect($crawler
+            $imageInfoFields = collect($crawler
                 ->filterXPath('//table[@class="image_info form"]/tr')
                 ->each(function (Crawler $node) {
-                    $label = $this->replaceNewLines($node->children()->getNode(0)->textContent);
+                    $label = strtolower(str_replace_first(':', '', $this->replaceNewLines($node->children()->getNode(0)->textContent)));
                     $value = $this->replaceNewLines($node->children()->getNode(1)->textContent);
 
-                    return compact('label', 'value');
+                    return [$label => $value];
                 })
             )->filter(function ($item) {
-                return $item['label'] == 'Rating' && in_array($item['value'], $this->getRatings());
-            })->first()['value'];
+                return in_array(key($item), $this->imageInfoFields);
+            })->flatMap(function ($item) {
+                $key = key($item);
+                $value = $item[$key];
+
+                if ($key == 'tags') {
+                    $item[$key] = strtolower(str_replace(' ', ',', $value));
+                }
+
+                if ($key == 'source' && $value == 'Unknown') {
+                    $item[$key] = null;
+                }
+
+                if (empty($value)) {
+                    return null;
+                }
+
+                return $item;
+            });
 
             $imageNode = $crawler->filter('img#main_image')->first();
 
@@ -176,11 +203,12 @@ class CrawlImages extends Command
 
             $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
-            $values = [
+            $values = array_merge([
                 'external_id' => $externalId,
-                'rating' => $rating,
                 'url' => $imageUrl,
-            ];
+            ], $imageInfoFields->toArray());
+
+//            dd($values);
 
             if ($isTest) {
                 collect($values)->each(function ($value, $key) {
@@ -202,13 +230,8 @@ class CrawlImages extends Command
                 $image->save();
             }
 
-            $this->verbose(function () use ($externalId, $rating) {$this->logInfo('  #' . $externalId . '|' . $rating);});
+            $this->verbose(function () use ($externalId) {$this->logInfo('  #' . $externalId);});
         });
-    }
-
-    private function getRatings()
-    {
-        return explode(',', env('CRAWLER_RATINGS'));
     }
 
     private function verbose(\Closure $closure)
