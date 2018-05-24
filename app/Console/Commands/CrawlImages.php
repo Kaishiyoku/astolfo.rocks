@@ -204,7 +204,10 @@ class CrawlImages extends Command
 
             $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
-            $tags = collect($imageInfoFields['tags']);
+            $tags = collect($imageInfoFields['tags'])
+                ->reject(function ($value) {
+                    return $value == 'tagme';
+                });
 
             $tagIds = $tags->map(function ($name) {
                 return Tag::whereName($name)->firstOrCreate(compact('name'))->id;
