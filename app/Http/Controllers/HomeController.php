@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
+
 class HomeController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $randomImage = Image::whereRating('Safe')->inRandomOrder()->first();
+
+        return view('welcome', compact('randomImage'));
     }
 }

@@ -35,14 +35,18 @@
     Astolfo render by <a href="https://ino2206.deviantart.com">Ino2206</a>
 </div>
 
-<div class="custom-container">
-    <p>
-        Welcome to my page! ^__^
-    </p>
+<div class="container">
+    <h1>Welcome to my page! ^__^</h1>
 
     <p>
-        <a href="https://mangas.astolfo.rocks" class="lg">Manga list</a>
+        <a href="https://mangas.astolfo.rocks" class="btn btn-dark btn-lg">Manga list</a>
     </p>
+
+    <h2>Random Astolfo</h2>
+
+    <a href="{{ env('CRAWLER_BASE_URL') }}/post/view/{{ $randomImage->external_id }}">
+        <img src="{{ $randomImage->url }}" class="img-fluid img-thumbnail" style="max-height: 400px;"/>
+    </a>
 </div>
 
 </body>
