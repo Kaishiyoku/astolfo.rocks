@@ -168,7 +168,7 @@ class CrawlImages extends Command
 
             $crawler = new Crawler($this->getContent($uri));
 
-            $imageInfoFields = collect($crawler
+            $imageInfoFieldValues = collect($crawler
                 ->filterXPath('//table[@class="image_info form"]/tr')
                 ->each(function (Crawler $node) {
                     $label = strtolower(str_replace_first(':', '', $this->replaceNewLines($node->children()->getNode(0)->textContent)));
@@ -204,7 +204,7 @@ class CrawlImages extends Command
 
             $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
-            $tags = collect($imageInfoFields['tags'])
+            $tags = collect($imageInfoFieldValues['tags'])
                 ->reject(function ($value) {
                     return $value == 'tagme';
                 });
@@ -216,18 +216,18 @@ class CrawlImages extends Command
             $values = array_merge([
                 'external_id' => $externalId,
                 'url' => $imageUrl,
-            ], $imageInfoFields->reject(function ($item, $key) {
+            ], $imageInfoFieldValues->reject(function ($item, $key) {
                 return $key == 'tags';
             })->toArray());
 
             if ($isTest) {
-                collect($values)->each(function ($value, $key) {
-                    if (empty($value)) {
-                        $this->logError($key . ' is empty');
+                $collectedFields = collect($imageInfoFieldValues)->map(function ($value, $key) {
+                    return [$key];
+                })->flatten()->toArray();
 
-                        $this->incrementErrorCount();
-                    }
-                });
+                if ($collectedFields != $this->imageInfoFields) {
+                    $this->incrementErrorCount();
+                }
             }
 
             if (!$isTest && $imageUrl != null) {
