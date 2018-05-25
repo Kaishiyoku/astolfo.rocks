@@ -2,23 +2,20 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\CrawlerTestFailed;
+use App\Console\BaseCommand;
 use App\Models\Image;
 use App\Models\Tag;
-use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Symfony\Component\DomCrawler\Crawler;
 
-class CrawlImages extends Command
+class CrawlImages extends BaseCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'astolfo:crawl {--test}';
+    protected $signature = 'astolfo:crawl';
 
     /**
      * The console command description.
@@ -26,21 +23,6 @@ class CrawlImages extends Command
      * @var string
      */
     protected $description = 'Crawls for Astolfo images';
-
-    /**
-     * @var int
-     */
-    private $errorCount = 0;
-
-    /**
-     * @var array
-     */
-    private $imageInfoFields = [
-        'views',
-        'tags',
-        'source',
-        'rating',
-    ];
 
     /**
      * Create a new command instance.
@@ -59,8 +41,6 @@ class CrawlImages extends Command
      */
     public function handle()
     {
-        $isTest = $this->option('test');
-
         $start = microtime(true);
 
         $this->logInfo('Crawling images...this will take some time.');
@@ -77,57 +57,29 @@ class CrawlImages extends Command
         // get first page
         $this->logInfo('Page 1');
 
-        $this->getImages(collect($this->getFullImageUris($crawler)), $isTest);
+        $this->getImages(collect($this->getFullImageUris($crawler)));
 
         // get remaining pages
-        if (!$isTest) {
-            $pages->each(function ($page) {
-                $this->logInfo('Page ' . $page);
+        $pages->each(function ($page) {
+            $this->logInfo('Page ' . $page);
 
-                $crawler = new Crawler($this->getListContent($page));
+            $crawler = new Crawler($this->getListContent($page));
 
-                $this->getImages(collect($this->getFullImageUris($crawler)));
-            });
-        }
+            $this->getImages(collect($this->getFullImageUris($crawler)));
+        });
 
         $timeElapsedInSeconds = microtime(true) - $start;
 
         $this->line('');
         $this->logInfo('...finished. Duration: ' . number_format($timeElapsedInSeconds, 2) . ' seconds.');
         $this->line('');
-
-        if ($isTest) {
-            if ($this->errorCount == 0) {
-                $this->logInfo('No errors occurred.');
-            } else {
-                $this->logError($this->errorCount . ' errors occurred.');
-
-                Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed());
-            }
-        }
-    }
-
-    private function getContent($uri)
-    {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($ch, CURLOPT_URL, env('CRAWLER_BASE_URL') . $uri);
-
-        $content = curl_exec($ch);
-
-        curl_close($ch);
-
-        return $content;
     }
 
     private function getListContent($pageNumber = null)
     {
         $uri = $pageNumber == null ? '/post/list' : "/post/list/$pageNumber";
 
-        return $this->getContent($uri);
+        return getAstolfoContent($uri);
     }
 
     private function getLastPageNumber(Crawler $crawler)
@@ -156,46 +108,13 @@ class CrawlImages extends Command
         return collect(explode('/', $uri))->last();
     }
 
-    private function replaceNewLines($content)
+    private function getImages(Collection $uris)
     {
-        return preg_replace("/\n|\t/", '', $content);
-    }
-
-    private function getImages(Collection $uris, $isTest = false)
-    {
-        $uris->each(function ($uri) use ($isTest) {
+        $uris->each(function ($uri) {
             $externalId = $this->getExternalIdByUri($uri);
 
-            $crawler = new Crawler($this->getContent($uri));
-
-            $imageInfoFieldValues = collect($crawler
-                ->filterXPath('//table[@class="image_info form"]/tr')
-                ->each(function (Crawler $node) {
-                    $label = strtolower(str_replace_first(':', '', $this->replaceNewLines($node->children()->getNode(0)->textContent)));
-                    $value = $this->replaceNewLines($node->children()->getNode(1)->textContent);
-
-                    return [$label => $value];
-                })
-            )->filter(function ($item) {
-                return in_array(key($item), $this->imageInfoFields);
-            })->flatMap(function ($item) {
-                $key = key($item);
-                $value = $item[$key];
-
-                if ($key == 'tags') {
-                    $item[$key] = explode(' ', strtolower($value));
-                }
-
-                if ($key == 'source' && $value == 'Unknown') {
-                    $item[$key] = null;
-                }
-
-                if (empty($value)) {
-                    return null;
-                }
-
-                return $item;
-            });
+            $crawler = new Crawler(getAstolfoContent($uri));
+            $imageInfoFieldValues = getImageInfoFieldValues($crawler);
 
             $imageNode = $crawler->filter('img#main_image')->first();
 
@@ -220,17 +139,7 @@ class CrawlImages extends Command
                 return $key == 'tags';
             })->toArray());
 
-            if ($isTest) {
-                $collectedFields = collect($imageInfoFieldValues)->map(function ($value, $key) {
-                    return [$key];
-                })->flatten()->toArray();
-
-                if ($collectedFields != $this->imageInfoFields) {
-                    $this->incrementErrorCount();
-                }
-            }
-
-            if (!$isTest && $imageUrl != null) {
+            if ($imageUrl != null) {
                 if ($image) {
                     $image->fill($values);
                 } else {
@@ -241,31 +150,9 @@ class CrawlImages extends Command
                 $image->tags()->sync($tagIds);
             }
 
-            $this->verbose(function () use ($externalId) {$this->logInfo('  #' . $externalId);});
+            $this->verbose(function () use ($externalId) {
+                $this->logInfo('  #' . $externalId);
+            });
         });
-    }
-
-    private function verbose(\Closure $closure)
-    {
-        if ($this->option('verbose')) {
-            $closure();
-        }
-    }
-
-    private function incrementErrorCount()
-    {
-        $this->errorCount++;
-    }
-
-    private function logInfo($message)
-    {
-        $this->line($message);
-        Log::info($message);
-    }
-
-    private function logError($message)
-    {
-        $this->error($message);
-        Log::error($message);
     }
 }

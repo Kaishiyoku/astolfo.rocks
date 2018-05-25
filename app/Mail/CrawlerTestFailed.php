@@ -12,11 +12,24 @@ class CrawlerTestFailed extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
+     * @var array
      */
-    public function __construct()
+    private $collectedFields;
+
+    /**
+     * @var array
+     */
+    private $expectedFields;
+
+    /**
+     * Create a new message instance.
+     * @param array $collectedFields
+     * @param array $expectedFields
+     */
+    public function __construct($collectedFields, $expectedFields)
     {
-        //
+        $this->collectedFields = $collectedFields;
+        $this->expectedFields = $expectedFields;
     }
 
     /**
@@ -26,6 +39,9 @@ class CrawlerTestFailed extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.crawler.failed');
+        return $this->view('emails.crawler.failed', [
+            'collectedFields' => $this->collectedFields,
+            'expectedFields' => $this->expectedFields,
+        ]);
     }
 }
