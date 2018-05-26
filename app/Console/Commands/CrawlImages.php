@@ -6,6 +6,8 @@ use App\Console\BaseCommand;
 use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlImages extends BaseCommand
@@ -144,6 +146,11 @@ class CrawlImages extends BaseCommand
                     $image->fill($values);
                 } else {
                     $image = new Image($values);
+
+                    $fileExtension = File::extension($image->url);
+                    $fileName = $image->external_id . '.' . $fileExtension;
+
+                    Storage::disk('local')->put(env('CRAWLER_FILESYSTEM_PATH'). '/' . $fileName, getExternalContent($image->url));
                 }
 
                 $image->save();
