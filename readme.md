@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Kaishiyoku/astolfo.rocks.svg?branch=master)](https://travis-ci.org/Kaishiyoku/astolfo.rocks)
+
 Table of contents
 =================
 * [About](#about)
