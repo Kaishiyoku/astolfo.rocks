@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use App\Http\Controllers\Api\v1\exceptions\InvalidArgumentException;
 
 class ImageController extends Controller
 {
@@ -28,6 +29,29 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
+        return response()->json($image);
+    }
+
+    /**
+     * @param string|null $rating
+     * @retun \Illuminate\Http\JsonResponse
+     */
+    public function showRandom($rating = null)
+    {
+        $availableRatings = collect(explode(',', env('CRAWLER_RATINGS')))->map(function ($rating) {
+            return strtolower($rating);
+        })->toArray();
+
+        if (!empty($rating) && !in_array(strtolower($rating), $availableRatings)) {
+            return response('The given rating is invalid.', 422);
+        }
+
+        if ($rating) {
+            $image = Image::whereRating($rating)->inRandomOrder()->first();
+        } else {
+            $image = Image::inRandomOrder()->first();
+        }
+
         return response()->json($image);
     }
 }
