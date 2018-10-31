@@ -79,3 +79,20 @@ if (!function_exists('getImageInfoFieldValues')) {
         });
     }
 }
+
+if (!function_exists('getSocialMediaLinks')) {
+    function getSocialMediaLinks() {
+        $str = env('SOCIAL_MEDIA_LINKS');
+
+        $data = empty($str) ? collect() : collect(explode(';', env('SOCIAL_MEDIA_LINKS')))->map(function ($item) {
+            $itemData = explode(',', $item);
+
+            return [
+                'title' => $itemData[0],
+                'url' => $itemData[1],
+            ];
+        });
+
+        return $data->toArray();
+    }
+}

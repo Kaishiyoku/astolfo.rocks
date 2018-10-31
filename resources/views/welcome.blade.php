@@ -20,7 +20,13 @@
             <a href="https://mangas.astolfo.rocks" class="btn btn-dark btn-lg">Manga list</a>
         </p>
 
-        <h2>Random Astolfo</h2>
+        <h2>Links</h2>
+
+        @foreach (getSocialMediaLinks() as $link)
+            {{ Html::link($link['url'], $link['title'], ['class' => 'btn btn-outline-light']) }}
+        @endforeach
+
+        <h2 class="mt-5">Random Astolfo</h2>
 
         <a href="{{ env('CRAWLER_BASE_URL') }}/post/view/{{ $randomImage->external_id }}">
             <img src="{{ $randomImage->url }}" class="img-fluid img-thumbnail" style="max-height: 400px;"/>
