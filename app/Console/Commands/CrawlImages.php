@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Console\BaseCommand;
 use App\Models\Image;
 use App\Models\Tag;
+use App\Models\UpdateLog;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -71,6 +72,9 @@ class CrawlImages extends BaseCommand
         });
 
         $timeElapsedInSeconds = microtime(true) - $start;
+
+        $updateLog = new UpdateLog();
+        $updateLog->save();
 
         $this->line('');
         $this->logInfo('...finished. Duration: ' . number_format($timeElapsedInSeconds, 2) . ' seconds.');
