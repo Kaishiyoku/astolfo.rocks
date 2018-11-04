@@ -37,4 +37,9 @@ class HomeController extends Controller
 
         return response()->json($stats);
     }
+
+    public function version()
+    {
+        return response()->json(env('APP_VERSION'));
+    }
 }
