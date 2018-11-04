@@ -1,37 +1,4 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
-// Variables
-@import "variables";
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
-
-body {
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  line-height: 1.5;
-  color: #ddd;
-  background-image: linear-gradient(135deg, #5253eb, #ac122c);
-  min-height: 100vh;
-  padding-top: 2em;
-  padding-bottom: 2em;
-}
-
-a {
-  color: #dfa0ad;
-}
-
-a:hover {
-  color: #ffffff;
-}
-
-.credits {
-  position: absolute;
-  right: 1em;
-  font-size: 0.75em;
-}
+@import 'bootstrap/bootstrap';

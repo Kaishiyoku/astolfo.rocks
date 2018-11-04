@@ -33,5 +33,11 @@
 
 @yield('content')
 
+<div class="container mt-5">
+    <footer>
+        <small>Astolfo render by <a href="https://ino2206.deviantart.com">Ino2206</a></small>
+    </footer>
+</div>
+
 </body>
 </html>
