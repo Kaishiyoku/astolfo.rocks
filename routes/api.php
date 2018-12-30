@@ -23,3 +23,7 @@ Route::prefix('v1')->middleware('api')->group(function () {
 
     Route::get('/stats', 'Api\v1\HomeController@stats');
 });
+
+Route::fallback(function () {
+    return response()->json(['message' => 'Not Found.'], 404);
+})->name('api.fallback.404');
