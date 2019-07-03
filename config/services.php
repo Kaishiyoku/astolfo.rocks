@@ -17,6 +17,7 @@ return [
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
     'ses' => [
@@ -33,11 +34,6 @@ return [
         'model' => App\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
-    ],
-
-    'sendinblue' => [
-        'url' => 'https://api.sendinblue.com/v2.0',
-        'key' => env('SENDINBLUE_KEY'),
     ],
 
 ];

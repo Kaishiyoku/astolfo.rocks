@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
 
 if (!function_exists('getImageInfoFields')) {
@@ -7,9 +8,13 @@ if (!function_exists('getImageInfoFields')) {
     {
         return [
             'views',
+            'uploader',
             'tags',
             'source',
+            'locked',
+            'parent',
             'rating',
+            'imageUrl',
         ];
     }
 }
@@ -49,39 +54,45 @@ if (!function_exists('replaceNewLines')) {
 if (!function_exists('getImageInfoFieldValues')) {
     function getImageInfoFieldValues(Crawler $crawler)
     {
-        return collect($crawler
-            ->filterXPath('//table[@class="image_info form"]/tr')
-            ->each(function (Crawler $node) {
-                $label = strtolower(str_replace_first(':', '', replaceNewLines($node->children()->getNode(0)->textContent)));
-                $value = replaceNewLines($node->children()->getNode(1)->textContent);
+        $converter = new CssSelectorConverter();
 
-                return [$label => $value];
-            })
-        )->filter(function ($item) {
-            return in_array(key($item), getImageInfoFields());
-        })->flatMap(function ($item) {
-            $key = key($item);
-            $value = $item[$key];
+        $image = $crawler->filterXPath($converter->toXPath('img#main_image, video#main_image source'));
+        $imageUrl = env('CRAWLER_BASE_URL') . $image->attr('src');
 
-            if ($key == 'tags') {
-                $item[$key] = explode(' ', strtolower($value));
-            }
-
-            if ($key == 'source' && $value == 'Unknown') {
-                $item[$key] = null;
-            }
-
-            if (empty($value)) {
-                return null;
-            }
-
-            return $item;
+        list($views, $uploader, $tags, $source, $locked, $parent, $rating) = $crawler->filterXPath($converter->toXPath('table.image_info tr'))->each(function (Crawler $crawler) {
+            return trim($crawler->children()->getNode(1)->textContent);
         });
+
+        $tags = explode(' ', $tags);
+        $source = $source == 'Unknown' ? null : $source;
+        $locked = $locked == 'No' ? false : true;
+        $parent = $parent == 'None' ? null : $parent;
+
+        return compact('views', 'uploader', 'tags', 'source', 'locked', 'parent', 'rating', 'imageUrl');
+    }
+}
+
+if (!function_exists('hasValueOrNull')) {
+    function hasValueOrNull($value)
+    {
+        return !empty($value) || $value == null;
+    }
+}
+
+if (!function_exists('toString')) {
+    function toString($value)
+    {
+        if (is_array($value)) {
+            return implode(', ', $value);
+        }
+
+        return $value;
     }
 }
 
 if (!function_exists('getSocialMediaLinks')) {
-    function getSocialMediaLinks() {
+    function getSocialMediaLinks()
+    {
         $str = env('SOCIAL_MEDIA_LINKS');
 
         $data = empty($str) ? collect() : collect(explode(';', env('SOCIAL_MEDIA_LINKS')))->map(function ($item) {

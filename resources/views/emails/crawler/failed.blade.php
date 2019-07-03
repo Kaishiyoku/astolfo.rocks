@@ -3,8 +3,8 @@
 <p>Collected:</p>
 
 <ul>
-    @foreach ($collectedFields as $collectedField)
-        <li>{{ $collectedField }}</li>
+    @foreach ($collectedFields as $key => $collectedField)
+        <li>{{ $key }} -> {{ toString($collectedField) }}</li>
     @endforeach
 </ul>
 

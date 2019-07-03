@@ -120,14 +120,10 @@ class CrawlImages extends BaseCommand
             $externalId = $this->getExternalIdByUri($uri);
 
             $crawler = new Crawler(getAstolfoContent($uri));
-            $imageInfoFieldValues = getImageInfoFieldValues($crawler);
-
-            $imageNode = $crawler->filter('img#main_image')->first();
+            $imageInfoFieldValues = collect(getImageInfoFieldValues($crawler));
 
             // only save not yet crawled images, update others
             $image = Image::find($externalId);
-
-            $imageUrl = $imageNode->count() > 0 ? env('CRAWLER_BASE_URL') . $imageNode->attr('src') : null;
 
             $tags = collect($imageInfoFieldValues['tags'])
                 ->reject(function ($value) {
@@ -140,12 +136,12 @@ class CrawlImages extends BaseCommand
 
             $values = array_merge([
                 'external_id' => $externalId,
-                'url' => $imageUrl,
+                'url' => $imageInfoFieldValues['imageUrl'],
             ], $imageInfoFieldValues->reject(function ($item, $key) {
                 return $key == 'tags';
             })->toArray());
 
-            if ($imageUrl != null) {
+            if ( $imageInfoFieldValues['imageUrl'] != null) {
                 if ($image) {
                     $image->fill($values);
                 } else {

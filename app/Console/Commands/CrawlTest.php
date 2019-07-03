@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Console\BaseCommand;
 use App\Mail\CrawlerTestFailed;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlTest extends BaseCommand
@@ -40,22 +41,23 @@ class CrawlTest extends BaseCommand
      */
     public function handle()
     {
-        $hasError = false;
+        $expectedFieldNames = ['views', 'uploader', 'tags', 'source', 'locked', 'parent', 'rating', 'imageUrl'];
         $crawler = new Crawler(getAstolfoContent('/post/view/1'));
-        $imageInfoFieldValues = getImageInfoFieldValues($crawler);
 
-        $collectedFields = collect($imageInfoFieldValues)->map(function ($value, $key) {
-            return [$key];
-        })->flatten()->toArray();
+        $fields = getImageInfoFieldValues($crawler);
 
-        if ($collectedFields != getImageInfoFields()) {
-            $hasError = true;
-        }
+        $fieldChecks = array_map(function ($fieldName) use ($fields) {
+            return array_key_exists($fieldName, $fields) && hasValueOrNull($fields[$fieldName]);
+        }, $expectedFieldNames);
+
+        $hasError = !array_reduce($fieldChecks, function ($acc, $value) {
+            return $acc && $value;
+        }, true);
 
         if ($hasError) {
             $this->logError('Crawler test failed.');
 
-            Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed($collectedFields, getImageInfoFields()));
+            Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed($fields, getImageInfoFields()));
         } else {
             $this->logInfo('No errors occurred.');
         }
