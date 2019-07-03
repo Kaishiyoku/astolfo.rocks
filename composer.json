@@ -8,9 +8,9 @@
         "php": "^7.1.3",
         "doctrine/dbal": "2.9.2",
         "fideloper/proxy": "4.1.0",
-        "laravel/framework": "5.7.28",
+        "laravel/framework": "5.8.27",
         "laravel/tinker": "1.0.8",
-        "laravelcollective/html": "5.7.1",
+        "laravelcollective/html": "5.8.0",
         "symfony/dom-crawler": "4.3.2",
         "webup/laravel-sendinblue": "1.1.4"
     },
