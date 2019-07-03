@@ -81,6 +81,8 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
+            'odbc' => true,
+            'odbc_datasource_name' => 'your-odbc-dsn',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '1433'),
             'database' => env('DB_DATABASE', 'forge'),
