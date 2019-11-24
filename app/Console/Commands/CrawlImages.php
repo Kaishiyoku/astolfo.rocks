@@ -109,57 +109,10 @@ class CrawlImages extends BaseCommand
             });
     }
 
-    private function getExternalIdByUri($uri)
-    {
-        return collect(explode('/', $uri))->last();
-    }
-
     private function getImages(Collection $uris)
     {
         $uris->each(function ($uri) {
-            $externalId = $this->getExternalIdByUri($uri);
-
-            $crawler = new Crawler(getAstolfoContent($uri));
-            $imageInfoFieldValues = collect(getImageInfoFieldValues($crawler));
-
-            // only save not yet crawled images, update others
-            $image = Image::find($externalId);
-
-            $tags = collect($imageInfoFieldValues['tags'])
-                ->reject(function ($value) {
-                    return $value == 'tagme';
-                });
-
-            $tagIds = $tags->map(function ($name) {
-                return Tag::whereName($name)->firstOrCreate(compact('name'))->id;
-            });
-
-            $values = array_merge([
-                'external_id' => $externalId,
-                'url' => $imageInfoFieldValues['imageUrl'],
-            ], $imageInfoFieldValues->reject(function ($item, $key) {
-                return $key == 'tags';
-            })->toArray());
-
-            if ( $imageInfoFieldValues['imageUrl'] != null) {
-                if ($image) {
-                    $image->fill($values);
-                } else {
-                    $image = new Image($values);
-
-                    $fileExtension = File::extension($image->url);
-                    $fileName = $image->external_id . '.' . $fileExtension;
-
-                    Storage::disk('local')->put(env('CRAWLER_FILESYSTEM_PATH'). '/' . $fileName, getExternalContent($image->url));
-                }
-
-                $image->save();
-                $image->tags()->sync($tagIds);
-            }
-
-            $this->verbose(function () use ($externalId) {
-                $this->logInfo('  #' . $externalId);
-            });
+            getImageForUri($uri);
         });
     }
 }

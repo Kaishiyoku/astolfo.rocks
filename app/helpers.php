@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Image;
+use App\Models\Tag;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -105,5 +108,73 @@ if (!function_exists('getSocialMediaLinks')) {
         });
 
         return $data->toArray();
+    }
+}
+
+if (!function_exists('getExternalIdByUri')) {
+    function getExternalIdByUri($uri)
+    {
+        return collect(explode('/', $uri))->last();
+    }
+}
+
+if (!function_exists('getImageForUri')) {
+    function getImageForUri($uri)
+    {
+        $externalId = getExternalIdByUri($uri);
+
+        $crawler = new Crawler(getAstolfoContent($uri));
+        $imageInfoFieldValues = collect(getImageInfoFieldValues($crawler));
+
+        // only save not yet crawled images, update others
+        $image = Image::find($externalId);
+
+        $tags = collect($imageInfoFieldValues['tags'])
+            ->reject(function ($value) {
+                return $value == 'tagme';
+            });
+
+        $tagIds = $tags->map(function ($name) {
+            return Tag::whereName($name)->firstOrCreate(compact('name'))->id;
+        });
+
+        $values = array_merge([
+            'external_id' => $externalId,
+            'url' => $imageInfoFieldValues['imageUrl'],
+        ], $imageInfoFieldValues->reject(function ($item, $key) {
+            return $key == 'tags';
+        })->toArray());
+
+        if ($imageInfoFieldValues['imageUrl'] != null) {
+            if ($image) {
+                $image->fill($values);
+
+                logInfoWithPrintout('  #' . $externalId . ' - updated');
+            } else {
+                $image = new Image($values);
+
+                $fileExtension = File::extension($image->url);
+                $fileName = $image->external_id . '.' . $fileExtension;
+
+                Storage::disk('local')->put(env('CRAWLER_FILESYSTEM_PATH'). '/' . $fileName, getExternalContent($image->url));
+
+                logInfoWithPrintout('  #' . $externalId . ' - created');
+            }
+
+            $image->save();
+            $image->tags()->sync($tagIds);
+        } else {
+            logInfoWithPrintout('  #' . $externalId . ' - imageUrl is empty');
+        }
+    }
+}
+
+if (!function_exists('logInfoWithPrintout')) {
+    function logInfoWithPrintout($line)
+    {
+        $out = new ConsoleOutput();
+        $out->writeln($line);
+
+        info($line);
     }
 }
