@@ -20,6 +20,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Tag query()
+ * @property-read int|null $images_count
  */
 class Tag extends Model
 {

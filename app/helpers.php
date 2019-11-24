@@ -119,7 +119,7 @@ if (!function_exists('getExternalIdByUri')) {
 }
 
 if (!function_exists('getImageForUri')) {
-    function getImageForUri($uri)
+    function getImageForUri($uri, $verbose = false)
     {
         $externalId = getExternalIdByUri($uri);
 
@@ -149,7 +149,9 @@ if (!function_exists('getImageForUri')) {
             if ($image) {
                 $image->fill($values);
 
-                logInfoWithPrintout('  #' . $externalId . ' - updated');
+                if ($verbose) {
+                    logInfoWithPrintout('  #' . $externalId . ' - updated');
+                }
             } else {
                 $image = new Image($values);
 
@@ -158,13 +160,17 @@ if (!function_exists('getImageForUri')) {
 
                 Storage::disk('local')->put(env('CRAWLER_FILESYSTEM_PATH'). '/' . $fileName, getExternalContent($image->url));
 
-                logInfoWithPrintout('  #' . $externalId . ' - created');
+                if ($verbose) {
+                    logInfoWithPrintout('  #' . $externalId . ' - created');
+                }
             }
 
             $image->save();
             $image->tags()->sync($tagIds);
         } else {
-            logInfoWithPrintout('  #' . $externalId . ' - imageUrl is empty');
+            if ($verbose) {
+                logInfoWithPrintout('  #' . $externalId . ' - imageUrl is empty');
+            }
         }
     }
 }

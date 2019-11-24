@@ -112,7 +112,7 @@ class CrawlImages extends BaseCommand
     private function getImages(Collection $uris)
     {
         $uris->each(function ($uri) {
-            getImageForUri($uri);
+            getImageForUri($uri, $this->option('verbose'));
         });
     }
 }

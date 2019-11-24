@@ -1,6 +1,8 @@
 <?php
 
+use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use Monolog\Handler\SyslogUdpHandler;
 
 return [
 
@@ -75,6 +77,11 @@ return [
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => env('LOG_LEVEL'),
+        ],
+
+        'null' => [
+            'driver' => 'monolog',
+            'handler' => NullHandler::class,
         ],
     ],
 

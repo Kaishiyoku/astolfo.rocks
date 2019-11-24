@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image query()
+ * @property-read int|null $tags_count
  */
 class Image extends Model
 {
