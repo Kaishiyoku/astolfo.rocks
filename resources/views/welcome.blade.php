@@ -9,10 +9,6 @@
                 </p>
 
                 <p>
-                    <a href="https://mangas.astolfo.rocks" class="btn btn-primary">Manga list</a>
-                </p>
-
-                <p>
                     @foreach (getSocialMediaLinks() as $link)
                         {{ Html::link($link['url'], $link['title'], ['class' => 'btn btn-outline-dark']) }}
                     @endforeach
