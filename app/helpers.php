@@ -149,16 +149,15 @@ if (!function_exists('getImageForUri')) {
             if ($image) {
                 $image->fill($values);
 
+                createImageFileIfNotExists($image);
+
                 if ($verbose) {
                     logInfoWithPrintout('  #' . $externalId . ' - updated');
                 }
             } else {
                 $image = new Image($values);
 
-                $fileExtension = File::extension($image->url);
-                $fileName = $image->external_id . '.' . $fileExtension;
-
-                Storage::disk('local')->put(env('CRAWLER_FILESYSTEM_PATH'). '/' . $fileName, getExternalContent($image->url));
+                createImageFile($image);
 
                 if ($verbose) {
                     logInfoWithPrintout('  #' . $externalId . ' - created');
@@ -172,6 +171,34 @@ if (!function_exists('getImageForUri')) {
                 logInfoWithPrintout('  #' . $externalId . ' - imageUrl is empty');
             }
         }
+    }
+}
+
+if (!function_exists('createImageFileIfNotExists')) {
+    function createImageFileIfNotExists($image)
+    {
+        try {
+            $imageFile = Storage::disk('local')->get(getImageFilePathFor($image));
+        } catch (\Illuminate\Contracts\Filesystem\FileNotFoundException $e) {
+            createImageFile($image);
+        }
+    }
+}
+
+if (!function_exists('createImageFile')) {
+    function createImageFile($image)
+    {
+        Storage::disk('local')->put(getImageFilePathFor($image), getExternalContent($image->url));
+    }
+}
+
+if (!function_exists('getImageFilePathFor')) {
+    function getImageFilePathFor($image)
+    {
+        $fileExtension = File::extension($image->url);
+        $fileName = $image->external_id . '.' . $fileExtension;
+
+        return env('CRAWLER_FILESYSTEM_PATH') . '/' . $fileName;
     }
 }
 
