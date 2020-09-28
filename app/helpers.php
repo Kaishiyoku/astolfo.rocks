@@ -98,7 +98,7 @@ if (!function_exists('getSocialMediaLinks')) {
     {
         $str = env('SOCIAL_MEDIA_LINKS');
 
-        $data = empty($str) ? collect() : collect(explode(';', env('SOCIAL_MEDIA_LINKS')))->map(function ($item) {
+        $data = empty($str) ? collect() : collect(explode(';', $str))->map(function ($item) {
             $itemData = explode(',', $item);
 
             return [

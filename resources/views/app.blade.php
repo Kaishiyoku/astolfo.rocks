@@ -25,17 +25,19 @@
     <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#c64a71">
 
-    {!! Html::style('css/app.css') !!}
+    <link media="all" type="text/css" rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-    {!! Html::script('js/app.js') !!}
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
-<body>
+<body class="bg-pink-100">
 
-@yield('content')
+<div class="container px-4 lg:px-20 py-8 mx-auto">
+    <main>
+        @yield('content')
+    </main>
 
-<div class="container mt-5">
-    <footer>
-        <small>Astolfo render by <a href="https://ino2206.deviantart.com">Ino2206</a></small>
+    <footer class="pt-12 text-sm">
+        Astolfo render by <a href="https://ino2206.deviantart.com">Ino2206</a>
     </footer>
 </div>
 
