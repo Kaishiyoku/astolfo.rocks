@@ -29,7 +29,7 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
-<body class="bg-pink-100">
+<body class="bg-pink-50">
 
 <div class="container px-4 lg:px-20 py-8 mx-auto">
     <main>
