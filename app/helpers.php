@@ -25,35 +25,10 @@ if (!function_exists('getImageInfoFields')) {
     }
 }
 
-if (!function_exists('getExternalContent')) {
-    function getExternalContent($url)
-    {
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-
-        $content = curl_exec($ch);
-
-        curl_close($ch);
-
-        return $content;
-    }
-}
-
 if (!function_exists('getAstolfoContent')) {
     function getAstolfoContent($uri)
     {
-        return getExternalContent(env('CRAWLER_BASE_URL') . $uri);
-    }
-}
-
-if (!function_exists('replaceNewLines')) {
-    function replaceNewLines($content)
-    {
-        return preg_replace("/\n|\t/", '', $content);
+        return Http::get(env('CRAWLER_BASE_URL') . $uri)->body();
     }
 }
 
@@ -204,7 +179,7 @@ if (!function_exists('createImageFile')) {
     function createImageFile(Image $image)
     {
         try {
-            $imageFile = getImageManager()->make(getExternalContent($image->url));
+            $imageFile = getImageManager()->make(Http::get($image->url)->body());
 
             return Storage::disk('local')->put(getImageFilePathFor($image), $imageFile->psrResponse()->getBody()->getContents());
         } catch (NotReadableException $e) {
