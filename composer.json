@@ -6,10 +6,12 @@
     "type": "project",
     "require": {
         "php": "^7.3",
+        "ext-curl": "*",
         "doctrine/dbal": "2.12.1",
         "fideloper/proxy": "4.4.1",
         "fruitcake/laravel-cors": "2.0.3",
         "guzzlehttp/guzzle": "7.2.0",
+        "intervention/image": "^2.5",
         "laravel/framework": "8.20.1",
         "laravel/helpers": "1.4.0",
         "laravel/tinker": "2.5.0",

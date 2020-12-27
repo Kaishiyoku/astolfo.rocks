@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\HomeController;
+use App\Http\Controllers\Api\v1\ImageController;
+use App\Http\Controllers\Api\v1\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,16 +17,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('v1')->middleware('api')->group(function () {
-    Route::get('/health_check', 'Api\v1\HomeController@healthCheck');
-    Route::get('/version', 'Api\v1\HomeCOntroller@version');
+    Route::get('/health_check', [HomeController::class, 'healthCheck']);
+    Route::get('/version', [HomeController::class, 'version']);
 
-    Route::get('/images/random/{rating?}', 'Api\v1\ImageController@showRandom');
-    Route::resource('/images', 'Api\v1\ImageController')->only(['index', 'show']);
-    Route::get('/images/rating/{rating?}', 'Api\v1\ImageController@index');
+    Route::get('/images/random/{rating?}', [HomeController::class, 'showRandom']);
+    Route::resource('/images', ImageController::class)->only(['index', 'show']);
+    Route::get('/images/rating/{rating?}', [ImageController::class, 'index']);
+    Route::get('/images/{image}/data', [ImageController::class, 'getImageData']);
 
-    Route::resource('/tags', 'Api\v1\TagController')->only(['index', 'show']);
+    Route::resource('/tags', TagController::class)->only(['index', 'show']);
 
-    Route::get('/stats', 'Api\v1\HomeController@stats');
+    Route::get('/stats', [HomeController::class, 'stats']);
 });
 
 Route::fallback(function () {

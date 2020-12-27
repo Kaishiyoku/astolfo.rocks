@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Image;
-use App\Http\Controllers\Api\v1\exceptions\InvalidArgumentException;
 
 class ImageController extends Controller
 {
@@ -53,5 +52,20 @@ class ImageController extends Controller
         }
 
         return response()->json($image);
+    }
+
+    /**
+     * @param Image $image
+     * @return \Illuminate\Http\Response
+     */
+    public function getImageData(Image $image)
+    {
+        $imageData = getImageDataFromStorage($image);
+
+        if ($imageData === null) {
+            return response(null, 404);
+        }
+
+        return response($imageData)->header('Content-Type', $image->mimetype);
     }
 }

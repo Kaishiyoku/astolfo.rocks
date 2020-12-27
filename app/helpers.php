@@ -2,6 +2,9 @@
 
 use App\Models\Image;
 use App\Models\Tag;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Intervention\Image\Exception\NotReadableException;
+use Intervention\Image\ImageManager;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 use Symfony\Component\DomCrawler\Crawler;
@@ -149,7 +152,11 @@ if (!function_exists('getImageForUri')) {
             if ($image) {
                 $image->fill($values);
 
-                createImageFileIfNotExists($image);
+                $isImageFileValid = createImageFileIfNotExists($image);
+
+                if (!$image->mimetype) {
+                    $image->mimetype = getImageFileMimetype($image);
+                }
 
                 if ($verbose) {
                     logInfoWithPrintout('  #' . $externalId . ' - updated');
@@ -157,15 +164,21 @@ if (!function_exists('getImageForUri')) {
             } else {
                 $image = new Image($values);
 
-                createImageFile($image);
+                $isImageFileValid = createImageFile($image);
+
+                $image->mimetype = getImageFileMimetype($image);
 
                 if ($verbose) {
                     logInfoWithPrintout('  #' . $externalId . ' - created');
                 }
             }
 
-            $image->save();
-            $image->tags()->sync($tagIds);
+            if ($isImageFileValid) {
+                $image->save();
+                $image->tags()->sync($tagIds);
+            } else {
+                logInfoWithPrintout('  #' . $externalId . ' - invalid file format');
+            }
         } else {
             if ($verbose) {
                 logInfoWithPrintout('  #' . $externalId . ' - imageUrl is empty');
@@ -175,25 +188,33 @@ if (!function_exists('getImageForUri')) {
 }
 
 if (!function_exists('createImageFileIfNotExists')) {
-    function createImageFileIfNotExists($image)
+    function createImageFileIfNotExists(Image $image)
     {
         try {
-            $imageFile = Storage::disk('local')->get(getImageFilePathFor($image));
-        } catch (\Illuminate\Contracts\Filesystem\FileNotFoundException $e) {
-            createImageFile($image);
+            Storage::disk('local')->get(getImageFilePathFor($image));
+
+            return true;
+        } catch (FileNotFoundException $e) {
+            return createImageFile($image);
         }
     }
 }
 
 if (!function_exists('createImageFile')) {
-    function createImageFile($image)
+    function createImageFile(Image $image)
     {
-        Storage::disk('local')->put(getImageFilePathFor($image), getExternalContent($image->url));
+        try {
+            $imageFile = getImageManager()->make(getExternalContent($image->url));
+
+            return Storage::disk('local')->put(getImageFilePathFor($image), $imageFile->psrResponse()->getBody()->getContents());
+        } catch (NotReadableException $e) {
+            return false;
+        }
     }
 }
 
 if (!function_exists('getImageFilePathFor')) {
-    function getImageFilePathFor($image)
+    function getImageFilePathFor(Image $image)
     {
         $fileExtension = File::extension($image->url);
         $fileName = $image->external_id . '.' . $fileExtension;
@@ -209,5 +230,33 @@ if (!function_exists('logInfoWithPrintout')) {
         $out->writeln($line);
 
         info($line);
+    }
+}
+
+if (!function_exists('getImageDataFromStorage')) {
+    function getImageDataFromStorage(Image $image)
+    {
+        try {
+            return getImageManager()->make(Storage::disk('local')->get(getImageFilePathFor($image)))->psrResponse()->getBody()->getContents();
+        } catch (NotReadableException $e) {
+            return null;
+        }
+    }
+}
+
+if (!function_exists('getImageFileMimetype')) {
+    function getImageFileMimetype(Image $image)
+    {
+        return Storage::disk('local')->mimeType(getImageFilePathFor($image));
+    }
+}
+
+if (!function_exists('getImageManager')) {
+    /**
+     * @return ImageManager
+     */
+    function getImageManager(): ImageManager
+    {
+        return new ImageManager();
     }
 }
