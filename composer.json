@@ -6,27 +6,27 @@
     "type": "project",
     "require": {
         "php": "^7.3",
-        "doctrine/dbal": "2.12.1",
-        "fideloper/proxy": "4.4.1",
-        "fruitcake/laravel-cors": "2.0.3",
-        "guzzlehttp/guzzle": "7.2.0",
-        "intervention/image": "^2.5",
-        "laravel/framework": "8.20.1",
-        "laravel/helpers": "1.4.0",
-        "laravel/tinker": "2.5.0",
-        "symfony/css-selector": "5.2.1",
-        "symfony/dom-crawler": "5.2.1"
+        "doctrine/dbal": "^2.12.1",
+        "fideloper/proxy": "^4.4.1",
+        "fruitcake/laravel-cors": "^2.0.3",
+        "guzzlehttp/guzzle": "^7.2.0",
+        "intervention/image": "^2.5.1",
+        "laravel/framework": "^8.22.1",
+        "laravel/helpers": "^1.4.0",
+        "laravel/tinker": "^2.5.0",
+        "symfony/css-selector": "^5.2.1",
+        "symfony/dom-crawler": "^5.2.1"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "3.5.1",
-        "barryvdh/laravel-ide-helper": "2.8.2",
-        "facade/ignition": "2.5.3",
-        "fzaninotto/faker": "1.9.2",
-        "laravel-frontend-presets/tailwindcss": "4.3.1",
-        "mockery/mockery": "1.4.2",
-        "nunomaduro/collision": "5.1.0",
+        "barryvdh/laravel-debugbar": "^3.5.2",
+        "barryvdh/laravel-ide-helper": "^2.9.0",
+        "facade/ignition": "^2.5.8",
+        "fzaninotto/faker": "^1.9.2",
+        "laravel-frontend-presets/tailwindcss": "^4.3.1",
+        "mockery/mockery": "^1.4.2",
+        "nunomaduro/collision": "^5.2.0",
         "phpunit/phpunit": "^9.3",
-        "spatie/phpunit-snapshot-assertions": "4.2.4"
+        "spatie/phpunit-snapshot-assertions": "^4.2.4"
     },
     "autoload": {
         "psr-4": {
