@@ -15,7 +15,7 @@ class AddMimetypeToImagesTable extends Migration
     public function up()
     {
         Schema::table('images', function (Blueprint $table) {
-            $table->string('mimetype');
+            $table->string('mimetype')->nullable();
         });
 
         Image::all()->each(function (Image $image) {

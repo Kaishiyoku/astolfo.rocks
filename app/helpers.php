@@ -211,6 +211,10 @@ if (!function_exists('logInfoWithPrintout')) {
 if (!function_exists('getImageDataFromStorage')) {
     function getImageDataFromStorage(Image $image)
     {
+        if (!$image->mimetype) {
+            return null;
+        }
+
         try {
             return getImageManager()->make(Storage::disk('local')->get(getImageFilePathFor($image)))->psrResponse()->getBody()->getContents();
         } catch (NotReadableException $e) {
@@ -222,7 +226,11 @@ if (!function_exists('getImageDataFromStorage')) {
 if (!function_exists('getImageFileMimetype')) {
     function getImageFileMimetype(Image $image)
     {
-        return Storage::disk('local')->mimeType(getImageFilePathFor($image));
+        if (Storage::disk('local')->exists(getImageFilePathFor($image))) {
+            return Storage::disk('local')->mimeType(getImageFilePathFor($image));
+        }
+
+        return null;
     }
 }
 
