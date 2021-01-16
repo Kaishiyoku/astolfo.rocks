@@ -17,8 +17,8 @@
         <div>
             <div class="text-xl pt-8 pb-2">Random Astolfo</div>
 
-            <a href="{{ env('CRAWLER_BASE_URL') }}/post/view/{{ $randomImage->external_id }}">
-                <img src="{{ url('/api/v1/images/' . $randomImage->external_id . '/data') }}" class="img-fluid border border-pink-400 rounded p-1 bg-white" alt="random Astolfo image"/>
+            <a href="{{ env('CRAWLER_BASE_URL') }}/post/view/{{ $randomImage->external_id }}" class="block">
+                <img src="{{ url('/api/v1/images/' . $randomImage->external_id . '/data') }}" class="rounded border-2 border-pink-200 opacity-50 p-2 hover:opacity-100 max-h-400 transition-all duration-300" alt="random Astolfo image"/>
             </a>
         </div>
     </div>
