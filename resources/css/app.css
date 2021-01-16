@@ -1,9 +1,7 @@
 @import "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap";
 
 @import "tailwindcss/base";
-
 @import "tailwindcss/components";
-
 @import "tailwindcss/utilities";
 
 body {
@@ -24,7 +22,7 @@ a:hover {
     @apply transition-all duration-200 text-white bg-gray-800 no-underline;
 }
 .btn:focus {
-    @apply outline-none shadow-outline-gray-900;
+    @apply outline-none ring-4 ring-gray-300;
 }
 
 p {

@@ -8,6 +8,6 @@ module.exports = {
   },
   variants: {},
   plugins: [
-    require('tailwindcss-shadow-outline-colors')(),
+
   ]
 }
