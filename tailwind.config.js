@@ -4,10 +4,15 @@ module.exports = {
     './resources/css/**/*.css',
   ],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        'sans': ['Nunito', 'sans-serif'],
+      },
+      maxHeight: {
+        '400': '400px',
+      },
+    },
   },
   variants: {},
-  plugins: [
-
-  ]
+  plugins: [],
 }

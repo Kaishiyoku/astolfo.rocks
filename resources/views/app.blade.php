@@ -29,7 +29,7 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
-<body class="bg-pink-50">
+<body>
 
 <div class="container px-4 lg:px-20 py-8 mx-auto">
     <main>
@@ -37,7 +37,7 @@
     </main>
 
     <footer class="pt-12 text-sm">
-        Astolfo render by <a href="https://ino2206.deviantart.com">Ino2206</a>
+        Astolfo render by <a href="https://ino2206.deviantart.com" class="text-pink-600 hover:text-pink-700 hover:underline">Ino2206</a>
     </footer>
 </div>
 
