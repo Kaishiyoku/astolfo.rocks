@@ -20,7 +20,7 @@ Route::prefix('v1')->middleware('api')->group(function () {
     Route::get('/health_check', [HomeController::class, 'healthCheck']);
     Route::get('/version', [HomeController::class, 'version']);
 
-    Route::get('/images/random/{rating?}', [HomeController::class, 'showRandom']);
+    Route::get('/images/random/{rating?}', [ImageController::class, 'showRandom']);
     Route::resource('/images', ImageController::class)->only(['index', 'show']);
     Route::get('/images/rating/{rating?}', [ImageController::class, 'index']);
     Route::get('/images/{image}/data', [ImageController::class, 'getImageData']);
