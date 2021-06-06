@@ -65,6 +65,6 @@ class Image extends Model
         $fileExtension = File::extension($this->url);
         $fileName = "{$this->external_id}.{$fileExtension}";
 
-        return "storage/astolfo/{$fileName}";
+        return "astolfo/{$fileName}";
     }
 }
