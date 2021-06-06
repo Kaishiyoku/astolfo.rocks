@@ -53,19 +53,4 @@ class ImageController extends Controller
 
         return response()->json($image);
     }
-
-    /**
-     * @param Image $image
-     * @return \Illuminate\Http\Response
-     */
-    public function getImageData(Image $image)
-    {
-        $imageData = getImageDataFromStorage($image);
-
-        if ($imageData === null) {
-            return response(null, 404);
-        }
-
-        return response($imageData)->header('Content-Type', $image->mimetype);
-    }
 }

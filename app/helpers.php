@@ -166,7 +166,7 @@ if (!function_exists('createImageFileIfNotExists')) {
     function createImageFileIfNotExists(Image $image)
     {
         try {
-            Storage::disk('local')->get(getImageFilePathFor($image));
+            Storage::disk('local')->get($image->getFilePath());
 
             return true;
         } catch (FileNotFoundException $e) {
@@ -181,20 +181,10 @@ if (!function_exists('createImageFile')) {
         try {
             $imageFile = getImageManager()->make(Http::get($image->url)->body());
 
-            return Storage::disk('local')->put(getImageFilePathFor($image), $imageFile->psrResponse()->getBody()->getContents());
+            return Storage::disk('local')->put($image->getFilePath(), $imageFile->psrResponse()->getBody()->getContents());
         } catch (NotReadableException $e) {
             return false;
         }
-    }
-}
-
-if (!function_exists('getImageFilePathFor')) {
-    function getImageFilePathFor(Image $image)
-    {
-        $fileExtension = File::extension($image->url);
-        $fileName = $image->external_id . '.' . $fileExtension;
-
-        return env('CRAWLER_FILESYSTEM_PATH') . '/' . $fileName;
     }
 }
 
@@ -216,7 +206,7 @@ if (!function_exists('getImageDataFromStorage')) {
         }
 
         try {
-            return getImageManager()->make(Storage::disk('local')->get(getImageFilePathFor($image)))->psrResponse()->getBody()->getContents();
+            return getImageManager()->make(Storage::disk('local')->get($image->getFilePath()))->psrResponse()->getBody()->getContents();
         } catch (NotReadableException $e) {
             return null;
         }
@@ -226,8 +216,8 @@ if (!function_exists('getImageDataFromStorage')) {
 if (!function_exists('getImageFileMimetype')) {
     function getImageFileMimetype(Image $image)
     {
-        if (Storage::disk('local')->exists(getImageFilePathFor($image))) {
-            return Storage::disk('local')->mimeType(getImageFilePathFor($image));
+        if (Storage::disk('local')->exists($image->getFilePath())) {
+            return Storage::disk('local')->mimeType($image->getFilePath());
         }
 
         return null;

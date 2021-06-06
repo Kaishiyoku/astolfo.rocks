@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 /**
  * App\Models\Image
@@ -57,5 +58,13 @@ class Image extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->orderBy('name', 'asc');
+    }
+
+    public function getFilePath()
+    {
+        $fileExtension = File::extension($this->url);
+        $fileName = "{$this->external_id}.{$fileExtension}";
+
+        return "storage/astolfo/{$fileName}";
     }
 }
