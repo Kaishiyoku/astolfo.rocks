@@ -57,7 +57,7 @@ class CrawlTest extends BaseCommand
         if ($hasError) {
             $this->logError('Crawler test failed.');
 
-            Mail::to(env('CRAWLER_NOTIFICATION_MAIL'))->send(new CrawlerTestFailed($fields, getImageInfoFields()));
+            Mail::to(config('astolfo.crawler_notification_mail'))->send(new CrawlerTestFailed($fields, getImageInfoFields()));
         } else {
             $this->logInfo('No errors occurred.');
         }

@@ -17,7 +17,7 @@
         <div>
             <div class="text-xl pt-8 pb-2">Random Astolfo</div>
 
-            <a href="{{ env('CRAWLER_BASE_URL') }}/post/view/{{ $randomImage->external_id }}" class="block">
+            <a href="{{ config('astolfo.crawler_base_url') }}/post/view/{{ $randomImage->external_id }}" class="block">
                 <img src="{{ asset($randomImage->getFilePath()) }}" class="rounded border-2 border-pink-200 opacity-50 p-2 hover:opacity-100 max-h-400 transition-all duration-300" alt="random Astolfo image"/>
             </a>
         </div>

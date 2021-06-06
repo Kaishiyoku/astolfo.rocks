@@ -18,7 +18,7 @@ class HomeController extends Controller
 
     public function stats()
     {
-        $statsPerRating = collect(explode(',', env('CRAWLER_RATINGS')))->flatMap(function ($rating) {
+        $statsPerRating = collect(explode(',', config('astolfo.available_ratings')))->flatMap(function ($rating) {
             $ratingLowerCase = strtolower($rating);
 
             return [
@@ -40,6 +40,6 @@ class HomeController extends Controller
 
     public function version()
     {
-        return response()->json(env('APP_VERSION'));
+        return response()->json(config('app.version'));
     }
 }

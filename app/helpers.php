@@ -28,7 +28,7 @@ if (!function_exists('getImageInfoFields')) {
 if (!function_exists('getAstolfoContent')) {
     function getAstolfoContent($uri)
     {
-        return Http::get(env('CRAWLER_BASE_URL') . $uri)->body();
+        return Http::get(config('astolfo.crawler_base_url') . $uri)->body();
     }
 }
 
@@ -38,7 +38,7 @@ if (!function_exists('getImageInfoFieldValues')) {
         $converter = new CssSelectorConverter();
 
         $image = $crawler->filterXPath($converter->toXPath('img#main_image, video#main_image source'));
-        $imageUrl = env('CRAWLER_BASE_URL') . $image->attr('src');
+        $imageUrl = config('astolfo.crawler_base_url') . $image->attr('src');
 
         list($views, $uploader, $tags, $source, $locked, $parent, $rating) = $crawler->filterXPath($converter->toXPath('table.image_info tr'))->each(function (Crawler $crawler) {
             return trim($crawler->children()->getNode(1)->textContent);
@@ -74,7 +74,7 @@ if (!function_exists('toString')) {
 if (!function_exists('getSocialMediaLinks')) {
     function getSocialMediaLinks()
     {
-        $str = env('SOCIAL_MEDIA_LINKS');
+        $str = config('astolfo.social_media_links');
 
         $data = empty($str) ? collect() : collect(explode(';', $str))->map(function ($item) {
             $itemData = explode(',', $item);

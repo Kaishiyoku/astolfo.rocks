@@ -37,7 +37,7 @@ class ImageController extends Controller
      */
     public function showRandom($rating = null)
     {
-        $availableRatings = collect(explode(',', env('CRAWLER_RATINGS')))->map(function ($rating) {
+        $availableRatings = collect(explode(',', config('astolfo.available_ratings')))->map(function ($rating) {
             return strtolower($rating);
         })->toArray();
 
