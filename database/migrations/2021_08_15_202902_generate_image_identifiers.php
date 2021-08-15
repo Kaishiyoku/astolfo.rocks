@@ -21,6 +21,10 @@ class GenerateImageIdentifiers extends Migration
         $images->each(function (Image $image) use ($imgFing) {
             $imageData = getImageDataFromStorage($image);
 
+            if (!$imageData) {
+                return;
+            }
+
             $image->identifier = $imgFing->identifyString($imageData);
             $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
             $image->save();
