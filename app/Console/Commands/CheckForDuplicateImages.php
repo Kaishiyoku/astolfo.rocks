@@ -47,8 +47,8 @@ class CheckForDuplicateImages extends Command
         PossibleDuplicate::truncate();
 
         $imgFing = imgFing();
-        $imagesAsc = Image::orderBy('external_id');
-        $imagesDesc = Image::orderBy('external_id', 'desc');
+        $imagesAsc = Image::whereNotNull('identifier')->orderBy('external_id');
+        $imagesDesc = Image::whereNotNull('identifier')->orderBy('external_id', 'desc');
 
         $imagesAsc->each(function (Image $imageAsc) use ($imagesDesc, $imgFing) {
             $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
