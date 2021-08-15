@@ -15,7 +15,8 @@
         "laravel/helpers": "^1.4.1",
         "laravel/tinker": "^2.6.1",
         "symfony/css-selector": "^5.3.0",
-        "symfony/dom-crawler": "^5.3.0"
+        "symfony/dom-crawler": "^5.3.0",
+        "tioga-tours/php-imgfing": "^0.3.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6.1",

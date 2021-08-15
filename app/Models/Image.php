@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Hex;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 
@@ -30,6 +31,12 @@ use Illuminate\Support\Facades\File;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereViews($value)
  * @mixin \Eloquent
+ * @property mixed|null $image_identifier
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereImageIdentifier($value)
+ * @property mixed|null $identifier
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifier($value)
+ * @property mixed|null $identifier_image
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifierImage($value)
  */
 class Image extends Model
 {
@@ -52,6 +59,15 @@ class Image extends Model
      * @var array
      */
     protected $hidden = [
+        'identifier', 'identifier_image',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
         //
     ];
 

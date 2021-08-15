@@ -3,6 +3,7 @@
 use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use ImgFing\ImgFing;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -149,6 +150,12 @@ if (!function_exists('getImageForUri')) {
             }
 
             if ($isImageFileValid) {
+                $imgFing = imgFing();
+                $imageData = getImageDataFromStorage($image);
+
+                $image->identifier = $imgFing->identifyString($imageData);
+                $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+
                 $image->save();
                 $image->tags()->sync($tagIds);
             } else {
@@ -231,5 +238,22 @@ if (!function_exists('getImageManager')) {
     function getImageManager(): ImageManager
     {
         return new ImageManager();
+    }
+}
+
+if (!function_exists('imgFing')) {
+    /**
+     * @return ImgFing
+     */
+    function imgFing(): ImgFing
+    {
+        return new ImgFing([
+            'bitSize' => 6000,
+            'avgColorAdjust' => 50,
+            'cropFit' => false,
+            'adapters' => [
+                'GD',
+            ],
+        ]);
     }
 }

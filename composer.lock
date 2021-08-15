@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5aef34f720bec46eb1dfeffcb73cb91",
+    "content-hash": "0ac28ec64d03a5e87728b01035d12934",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -5711,6 +5711,64 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.3"
             },
             "time": "2020-07-13T06:12:54+00:00"
+        },
+        {
+            "name": "tioga-tours/php-imgfing",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tioga-tours/php-imgfing.git",
+                "reference": "44d3c6a4bed53e64491bfbdf8921e26fbd977b35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tioga-tours/php-imgfing/zipball/44d3c6a4bed53e64491bfbdf8921e26fbd977b35",
+                "reference": "44d3c6a4bed53e64491bfbdf8921e26fbd977b35",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.16",
+                "phploc/phploc": "~7.0",
+                "phpmd/phpmd": "~2.9",
+                "phpunit/phpunit": "^9.0",
+                "sebastian/phpcpd": "~6.0",
+                "squizlabs/php_codesniffer": "~3.3"
+            },
+            "suggest": {
+                "ext-imagick": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ImgFing\\": [
+                        "src"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Martin Winkel",
+                    "email": "martin@tiogatours.nl",
+                    "role": "lead"
+                }
+            ],
+            "description": "Check images on their unique fingerprint and compare them",
+            "keywords": [
+                "image processing"
+            ],
+            "support": {
+                "issues": "https://github.com/tioga-tours/php-imgfing/issues",
+                "source": "https://github.com/tioga-tours/php-imgfing/tree/0.3.0"
+            },
+            "time": "2021-06-16T10:57:47+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
