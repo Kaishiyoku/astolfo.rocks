@@ -9,7 +9,9 @@
 
             <p class="pt-1 pb-2">
                 @foreach (getSocialMediaLinks() as $link)
-                    <a href="{{ $link['url'] }}" class="inline-block py-2 px-3 border border-gray-800 text-black rounded no-underline mr-1 hover:transition-all hover:duration-200 hover:text-white hover:bg-gray-800 hover:no-underline focus:outline-none focus:ring-4 focus:ring-gray-300 transition-all duration-200">{{ $link['title'] }}</a>
+                    <x-button-link :url="$link['url']">
+                        {{ $link['title'] }}
+                    </x-button-link>
                 @endforeach
             </p>
         </div>

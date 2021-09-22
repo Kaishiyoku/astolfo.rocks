@@ -36,7 +36,7 @@
         @yield('content')
     </main>
 
-    <footer class="pt-12 text-sm">
+    <footer class="pt-12 text-sm text-gray-500">
         Astolfo render by <a href="https://ino2206.deviantart.com" class="text-pink-600 hover:text-pink-700 hover:underline">Ino2206</a>
     </footer>
 </div>
