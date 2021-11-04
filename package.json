@@ -10,17 +10,17 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "autoprefixer": "^10.3.5",
-        "axios": "^0.21.4",
+        "autoprefixer": "^10.4.0",
+        "axios": "^0.24.0",
         "cross-env": "^7.0.3",
-        "laravel-mix": "^6.0.31",
+        "laravel-mix": "^6.0.37",
         "lodash": "^4.17.20",
-        "postcss": "^8.3.7",
+        "postcss": "^8.3.11",
         "postcss-import": "^14.0.2",
         "resolve-url-loader": "^4.0.0",
-        "sass": "^1.42.1",
-        "sass-loader": "^12.1.0",
-        "tailwindcss": "^2.2.15",
+        "sass": "^1.43.4",
+        "sass-loader": "^12.3.0",
+        "tailwindcss": "^2.2.19",
         "vue-template-compiler": "^2.6.14"
     }
 }
