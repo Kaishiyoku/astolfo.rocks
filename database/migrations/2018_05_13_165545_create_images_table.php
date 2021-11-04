@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ImageRating;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -16,7 +17,7 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->unsignedInteger('external_id')->unique();
             $table->string('url', 1528);
-            $table->enum('rating', explode(',', env('CRAWLER_RATINGS')));
+            $table->enum('rating', ImageRating::getValues());
             $table->timestamps();
 
             $table->primary('external_id');

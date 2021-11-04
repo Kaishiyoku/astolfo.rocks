@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * App\Models\PossibleDuplicate
  *
  * @property int $id
- * @property int $image_external_id
+ * @property int $image_id_left
+ * @property int $image_id_right
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newModelQuery()
@@ -17,13 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate query()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageExternalId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdLeft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdRight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property int $image_external_id_left
- * @property int $image_external_id_right
- * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageExternalIdLeft($value)
- * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageExternalIdRight($value)
  */
 class PossibleDuplicate extends Model
 {
@@ -35,6 +33,7 @@ class PossibleDuplicate extends Model
      * @var array
      */
     protected $fillable = [
-        'image_external_id_left', 'image_external_id_right',
+        'image_id_left',
+        'image_id_right',
     ];
 }

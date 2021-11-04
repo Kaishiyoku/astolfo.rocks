@@ -39,7 +39,7 @@ class GenerateImageIdentifiers extends Command
     public function handle()
     {
         $imgFing = imgFing();
-        $images = Image::orderBy('external_id')->get();
+        $images = Image::orderBy('id')->get();
 
         $images->each(function (Image $image) use ($imgFing) {
             $imageData = getImageDataFromStorage($image);

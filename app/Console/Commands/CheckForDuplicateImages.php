@@ -47,24 +47,24 @@ class CheckForDuplicateImages extends Command
         PossibleDuplicate::truncate();
 
         $imgFing = imgFing();
-        $imagesAsc = Image::whereNotNull('identifier')->orderBy('external_id');
-        $imagesDesc = Image::whereNotNull('identifier')->orderBy('external_id', 'desc');
+        $imagesAsc = Image::whereNotNull('identifier')->orderBy('id');
+        $imagesDesc = Image::whereNotNull('identifier')->orderBy('id', 'desc');
 
         $imagesAsc->each(function (Image $imageAsc) use ($imagesDesc, $imgFing) {
             $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
-                if ($imageAsc->external_id === $imageDesc->external_id) {
+                if ($imageAsc->id === $imageDesc->id) {
                     return;
                 }
 
                 if ($imgFing->matchScore($imageAsc->identifier, $imageDesc->identifier) > static::THRESHOLD) {
-                    $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::where('image_external_id_left', $imageDesc->external_id)
-                        ->where('image_external_id_right', $imageAsc->external_id)
+                    $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::where('image_id_left', $imageDesc->id)
+                        ->where('image_id_right', $imageAsc->id)
                         ->count();
 
                     if ($alreadyInsertedPossibleDuplicateCount === 0) {
                         PossibleDuplicate::create([
-                            'image_external_id_left' => $imageAsc->external_id,
-                            'image_external_id_right' => $imageDesc->external_id,
+                            'image_id_left' => $imageAsc->id,
+                            'image_id_right' => $imageDesc->id,
                         ]);
                     }
                 }

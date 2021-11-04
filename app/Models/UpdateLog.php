@@ -24,7 +24,7 @@ class UpdateLog extends Model
      * @var array
      */
     protected $fillable = [
-
+        //
     ];
 
     /**
@@ -33,7 +33,7 @@ class UpdateLog extends Model
      * @var array
      */
     protected $hidden = [
-
+        //
     ];
 
     public function setUpdatedAt($value)

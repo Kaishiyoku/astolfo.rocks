@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Enums\ImageRating;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
+use BenSampo\Enum\Rules\EnumValue;
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
     /**
+     * @param \Illuminate\Http\Request $request
      * @param string|null $rating
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($rating = null)
+    public function index(Request $request, string $rating = null)
     {
-        $images = Image::orderBy('external_id', 'desc')->with('tags');
+        $this->validateRating($request);
+
+        $images = Image::orderBy('id', 'desc')->with('tags');
 
         if ($rating) {
             $images = $images->whereRating($rating);
@@ -32,25 +38,30 @@ class ImageController extends Controller
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
      * @param string|null $rating
      * @retun \Illuminate\Http\JsonResponse
      */
-    public function showRandom($rating = null)
+    public function showRandom(Request $request, $rating = null)
     {
-        $availableRatings = collect(explode(',', config('astolfo.available_ratings')))->map(function ($rating) {
-            return strtolower($rating);
-        })->toArray();
+        $this->validateRating($request);
 
-        if (!empty($rating) && !in_array(strtolower($rating), $availableRatings)) {
-            return response('The given rating is invalid.', 422);
-        }
+        $image = Image::query();
 
         if ($rating) {
-            $image = Image::whereRating($rating)->inRandomOrder()->first();
-        } else {
-            $image = Image::inRandomOrder()->first();
+            $image = $image->whereRating($rating);
         }
 
+        $image = $image->inRandomOrder()->first();
+
         return response()->json($image);
+    }
+
+    private function validateRating(Request $request)
+    {
+        $request->merge(['rating' => $request->route('rating')]);
+        $request->validate([
+            'rating' => ['nullable', new EnumValue(ImageRating::class)],
+        ]);
     }
 }
