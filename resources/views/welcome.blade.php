@@ -7,10 +7,6 @@
                 </div>
 
                 <div class="py-4">
-                    <x-button-link :url="url('docs')">
-                        {{ __('API documentation') }}
-                    </x-button-link>
-
                     @foreach (getSocialMediaLinks() as $link)
                         <x-button-link :url="$link['url']">
                             {{ $link['title'] }}

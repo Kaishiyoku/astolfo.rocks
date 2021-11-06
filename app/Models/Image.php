@@ -3,13 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
 
 /**
  * App\Models\Image
  *
  * @property int $id
- * @property string $url
  * @property mixed|null $identifier_image
  * @property string|null $identifier
  * @property string $rating
@@ -17,6 +15,7 @@ use Illuminate\Support\Facades\File;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $views
  * @property string|null $source
+ * @property string $file_extension
  * @property string|null $mimetype
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read int|null $tags_count
@@ -24,6 +23,7 @@ use Illuminate\Support\Facades\File;
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereFileExtension($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifier($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifierImage($value)
@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\File;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereViews($value)
  * @mixin \Eloquent
  */
@@ -43,7 +42,6 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
-        'url',
         'rating',
         'views',
         'source',
@@ -75,9 +73,6 @@ class Image extends Model
 
     public function getFilePath()
     {
-        $fileExtension = File::extension($this->url);
-        $fileName = "{$this->id}.{$fileExtension}";
-
-        return "astolfo/{$fileName}";
+        return "astolfo/{$this->id}.{$this->file_extension}";
     }
 }
