@@ -19,7 +19,7 @@ About
 
 Documentation
 =============
-* [API Docs](https://documenter.getpostman.com/view/5778194/RzZ4qhMa#8df3a6dd-d8f4-4259-8dde-4c78f63d21c5)
+* [API Docs](https://documenter.getpostman.com/view/5778194/RzZ4qhMa)
 
 Features
 ========
