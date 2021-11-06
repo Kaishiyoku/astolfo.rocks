@@ -2,17 +2,21 @@
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div class="md:flex md:justify-between">
             <div>
-                <p class="pt-1 pb-2">
+                <div class="pt-1 pb-2">
                     <img src="{{ asset('img/astolfo.png') }}" class="max-h-[400px]" alt="Astolfo"/>
-                </p>
+                </div>
 
-                <p class="pt-1 pb-2">
+                <div class="py-4">
+                    <x-button-link :url="url('docs')">
+                        {{ __('API documentation') }}
+                    </x-button-link>
+
                     @foreach (getSocialMediaLinks() as $link)
                         <x-button-link :url="$link['url']">
                             {{ $link['title'] }}
                         </x-button-link>
                     @endforeach
-                </p>
+                </div>
             </div>
 
             <div>
