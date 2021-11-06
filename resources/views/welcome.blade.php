@@ -23,14 +23,14 @@
                 <div class="text-xl pt-8 pb-2">{{ __('Random Astolfo') }}</div>
 
                 <a href="{{ config('astolfo.crawler_base_url') }}/post/view/{{ $randomImage->external_id }}" class="block">
-                    <img src="{{ asset($randomImage->getFilePath()) }}" class="rounded border-2 border-pink-200 opacity-50 p-2 hover:opacity-100 max-h-[400px] transition-all duration-300" alt="random Astolfo image"/>
+                    <img src="{{ asset($randomImage->getFilePath()) }}" class="rounded border-2 border-pink-200 opacity-50 p-2 hover:opacity-100 max-h-[400px] transition-all duration-300" alt="{{ __('random Astolfo image') }}"/>
                 </a>
             </div>
         </div>
 
         <div class="pt-12 text-sm text-gray-500">
             <div>
-                Astolfo render by <x-link href="https://ino2206.deviantart.com">Ino2206</x-link>
+                {{ __('Astolfo render by') }} <x-link href="https://ino2206.deviantart.com">Ino2206</x-link>
             </div>
 
             <div>
