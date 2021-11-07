@@ -4,6 +4,7 @@ use App\Models\Image;
 use ImgFing\ImgFing;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
+use ScriptFUSION\Byte\ByteFormatter;
 
 if (!function_exists('toString')) {
     function toString($value)
@@ -34,18 +35,27 @@ if (!function_exists('getSocialMediaLinks')) {
     }
 }
 
-if (!function_exists('getImageDataFromStorage')) {
-    function getImageDataFromStorage(Image $image)
+if (!function_exists('getImageFromStorage')) {
+    function getImageFromStorage(Image $image): ?\Intervention\Image\Image
     {
         if (!$image->mimetype) {
             return null;
         }
 
         try {
-            return getImageManager()->make(Storage::disk('local')->get($image->getFilePath()))->psrResponse()->getBody()->getContents();
+            return getImageManager()->make(Storage::disk('local')->path($image->getFilePath()));
         } catch (NotReadableException $e) {
             return null;
         }
+    }
+}
+
+if (!function_exists('getImageDataFromStorage')) {
+    function getImageDataFromStorage(Image $image): ?string
+    {
+        return optional(getImageFromStorage($image), function ($data) {
+            return $data->psrResponse()->getBody()->getContents();
+        });
     }
 }
 
@@ -60,6 +70,13 @@ if (!function_exists('getImageFileMimetype')) {
     }
 }
 
+if (!function_exists('formatFileSize')) {
+    function formatFileSize(int $fileSize): string
+    {
+        return byteFormatter()->format($fileSize);
+    }
+}
+
 if (!function_exists('getImageManager')) {
     /**
      * @return ImageManager
@@ -71,9 +88,6 @@ if (!function_exists('getImageManager')) {
 }
 
 if (!function_exists('imgFing')) {
-    /**
-     * @return ImgFing
-     */
     function imgFing(): ImgFing
     {
         return new ImgFing([
@@ -84,5 +98,12 @@ if (!function_exists('imgFing')) {
                 'GD',
             ],
         ]);
+    }
+}
+
+if (!function_exists('byteFormatter')) {
+    function byteFormatter(): ByteFormatter
+    {
+        return new ByteFormatter();
     }
 }

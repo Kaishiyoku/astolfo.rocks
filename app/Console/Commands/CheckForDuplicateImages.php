@@ -23,11 +23,6 @@ class CheckForDuplicateImages extends Command
     protected $description = 'Check for duplicate images';
 
     /**
-     * @var float
-     */
-    private const THRESHOLD = 0.95;
-
-    /**
      * Create a new command instance.
      *
      * @return void
@@ -44,6 +39,8 @@ class CheckForDuplicateImages extends Command
      */
     public function handle()
     {
+        // keep duplicates which were marked as false positives
+
         PossibleDuplicate::truncate();
 
         $imgFing = imgFing();
@@ -56,7 +53,7 @@ class CheckForDuplicateImages extends Command
                     return;
                 }
 
-                if ($imgFing->matchScore($imageAsc->identifier, $imageDesc->identifier) > static::THRESHOLD) {
+                if ($imgFing->matchScore($imageAsc->identifier, $imageDesc->identifier) > config('astolfo.duplicate_checker_threshold')) {
                     $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::where('image_id_left', $imageDesc->id)
                         ->where('image_id_right', $imageAsc->id)
                         ->count();

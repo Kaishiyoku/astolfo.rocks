@@ -1,3 +1,5 @@
+import onDomReady from './utils/onDomReady';
+
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -24,3 +26,17 @@
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+onDomReady(() => {
+    document.querySelectorAll('[data-confirm]').forEach((element) => {
+        element.addEventListener('click', (event) => {
+            const confirmationText = element.getAttribute('data-confirm');
+
+            if (!confirm(confirmationText)) {
+                event.preventDefault();
+
+                return false;
+            }
+        });
+    });
+});

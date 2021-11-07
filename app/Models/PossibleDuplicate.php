@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 /**
  * App\Models\PossibleDuplicate
@@ -22,6 +23,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdRight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Image $imageLeft
+ * @property-read \App\Models\Image $imageRight
  */
 class PossibleDuplicate extends Model
 {
@@ -35,5 +38,28 @@ class PossibleDuplicate extends Model
     protected $fillable = [
         'image_id_left',
         'image_id_right',
+        'is_false_positive',
     ];
+
+    /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 15;
+
+    public function imageLeft()
+    {
+        return $this->belongsTo(Image::class, 'image_id_left');
+    }
+
+    public function imageRight()
+    {
+        return $this->belongsTo(Image::class, 'image_id_right');
+    }
+
+    public function imageDataLeft()
+    {
+        return File::size($this->imageLeft->getFilePath());
+    }
 }

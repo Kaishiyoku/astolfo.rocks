@@ -33,6 +33,12 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereViews($value)
  * @mixin \Eloquent
+ * @property int $file_size
+ * @property int $width
+ * @property int $height
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereFileSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
  */
 class Image extends Model
 {
@@ -45,6 +51,11 @@ class Image extends Model
         'rating',
         'views',
         'source',
+        'file_extension',
+        'mimetype',
+        'file_size',
+        'width',
+        'height',
     ];
 
     /**
