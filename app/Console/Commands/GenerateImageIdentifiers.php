@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Image;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class GenerateImageIdentifiers extends Command
 {
@@ -44,9 +46,16 @@ class GenerateImageIdentifiers extends Command
         $images->each(function (Image $image) use ($imgFing) {
             $imageData = getImageDataFromStorage($image);
 
-            $image->identifier = $imgFing->identifyString($imageData);
-            $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
-            $image->save();
+            try {
+                $image->identifier = $imgFing->identifyString($imageData);
+                $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+                $image->save();
+            } catch (Throwable $e) {
+                $warningMessage = "Could not generate identifier for image #{$image->id}";
+
+                $this->warn($warningMessage);
+                Log::warning($warningMessage);
+            }
         });
 
         return 0;

@@ -49,11 +49,7 @@ class PossibleDuplicateController extends Controller
 
         $possibleDuplicate->delete();
 
-        $imageToBeDeleted->tags()->detach();
-
-        Storage::disk('local')->delete($imageToBeDeleted->getFilePath());
-
-        $imageToBeDeleted->delete();
+        deleteImage($imageToBeDeleted);
 
         return redirect()->route('possible_duplicates.index');
     }

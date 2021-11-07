@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 use ImgFing\ImgFing;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
@@ -77,6 +78,17 @@ if (!function_exists('formatFileSize')) {
     }
 }
 
+if (!function_exists('deleteImage')) {
+    function deleteImage(Image $image)
+    {
+        $image->tags()->detach();
+
+        Storage::disk('local')->delete($image->getFilePath());
+
+        $image->delete();
+    }
+}
+
 if (!function_exists('getImageManager')) {
     /**
      * @return ImageManager
@@ -91,7 +103,7 @@ if (!function_exists('imgFing')) {
     function imgFing(): ImgFing
     {
         return new ImgFing([
-            'bitSize' => 6000,
+            'bitSize' => 7500,
             'avgColorAdjust' => 50,
             'cropFit' => false,
             'adapters' => [
