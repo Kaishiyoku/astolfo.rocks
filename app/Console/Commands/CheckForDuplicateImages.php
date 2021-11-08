@@ -68,6 +68,6 @@ class CheckForDuplicateImages extends Command
             });
         });
 
-        return 0;
+        return Command::SUCCESS;
     }
 }
