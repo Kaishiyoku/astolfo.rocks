@@ -46,7 +46,7 @@ class PossibleDuplicateController extends Controller
     {
         $imageToBeDeleted = $possibleDuplicate->image_id_left === $image->id ? $possibleDuplicate->imageRight : $possibleDuplicate->imageLeft;
 
-        $possibleDuplicate->delete();
+        PossibleDuplicate::where('image_id_left', $imageToBeDeleted->id)->orWhere('image_id_right', $imageToBeDeleted->id)->delete();
 
         deleteImage($imageToBeDeleted);
 
