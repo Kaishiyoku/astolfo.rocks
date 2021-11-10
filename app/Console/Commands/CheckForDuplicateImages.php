@@ -39,9 +39,7 @@ class CheckForDuplicateImages extends Command
      */
     public function handle()
     {
-        // keep duplicates which were marked as false positives
-
-        PossibleDuplicate::truncate();
+        PossibleDuplicate::where('is_false_positive', false)->delete();
 
         $imgFing = imgFing();
         $imagesAsc = Image::whereNotNull('identifier')->orderBy('id');
