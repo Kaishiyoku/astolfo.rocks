@@ -3,6 +3,8 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-300 leading-tight">
             {{ __('Possible duplicates') }}
         </h2>
+
+        <div>{{ trans_choice('image.total_number_of_images', $totalImageCount) }}</div>
     </x-slot>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">

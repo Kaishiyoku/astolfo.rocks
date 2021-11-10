@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class PossibleDuplicateController extends Controller
 {
@@ -17,6 +15,7 @@ class PossibleDuplicateController extends Controller
     public function index()
     {
         return view('possible_duplicate.index', [
+            'totalImageCount' => Image::count(),
             'possibleDuplicates' => PossibleDuplicate::orderBy('created_at', 'desc')->paginate(),
         ]);
     }
