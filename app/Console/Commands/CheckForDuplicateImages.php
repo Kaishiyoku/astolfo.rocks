@@ -45,7 +45,7 @@ class CheckForDuplicateImages extends Command
         $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id');
         $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc');
 
-        $imagesAsc->each(function (Image $imageAsc) use ($imagesDesc, $imgFing) {
+        $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $imgFing) {
             $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
                 if ($imageAsc->id === $imageDesc->id) {
                     return;
@@ -65,6 +65,8 @@ class CheckForDuplicateImages extends Command
                     }
                 }
             });
+
+            $this->line($i + 1 . ' images checked');
         });
 
         return Command::SUCCESS;
