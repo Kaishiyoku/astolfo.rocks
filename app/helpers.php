@@ -103,7 +103,7 @@ if (!function_exists('imgFing')) {
     function imgFing(): ImgFing
     {
         return new ImgFing([
-            'bitSize' => 7500,
+            'bitSize' => 3000,
             'avgColorAdjust' => 50,
             'cropFit' => false,
             'adapters' => [

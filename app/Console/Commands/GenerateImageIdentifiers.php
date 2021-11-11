@@ -50,6 +50,8 @@ class GenerateImageIdentifiers extends Command
                 $image->identifier = $imgFing->identifyString($imageData);
                 $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
                 $image->save();
+
+                $this->line("generated identifier for image #{$image->id}");
             } catch (Throwable $e) {
                 $warningMessage = "Could not generate identifier for image #{$image->id}";
 
