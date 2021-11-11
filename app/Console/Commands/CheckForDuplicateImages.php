@@ -42,8 +42,8 @@ class CheckForDuplicateImages extends Command
         PossibleDuplicate::where('is_false_positive', false)->delete();
 
         $imgFing = imgFing();
-        $imagesAsc = Image::whereNotNull('identifier')->orderBy('id');
-        $imagesDesc = Image::whereNotNull('identifier')->orderBy('id', 'desc');
+        $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id');
+        $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc');
 
         $imagesAsc->each(function (Image $imageAsc) use ($imagesDesc, $imgFing) {
             $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
@@ -52,7 +52,8 @@ class CheckForDuplicateImages extends Command
                 }
 
                 if ($imgFing->matchScore($imageAsc->identifier, $imageDesc->identifier) > config('astolfo.duplicate_checker_threshold')) {
-                    $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::where('image_id_left', $imageDesc->id)
+                    $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::query()
+                        ->where('image_id_left', $imageDesc->id)
                         ->where('image_id_right', $imageAsc->id)
                         ->count();
 
