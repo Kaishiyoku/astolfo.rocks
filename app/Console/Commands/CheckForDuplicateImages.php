@@ -42,8 +42,8 @@ class CheckForDuplicateImages extends Command
         PossibleDuplicate::where('is_false_positive', false)->delete();
 
         $imgFing = imgFing();
-        $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id');
-        $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc');
+        $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id')->get();
+        $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc')->get();
 
         $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $imgFing) {
             $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
