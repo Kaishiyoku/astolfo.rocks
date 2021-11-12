@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\File;
  * @mixin \Eloquent
  * @property-read \App\Models\Image $imageLeft
  * @property-read \App\Models\Image $imageRight
+ * @property int $is_false_positive
+ * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereIsFalsePositive($value)
  */
 class PossibleDuplicate extends Model
 {
