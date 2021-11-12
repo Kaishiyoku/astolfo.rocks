@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "bensampo/laravel-enum": "^3.4",
+        "cjstroud/classnames-php": "^1.0",
         "doctrine/dbal": "^3.1.0",
         "fideloper/proxy": "^4.4.1",
         "fileeye/mimemap": "^1.2",

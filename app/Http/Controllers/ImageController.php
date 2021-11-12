@@ -42,6 +42,6 @@ class ImageController extends Controller
     {
         deleteImage($image);
 
-        return redirect()->route('image.index');
+        return redirect()->route('images.index');
     }
 }

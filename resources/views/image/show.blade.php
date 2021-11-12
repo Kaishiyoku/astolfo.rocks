@@ -64,6 +64,10 @@
                     </div>
                 </div>
             </div>
+
+            <div class="pt-4">
+                <x-delete-button :action="route('images.destroy', $image)"/>
+            </div>
         </x-card.body>
     </x-card.card>
 </x-app-layout>
