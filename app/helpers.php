@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Image;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use ImgFing\ImgFing;
 use Intervention\Image\Exception\NotReadableException;
@@ -86,6 +87,13 @@ if (!function_exists('deleteImage')) {
         Storage::disk('local')->delete($image->getFilePath());
 
         $image->delete();
+    }
+}
+
+if (!function_exists('formatDateTime')) {
+    function formatDateTime(?Carbon $date): string
+    {
+        return optional($date, fn(Carbon $date) => $date->format(__('date.datetime')));
     }
 }
 
