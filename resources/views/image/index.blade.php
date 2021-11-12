@@ -9,9 +9,9 @@
 
     <div class="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         @foreach ($images as $image)
-            <a href="{{ route('images.show', $image) }}" class="block transition sm:rounded-lg hover:opacity-50">
+            <a href="{{ route('images.show', $image) }}" class="block transition sm:rounded-lg hover:opacity-70">
                 <x-card.card class="h-full overflow-hidden">
-                    <img src="/{{ $image->getFilePath() }}" alt="{{ $image->id }}" class="h-full object-cover"/>
+                    <img src="/{{ $image->getFilePath() }}" alt="{{ $image->id }}" class="h-full object-cover transform hover:scale-110 transition ease-in-out"/>
                 </x-card.card>
             </a>
         @endforeach

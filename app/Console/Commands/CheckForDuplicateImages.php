@@ -66,7 +66,7 @@ class CheckForDuplicateImages extends Command
                 }
             });
 
-            $this->line($i + 1 . ' images checked');
+            $this->line(($i + 1) . ' images checked');
         });
 
         return Command::SUCCESS;
