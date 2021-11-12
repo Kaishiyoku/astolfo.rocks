@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Image;
+use App\Models\PossibleDuplicate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use ImgFing\ImgFing;
@@ -80,13 +81,19 @@ if (!function_exists('formatFileSize')) {
 }
 
 if (!function_exists('deleteImage')) {
-    function deleteImage(Image $image)
+    function deleteImage(Image $image): void
     {
         $image->tags()->detach();
 
         Storage::disk('local')->delete($image->getFilePath());
 
         $image->delete();
+    }
+}
+if (!function_exists('deletePossibleDuplicatesForImage')) {
+    function deletePossibleDuplicatesForImage(Image $image): void
+    {
+        PossibleDuplicate::where('image_id_left', $image->id)->orWhere('image_id_right', $image->id)->delete();
     }
 }
 

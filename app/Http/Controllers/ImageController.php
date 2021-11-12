@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Image;
+use App\Models\PossibleDuplicate;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -40,6 +41,7 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
+        deletePossibleDuplicatesForImage($image);
         deleteImage($image);
 
         return redirect()->route('images.index');
