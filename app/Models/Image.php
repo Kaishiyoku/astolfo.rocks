@@ -77,6 +77,13 @@ class Image extends Model
         //
     ];
 
+    /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 24;
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->orderBy('name');

@@ -16,6 +16,10 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('images.index')" :active="request()->routeIs('images.*')">
+                        {{ __('Images') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('possible_duplicates.index')" :active="request()->routeIs('possible_duplicates.*')">
                         {{ __('Possible duplicates') }}
                     </x-nav-link>
@@ -69,6 +73,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('images.index')" :active="request()->routeIs('images.*')">
+                {{ __('Images') }}
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('possible_duplicates.index')" :active="request()->routeIs('possible_duplicates.*')">

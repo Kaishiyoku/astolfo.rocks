@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PossibleDuplicateController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::group(['middleware' => ['auth', 'administrate']], function () {
     Route::put('/possible_duplicates/{possibleDuplicate}/ignore', [PossibleDuplicateController::class, 'ignore'])->name('possible_duplicates.ignore');
     Route::put('/possible_duplicates/{possibleDuplicate}/{image}', [PossibleDuplicateController::class, 'keepImage'])->name('possible_duplicates.keep_image');
     Route::resource('possible_duplicates', PossibleDuplicateController::class)->only(['index', 'show', 'destroy']);
+
+    Route::resource('images', ImageController::class)->only(['index', 'show', 'destroy']);
 });
 
 require __DIR__.'/auth.php';
