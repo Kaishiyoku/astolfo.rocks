@@ -1,8 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-300 leading-tight">
-            {{ __('Possible duplicate') }}
-        </h2>
+        <x-page-header.container>
+            <x-page-header.back-link :href="route('possible_duplicates.index')"/>
+
+            <x-page-header.headline>
+                {{ __('Possible duplicate') }}
+            </x-page-header.headline>
+        </x-page-header.container>
     </x-slot>
 
     <x-form-button :action="route('possible_duplicates.ignore', [$possibleDuplicate])" method="put" class="pb-4">

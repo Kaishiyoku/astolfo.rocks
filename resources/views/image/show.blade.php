@@ -1,8 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-300 leading-tight">
-            {{ __('Image details') }}
-        </h2>
+        <x-page-header.container>
+            <x-page-header.back-link :href="route('images.index')"/>
+
+            <x-page-header.headline>
+                {{ __('Image details') }}
+            </x-page-header.headline>
+        </x-page-header.container>
     </x-slot>
 
     <x-card.card>
