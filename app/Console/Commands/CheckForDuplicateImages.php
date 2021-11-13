@@ -41,13 +41,17 @@ class CheckForDuplicateImages extends Command
     {
         PossibleDuplicate::where('is_false_positive', false)->delete();
 
+        $falsePositiveImageIds = PossibleDuplicate::where('is_false_positive', true)->get()->map(function (PossibleDuplicate $possibleDuplicate) {
+            return [$possibleDuplicate->image_id_left, $possibleDuplicate->image_id_right];
+        })->flatten()->unique();
+
         $imgFing = imgFing();
         $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id')->get();
         $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc')->get();
 
-        $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $imgFing) {
-            $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing) {
-                if ($imageAsc->id === $imageDesc->id) {
+        $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $imgFing, $falsePositiveImageIds) {
+            $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing, $falsePositiveImageIds) {
+                if ($imageAsc->id === $imageDesc->id || ($falsePositiveImageIds->contains($imageAsc->id) && $falsePositiveImageIds->contains($imageDesc->id))) {
                     return;
                 }
 
