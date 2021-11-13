@@ -22,6 +22,12 @@
                 {{ __('Image dimensions') }}:
                 {{ $image->width }}x{{ $image->height }}
             </div>
+
+            <div>
+                <x-link :href="route('images.show', $image)">
+                    {{ __('Image details') }}
+                </x-link>
+            </div>
         </div>
 
         <div class="pt-4 md:pt-0">
