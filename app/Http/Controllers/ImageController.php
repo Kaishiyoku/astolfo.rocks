@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ImageRating;
 use App\Models\Image;
-use App\Models\PossibleDuplicate;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\Request;
 
 class ImageController extends Controller
@@ -11,12 +12,22 @@ class ImageController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \Illuminate\Http\Request $request
+     * @param string|null $rating
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function index(Request $request, $rating = null)
     {
+        $this->validateRating($request, $rating);
+
+        $images = Image::query()
+            ->when($rating, fn($query) => $query->whereRating($rating))
+            ->orderBy('id', 'desc')
+            ->paginate();
+
         return view('image.index', [
-            'images' => Image::orderBy('id', 'desc')->paginate(),
+            'totalImageCount' => Image::count(),
+            'images' => $images,
         ]);
     }
 
@@ -45,5 +56,13 @@ class ImageController extends Controller
         deleteImage($image);
 
         return redirect()->route('images.index');
+    }
+
+    private function validateRating(Request $request, string $rating = null)
+    {
+        $request->merge(['rating' => $rating]);
+        $request->validate([
+            'rating' => ['nullable', new EnumValue(ImageRating::class)],
+        ]);
     }
 }

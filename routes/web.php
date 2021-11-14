@@ -27,7 +27,8 @@ Route::group(['middleware' => ['auth', 'administrate']], function () {
     Route::put('/possible_duplicates/{possibleDuplicate}/{image}', [PossibleDuplicateController::class, 'keepImage'])->name('possible_duplicates.keep_image');
     Route::resource('possible_duplicates', PossibleDuplicateController::class)->only(['index', 'show', 'destroy']);
 
-    Route::resource('images', ImageController::class)->only(['index', 'show', 'destroy']);
+    Route::get('/images/{rating?}', [ImageController::class, 'index'])->name('images.index');
+    Route::resource('images', ImageController::class)->only(['show', 'destroy']);
 });
 
 require __DIR__.'/auth.php';

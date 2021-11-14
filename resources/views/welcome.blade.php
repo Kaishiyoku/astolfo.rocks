@@ -8,7 +8,7 @@
 
                 <div class="py-4">
                     @foreach (getSocialMediaLinks() as $link)
-                        <x-button-link :url="$link['url']">
+                        <x-button-link :href="$link['url']">
                             {{ $link['title'] }}
                         </x-button-link>
                     @endforeach
