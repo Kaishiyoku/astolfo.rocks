@@ -13,7 +13,7 @@
         </x-button-link>
 
         @foreach (\App\Enums\ImageRating::getValues() as $imageRating)
-            <x-button-link :href="route('images.index', $imageRating)" class="{{ classNames(['text-pink-300 bg-pink-800 hover:bg-pink-900' => request()->route()->parameter('rating') === $imageRating]) }}">
+            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames(['text-pink-300 bg-pink-800 hover:bg-pink-900' => request()->route()->parameter('rating') === $imageRating]) }}">
                 {{ $imageRating }}
             </x-button-link>
         @endforeach
