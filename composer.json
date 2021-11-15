@@ -20,6 +20,7 @@
         "laravel/helpers": "^1.4.1",
         "laravel/tinker": "^2.6.1",
         "scriptfusion/byte-formatter": "^4.0",
+        "spatie/laravel-html": "^2.30",
         "symfony/css-selector": "^5.3.0",
         "symfony/dom-crawler": "^5.3.0",
         "tioga-tours/php-imgfing": "^0.3.0"

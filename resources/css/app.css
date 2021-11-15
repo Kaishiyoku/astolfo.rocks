@@ -4,6 +4,17 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@layer base {
+    .text-muted {
+        @apply text-gray-500;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+
+}
+
 @layer utilities {
     .image-rendering-none {
         image-rendering: optimizeSpeed;
@@ -12,5 +23,16 @@
         image-rendering: -webkit-optimize-contrast;
         image-rendering: pixelated;
         image-rendering: optimize-contrast;
+    }
+}
+
+@layer components {
+    /**
+    * Inputs
+    */
+    .label-required:after {
+        @apply text-red-600;
+
+        content: '*';
     }
 }

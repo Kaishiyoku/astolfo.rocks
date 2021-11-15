@@ -1,10 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-300 leading-tight">
-            {{ __('Images') }}
-        </h2>
+        <x-page-header.flex-container>
+            <div>
+                <x-page-header.headline>
+                    {{ __('Images') }}
+                </x-page-header.headline>
 
-        <div>{{ trans_choice('image.total_number_of_images', $totalImageCount) }}</div>
+                <div>{{ trans_choice('image.total_number_of_images', $totalImageCount) }}</div>
+            </div>
+
+            <x-secondary-button-link :href="route('images.create')">{{ __('Add image') }}</x-secondary-button-link>
+        </x-page-header.flex-container>
     </x-slot>
 
     <div class="flex space-x-2 pb-8">

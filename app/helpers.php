@@ -1,9 +1,11 @@
 <?php
 
+use App\Enums\ImageRating;
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use ImgFing\ImgFing;
 use Intervention\Image\Exception\NotReadableException;
 use Intervention\Image\ImageManager;
@@ -101,6 +103,13 @@ if (!function_exists('formatDateTime')) {
     function formatDateTime(?Carbon $date): string
     {
         return optional($date, fn(Carbon $date) => $date->format(__('date.datetime')));
+    }
+}
+
+if (!function_exists('getAvailableImageRatingOptions')) {
+    function getAvailableImageRatingOptions(): array
+    {
+        return collect(ImageRating::getValues())->mapWithKeys(fn($rating) => [$rating => __(Str::ucfirst($rating))])->toArray();
     }
 }
 

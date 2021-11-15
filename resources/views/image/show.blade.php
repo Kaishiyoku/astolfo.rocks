@@ -69,7 +69,11 @@
                 </div>
             </div>
 
-            <div class="pt-4">
+            <div class="flex justify-between pt-4">
+                <x-button-link :href="route('images.edit', $image)">
+                    {{ __('Edit') }}
+                </x-button-link>
+
                 <x-delete-button :action="route('images.destroy', $image)"/>
             </div>
         </x-card.body>

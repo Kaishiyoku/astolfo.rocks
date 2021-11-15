@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth', 'administrate']], function () {
     Route::resource('possible_duplicates', PossibleDuplicateController::class)->only(['index', 'show', 'destroy']);
 
     Route::get('/images/rating/{rating?}', [ImageController::class, 'index'])->name('images.index_by_rating');
-    Route::resource('images', ImageController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('images', ImageController::class);
 });
 
 require __DIR__.'/auth.php';

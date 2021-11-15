@@ -32,6 +32,56 @@ class ImageController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function create()
+    {
+        return view('image.create', [
+            'image' => new Image(),
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'rating' => ['required', new EnumValue(ImageRating::class)],
+            'source' => ['nullable', 'string:255'],
+            'image' => ['image', 'mimetypes:image/jpeg,image/png,image/gif', 'max:10000'],
+        ]);
+
+        $imageFile = $request->file('image');
+        $fileExtension = $imageFile->getClientOriginalExtension();
+        [$width, $height] = getimagesize($imageFile->getRealPath());
+
+        $image = Image::create(array_merge($validated, [
+            'file_extension' => $fileExtension,
+            'mimetype' => $imageFile->getMimeType(),
+            'file_size' => $imageFile->getSize(),
+            'width' => $width,
+            'height' => $height,
+        ]));
+
+        $request->file('image')->storeAs('astolfo', "{$image->id}.{$fileExtension}");
+
+        $imgFing = imgFing();
+
+        $imageData = getImageDataFromStorage($image);
+        $image->identifier = $imgFing->identifyString($imageData);
+        $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+        $image->save();
+
+        return redirect()->route('images.show', $image);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Image  $image
@@ -42,6 +92,39 @@ class ImageController extends Controller
         return view('image.show', [
             'image' => $image,
         ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function edit(Image $image)
+    {
+        return view('image.edit', [
+            'image' => $image,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Image  $image
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Image $image)
+    {
+        $validated = $request->validate([
+            'rating' => ['required', new EnumValue(ImageRating::class)],
+            'source' => ['nullable', 'string:255'],
+        ]);
+
+        $image->fill($validated);
+        $image->save();
+
+        return redirect()->route('images.show', $image);
     }
 
     /**
