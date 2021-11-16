@@ -6,7 +6,7 @@
     </x-slot>
 
     {{ html()->modelForm($image, 'post', route('images.store'))->class('px-4 sm:px-0')->acceptsFiles()->open() }}
-        @include('image._form_fields', ['showFileInput' => true])
+        @include('image._form_fields')
 
         <x-button>{{ __('Save') }}</x-button>
     {{ html()->closeModelForm() }}

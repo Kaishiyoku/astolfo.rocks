@@ -6,6 +6,7 @@ use App\Enums\ImageRating;
 use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ImageController extends Controller
 {
@@ -46,7 +47,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -57,26 +58,7 @@ class ImageController extends Controller
             'image' => ['image', 'mimetypes:image/jpeg,image/png,image/gif', 'max:10000'],
         ]);
 
-        $imageFile = $request->file('image');
-        $fileExtension = $imageFile->getClientOriginalExtension();
-        [$width, $height] = getimagesize($imageFile->getRealPath());
-
-        $image = Image::create(array_merge($validated, [
-            'file_extension' => $fileExtension,
-            'mimetype' => $imageFile->getMimeType(),
-            'file_size' => $imageFile->getSize(),
-            'width' => $width,
-            'height' => $height,
-        ]));
-
-        $request->file('image')->storeAs('astolfo', "{$image->id}.{$fileExtension}");
-
-        $imgFing = imgFing();
-
-        $imageData = getImageDataFromStorage($image);
-        $image->identifier = $imgFing->identifyString($imageData);
-        $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
-        $image->save();
+        $image = $this->saveAndUploadImage($validated, $request->file('image'));
 
         return redirect()->route('images.show', $image);
     }
@@ -84,7 +66,7 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Image  $image
+     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(Image $image)
@@ -97,7 +79,7 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Image  $image
+     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(Image $image)
@@ -110,8 +92,8 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Image  $image
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Image $image
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Image $image)
@@ -119,18 +101,26 @@ class ImageController extends Controller
         $validated = $request->validate([
             'rating' => ['required', new EnumValue(ImageRating::class)],
             'source' => ['nullable', 'string:255'],
+            'image' => ['nullable', 'image', 'mimetypes:image/jpeg,image/png,image/gif', 'max:10000'],
         ]);
 
-        $image->fill($validated);
-        $image->save();
+        if ($request->hasFile('image')) {
+            $savedImage = $this->saveAndUploadImage($validated, $request->file('image'), $image);
 
-        return redirect()->route('images.show', $image);
+            // remove possible duplicates when a new image has been uploaded
+            deletePossibleDuplicatesForImage($savedImage);
+        } else {
+            $image->update($validated);
+            $savedImage = $image;
+        }
+
+        return redirect()->route('images.show', $savedImage);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Image  $image
+     * @param \App\Models\Image $image
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Image $image)
@@ -147,5 +137,31 @@ class ImageController extends Controller
         $request->validate([
             'rating' => ['nullable', new EnumValue(ImageRating::class)],
         ]);
+    }
+
+    private function saveAndUploadImage($validated, UploadedFile $imageFile, Image $image = null)
+    {
+        $fileExtension = $imageFile->getClientOriginalExtension();
+        [$width, $height] = getimagesize($imageFile->getRealPath());
+
+        $image = Image::updateOrCreate(['id' => optional($image)->id],
+            array_merge($validated, [
+                'file_extension' => $fileExtension,
+                'mimetype' => $imageFile->getMimeType(),
+                'file_size' => $imageFile->getSize(),
+                'width' => $width,
+                'height' => $height,
+            ]));
+
+        $imageFile->storeAs('astolfo', "{$image->id}.{$fileExtension}");
+
+        $imgFing = imgFing();
+
+        $imageData = getImageDataFromStorage($image);
+        $image->identifier = $imgFing->identifyString($imageData);
+        $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+        $image->save();
+
+        return $image;
     }
 }

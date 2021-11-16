@@ -14,12 +14,10 @@
     <x-validation-error for="source"/>
 </div>
 
-@if ($showFileInput)
-    <div class="mb-4">
-        <x-label for="image" :value="__('validation.attributes.image')" required/>
+<div class="mb-4">
+    <x-label for="image" :value="__('validation.attributes.image')" :required="!$image->exists"/>
 
-        <x-file-select-button id="image" name="image" class="mt-1 w-full" required/>
+    <x-file-select-button id="image" name="image" class="mt-1 w-full" :required="!$image->exists"/>
 
-        <x-validation-error for="image"/>
-    </div>
-@endif
+    <x-validation-error for="image"/>
+</div>
