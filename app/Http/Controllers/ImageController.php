@@ -26,8 +26,12 @@ class ImageController extends Controller
             ->orderBy('id', 'desc')
             ->paginate();
 
+        $ratingCounts = collect(ImageRating::getValues())
+            ->mapWithKeys(fn($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
+
         return view('image.index', [
             'totalImageCount' => Image::count(),
+            'imagesByRatingCounts' => $ratingCounts,
             'images' => $images,
         ]);
     }

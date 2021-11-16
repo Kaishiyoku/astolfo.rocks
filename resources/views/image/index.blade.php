@@ -19,8 +19,12 @@
         </x-button-link>
 
         @foreach (\App\Enums\ImageRating::getValues() as $imageRating)
-            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames(['text-pink-300 bg-pink-800 hover:bg-pink-900' => request()->route()->parameter('rating') === $imageRating]) }}">
-                {{ $imageRating }}
+            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames('group', ['text-pink-300 bg-pink-800 hover:bg-pink-900' => request()->route()->parameter('rating') === $imageRating]) }}">
+                <span>{{ $imageRating }}</span>
+
+                <x-badge class="{{ classNames('transition', ['bg-pink-700 group-hover:bg-pink-600' => request()->route()->parameter('rating') === $imageRating, 'group-hover:bg-gray-600' => request()->route()->parameter('rating') !== $imageRating]) }}">
+                    {{ $imagesByRatingCounts->get($imageRating) }}
+                </x-badge>
             </x-button-link>
         @endforeach
     </div>
