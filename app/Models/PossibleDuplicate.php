@@ -59,9 +59,4 @@ class PossibleDuplicate extends Model
     {
         return $this->belongsTo(Image::class, 'image_id_right');
     }
-
-    public function imageDataLeft()
-    {
-        return File::size($this->imageLeft->getFilePath());
-    }
 }
