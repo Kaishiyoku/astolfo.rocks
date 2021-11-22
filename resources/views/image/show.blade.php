@@ -12,8 +12,8 @@
     <x-card.card>
         <x-card.body>
             <div class="md:flex md:space-x-4">
-                <a href="/{{ $image->getFilePath() }}" target="_blank" class="inline-block">
-                    <img src="/{{ $image->getFilePath() }}" alt="{{ $image->id }}" class="max-w-[300px]"/>
+                <a href="{{ $image->getFilePath() }}" target="_blank" class="inline-block">
+                    <img src="{{ $image->getFilePath() }}" alt="{{ $image->id }}" class="max-w-[300px]"/>
                 </a>
 
                 <div>
