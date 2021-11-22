@@ -188,6 +188,8 @@ class ImageController extends Controller
     {
         PossibleDuplicateController::deletePossibleDuplicatesForImage($image);
 
+        $image->tags()->detach();
+
         Storage::disk('astolfo')->delete($image->getFileName());
         Storage::disk('astolfo')->delete("thumbnails/{$image->getThumbnailFileName()}");
 
