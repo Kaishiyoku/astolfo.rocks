@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use ImageManager;
+use Intervention\Image\Exception\NotReadableException;
+use Storage;
 
 /**
  * App\Models\Image
@@ -89,8 +92,42 @@ class Image extends Model
         return $this->belongsToMany(Tag::class)->orderBy('name');
     }
 
-    public function getFilePath()
+    public function getFileName(): string
     {
-        return "astolfo/{$this->id}.{$this->file_extension}";
+        return "{$this->id}.{$this->file_extension}";
+    }
+
+    public function getFilePath(): string
+    {
+        return Storage::disk('astolfo')->url($this->getFileName());
+    }
+
+    public function getImageFromStorage(): ?\Intervention\Image\Image
+    {
+        if (!$this->mimetype) {
+            return null;
+        }
+
+        try {
+            return ImageManager::make(Storage::disk('astolfo')->path($this->getFileName()));
+        } catch (NotReadableException $e) {
+            return null;
+        }
+    }
+
+    public function getImageDataFromStorage(): ?string
+    {
+        return optional($this->getImageFromStorage(), function ($data) {
+            return $data->psrResponse()->getBody()->getContents();
+        });
+    }
+
+    public function getMimetypeFromStorage(): ?string
+    {
+        if (Storage::disk('astolfo')->exists($this->getFileName())) {
+            return Storage::disk('astolfo')->mimeType($this->getFileName());
+        }
+
+        return null;
     }
 }

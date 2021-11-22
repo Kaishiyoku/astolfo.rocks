@@ -19,8 +19,7 @@ class AddMimetypeToImagesTable extends Migration
         });
 
         Image::all()->each(function (Image $image) {
-            $image->mimetype = getImageFileMimetype($image);
-
+            $image->mimetype = $image->getMimetypeFromStorage();
             $image->save();
         });
     }

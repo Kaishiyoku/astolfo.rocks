@@ -7,6 +7,8 @@ use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use ImgFing;
 
 class ImageController extends Controller
 {
@@ -112,7 +114,7 @@ class ImageController extends Controller
             $savedImage = $this->saveAndUploadImage($validated, $request->file('image'), $image);
 
             // remove possible duplicates when a new image has been uploaded
-            deletePossibleDuplicatesForImage($savedImage);
+            PossibleDuplicateController::deletePossibleDuplicatesForImage($savedImage);
         } else {
             $image->update($validated);
             $savedImage = $image;
@@ -129,8 +131,8 @@ class ImageController extends Controller
      */
     public function destroy(Image $image)
     {
-        deletePossibleDuplicatesForImage($image);
-        deleteImage($image);
+        PossibleDuplicateController::deletePossibleDuplicatesForImage($image);
+        static::deleteImage($image);
 
         return redirect()->route('images.index');
     }
@@ -159,13 +161,20 @@ class ImageController extends Controller
 
         $imageFile->storeAs('astolfo', "{$image->id}.{$fileExtension}");
 
-        $imgFing = imgFing();
-
-        $imageData = getImageDataFromStorage($image);
-        $image->identifier = $imgFing->identifyString($imageData);
-        $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+        $imageData = $image->getImageDataFromStorage();
+        $image->identifier = ImgFing::identifyString($imageData);
+        $image->identifier_image = ImgFing::createIdentityImageFromString($imageData);
         $image->save();
 
         return $image;
+    }
+
+    public static function deleteImage(Image $image)
+    {
+        PossibleDuplicateController::deletePossibleDuplicatesForImage($image);
+
+        Storage::disk('vk')->delete($image->getFileName());
+
+        $image->delete();
     }
 }

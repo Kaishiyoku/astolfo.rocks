@@ -20,7 +20,7 @@ class AddImageMetadataToImagesTable extends Migration
         });
 
         \App\Models\Image::all()->each(function (\App\Models\Image $image) {
-            $imageData = getImageFromStorage($image);
+            $imageData = $image->getImageFromStorage();
 
             if ($imageData) {
                 $image->file_size = $imageData->filesize();

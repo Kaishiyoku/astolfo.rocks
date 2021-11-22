@@ -46,8 +46,8 @@ class PossibleDuplicateController extends Controller
     {
         $imageToBeDeleted = $possibleDuplicate->image_id_left === $image->id ? $possibleDuplicate->imageRight : $possibleDuplicate->imageLeft;
 
-        deletePossibleDuplicatesForImage($imageToBeDeleted);
-        deleteImage($imageToBeDeleted);
+        static::deletePossibleDuplicatesForImage($imageToBeDeleted);
+        ImageController::deleteImage($imageToBeDeleted);
 
         return redirect()->route('possible_duplicates.index');
     }
@@ -63,5 +63,10 @@ class PossibleDuplicateController extends Controller
         $possibleDuplicate->delete();
 
         return redirect()->route('possible_duplicates.index');
+    }
+
+    public static function deletePossibleDuplicatesForImage(Image $image)
+    {
+        PossibleDuplicate::where('image_id_left', $image->id)->orWhere('image_id_right', $image->id)->delete();
     }
 }

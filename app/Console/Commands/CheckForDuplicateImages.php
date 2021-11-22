@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
 use Illuminate\Console\Command;
+use ImgFing;
 
 class CheckForDuplicateImages extends Command
 {
@@ -45,17 +46,16 @@ class CheckForDuplicateImages extends Command
             return [$possibleDuplicate->image_id_left, $possibleDuplicate->image_id_right];
         })->flatten()->unique();
 
-        $imgFing = imgFing();
         $imagesAsc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id')->get();
         $imagesDesc = Image::select(['identifier', 'id'])->whereNotNull('identifier')->orderBy('id', 'desc')->get();
 
-        $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $imgFing, $falsePositiveImageIds) {
-            $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $imgFing, $falsePositiveImageIds) {
+        $imagesAsc->each(function (Image $imageAsc, int $i) use ($imagesDesc, $falsePositiveImageIds) {
+            $imagesDesc->each(function (Image $imageDesc) use ($imageAsc, $falsePositiveImageIds) {
                 if ($imageAsc->id === $imageDesc->id || ($falsePositiveImageIds->contains($imageAsc->id) && $falsePositiveImageIds->contains($imageDesc->id))) {
                     return;
                 }
 
-                if ($imgFing->matchScore($imageAsc->identifier, $imageDesc->identifier) > config('astolfo.duplicate_checker_threshold')) {
+                if (ImgFing::matchScore($imageAsc->identifier, $imageDesc->identifier) > config('astolfo.duplicate_checker_threshold')) {
                     $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::query()
                         ->where('image_id_left', $imageDesc->id)
                         ->where('image_id_right', $imageAsc->id)

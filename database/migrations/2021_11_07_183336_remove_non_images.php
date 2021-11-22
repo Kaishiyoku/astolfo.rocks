@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use Illuminate\Database\Migrations\Migration;
 
 class RemoveNonImages extends Migration
@@ -12,7 +13,7 @@ class RemoveNonImages extends Migration
     public function up()
     {
         \App\Models\Image::where('mimetype', 'like', 'video/%')->each(function (\App\Models\Image $image) {
-            deleteImage($image);
+            ImageController::deleteImage($image);
         });
     }
 

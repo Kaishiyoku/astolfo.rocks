@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use App\Models\Image;
-use ImgFing\ImgFing;
 
 class GenerateImageIdentifiers extends Migration
 {
@@ -15,18 +12,17 @@ class GenerateImageIdentifiers extends Migration
      */
     public function up()
     {
-        $imgFing = imgFing();
         $images = Image::orderBy('external_id')->get();
 
-        $images->each(function (Image $image) use ($imgFing) {
-            $imageData = getImageDataFromStorage($image);
+        $images->each(function (Image $image) {
+            $imageData = $image->getImageDataFromStorage();
 
             if (!$imageData) {
                 return;
             }
 
-            $image->identifier = $imgFing->identifyString($imageData);
-            $image->identifier_image = $imgFing->createIdentityImageFromString($imageData);
+            $image->identifier = ImgFing::identifyString($imageData);
+            $image->identifier_image = ImgFing::createIdentityImageFromString($imageData);
             $image->save();
         });
     }
