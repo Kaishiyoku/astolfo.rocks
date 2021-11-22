@@ -97,9 +97,19 @@ class Image extends Model
         return "{$this->id}.{$this->file_extension}";
     }
 
+    public function getThumbnailFileName(): string
+    {
+        return "{$this->id}.jpg";
+    }
+
     public function getFilePath(): string
     {
         return Storage::disk('astolfo')->url($this->getFileName());
+    }
+
+    public function getThumbnailFilePath(): string
+    {
+        return Storage::disk('astolfo')->url("thumbnails/{$this->getThumbnailFileName()}");
     }
 
     public function getImageFromStorage(): ?\Intervention\Image\Image

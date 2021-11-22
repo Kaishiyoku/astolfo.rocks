@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use ImgFing;
+use Intervention\Image\Constraint;
 
 class ImageController extends Controller
 {
@@ -166,14 +167,29 @@ class ImageController extends Controller
         $image->identifier_image = ImgFing::createIdentityImageFromString($imageData);
         $image->save();
 
+        static::saveThumbnail($image);
+
         return $image;
+    }
+
+    public static function saveThumbnail(Image $image)
+    {
+        $thumbnail = $image->getImageFromStorage()
+            ->resize(config('astolfo.thumbnail_max_width'), null, function (Constraint $constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })
+            ->psrResponse('jpg', config('visual_kei.thumbnail_quality'));
+
+        Storage::disk('astolfo')->put("thumbnails/{$image->id}.jpg", $thumbnail->getBody()->getContents());
     }
 
     public static function deleteImage(Image $image)
     {
         PossibleDuplicateController::deletePossibleDuplicatesForImage($image);
 
-        Storage::disk('vk')->delete($image->getFileName());
+        Storage::disk('astolfo')->delete($image->getFileName());
+        Storage::disk('astolfo')->delete("thumbnails/{$image->getThumbnailFileName()}");
 
         $image->delete();
     }
