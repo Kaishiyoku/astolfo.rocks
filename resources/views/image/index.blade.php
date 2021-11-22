@@ -33,7 +33,7 @@
         <div class="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             @foreach ($images as $image)
                 <a href="{{ route('images.show', $image) }}" class="group block w-full h-[250px] transition sm:rounded-lg hover:opacity-70">
-                    <x-card.card class="h-full overflow-hidden bg-cover transform hover:scale-110 transition ease-in-out" style="background-image: url('/{{ $image->getFilePath() }}')">
+                    <x-card.card class="h-full overflow-hidden bg-cover transform hover:scale-105 transition ease-in-out" style="background-image: url('/{{ $image->getFilePath() }}')">
                         <x-card.body class="absolute bottom-0">
                             <x-badge>
                                 {{ $image->rating }}
