@@ -32,14 +32,12 @@
     @if ($images->isNotEmpty())
         <div class="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             @foreach ($images as $image)
-                <a href="{{ route('images.show', $image) }}" class="group block transition sm:rounded-lg hover:opacity-70">
-                    <x-card.card class="h-full overflow-hidden">
-                        <div class="pb-2">
-                            <img src="/{{ $image->getFilePath() }}" alt="{{ $image->id }}" height="{{ $image->height }}" class="h-full object-cover transform group-hover:scale-110 transition ease-in-out" loading="lazy"/>
-                        </div>
-
-                        <x-card.body>
-                            {{ $image->rating }}
+                <a href="{{ route('images.show', $image) }}" class="group block w-full h-[250px] transition sm:rounded-lg hover:opacity-70">
+                    <x-card.card class="h-full overflow-hidden bg-cover transform hover:scale-110 transition ease-in-out" style="background-image: url('/{{ $image->getFilePath() }}')">
+                        <x-card.body class="absolute bottom-0">
+                            <x-badge>
+                                {{ $image->rating }}
+                            </x-badge>
                         </x-card.body>
                     </x-card.card>
                 </a>
