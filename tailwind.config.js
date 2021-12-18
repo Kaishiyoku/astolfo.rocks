@@ -1,21 +1,15 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    purge: {
-        content: [
-            './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-            './storage/framework/views/*.php',
-            './resources/views/**/*.blade.php',
-        ],
-        options: {
-            safelist: [
-                'w-5',
-                'h-5',
-            ],
-        },
-    },
-
-    mode: 'jit',
+    content: [
+        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+    ],
+    safelist: [
+        'w-5',
+        'h-5',
+    ],
 
     theme: {
         extend: {
@@ -25,11 +19,7 @@ module.exports = {
         },
     },
 
-    variants: {
-        extend: {
-            opacity: ['disabled'],
-        },
-    },
-
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [
+        require('@tailwindcss/forms'),
+    ],
 };
