@@ -176,6 +176,9 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ImageManagerServiceProvider::class,
+        App\Providers\ImgFingServiceProvider::class,
+        App\Providers\ByteFormatterServiceProvider::class,
 
     ],
 
