@@ -13,7 +13,7 @@ return [
     /*
     * The class name of the user model to be used.
     */
-    'model' => \App\Models\User::class,
+    'model' => User::class,
 
     /*
     * The fields with their validation rules to check for user model input.
@@ -43,7 +43,7 @@ return [
         ],
     ],
 
-    'post_creation_fn' => \Opis\Closure\serialize(function (User $user) {
+    'post_creation_fn' => \Opis\Closure\serialize(function ($user) {
         $user->markEmailAsVerified();
 
         return $user;
