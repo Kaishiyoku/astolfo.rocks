@@ -157,6 +157,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'attributes' => [
+            'rating' => 'Rating',
+            'source' => 'Source',
+            'image' => 'Image',
+        ],
+    ],
 
 ];

@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\v1\HomeController;
+use App\Http\Controllers\Api\v1\ImageController;
+use App\Http\Controllers\Api\v1\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->as('api.v1.')->middleware('api')->group(function () {
+    Route::get('/health_check', [HomeController::class, 'healthCheck'])->name('health_check');
+    Route::get('/version', [HomeController::class, 'version'])->name('version');
+
+    Route::get('/images/random/{rating?}', [ImageController::class, 'showRandom'])->name('images.random');
+    Route::get('/images', [ImageController::class, 'index'])->name('images.index');
+    Route::get('/images/rating/{rating}', [ImageController::class, 'index'])->name('images.index_rating');
+    Route::get('/images/{image}', [ImageController::class, 'show'])->name('images.show');
+
+    Route::resource('/tags', TagController::class)->only(['index', 'show']);
+
+    Route::get('/stats', [HomeController::class, 'stats'])->name('stats');
 });
+
+Route::fallback(function () {
+    return response()->json(['message' => 'Not Found.'], 404);
+})->name('api.fallback.404');
