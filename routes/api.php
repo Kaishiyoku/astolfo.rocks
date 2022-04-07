@@ -16,18 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->middleware('api')->group(function () {
-    Route::get('/health_check', [HomeController::class, 'healthCheck']);
-    Route::get('/version', [HomeController::class, 'version']);
+Route::prefix('v1')->as('api.v1.')->middleware('api')->group(function () {
+    Route::get('/health_check', [HomeController::class, 'healthCheck'])->name('health_check');
+    Route::get('/version', [HomeController::class, 'version'])->name('version');
 
-    Route::get('/images/random/{rating?}', [ImageController::class, 'showRandom']);
-    Route::get('/images', [ImageController::class, 'index']);
-    Route::get('/images/rating/{rating}', [ImageController::class, 'index']);
-    Route::resource('/images', ImageController::class)->only(['show']);
+    Route::get('/images/random/{rating?}', [ImageController::class, 'showRandom'])->name('images.random');
+    Route::get('/images', [ImageController::class, 'index'])->name('images.index');
+    Route::get('/images/rating/{rating}', [ImageController::class, 'index'])->name('images.index_rating');
+    Route::get('/images/{image}', [ImageController::class, 'show'])->name('images.show');
 
     Route::resource('/tags', TagController::class)->only(['index', 'show']);
 
-    Route::get('/stats', [HomeController::class, 'stats']);
+    Route::get('/stats', [HomeController::class, 'stats'])->name('stats');
 });
 
 Route::fallback(function () {
