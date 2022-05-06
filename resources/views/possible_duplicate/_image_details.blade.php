@@ -42,7 +42,7 @@
         </x-form-button>
     </div>
 
-    <a href="{{ $image->getFilePath() }}" target="_blank" class="inline-block pt-8">
-        <img src="{{ $image->getFilePath() }}" alt="{{ $image->id }}"/>
+    <a href="{{ $image->getUrl() }}" target="_blank" class="inline-block pt-8">
+        <img src="{{ $image->getUrl() }}" alt="{{ $image->id }}"/>
     </a>
 </div>

@@ -102,12 +102,12 @@ class Image extends Model
         return "{$this->id}.jpg";
     }
 
-    public function getFilePath(): string
+    public function getUrl(): string
     {
         return Storage::disk('astolfo')->url($this->getFileName());
     }
 
-    public function getThumbnailFilePath(): string
+    public function getThumbnailUrl(): string
     {
         return Storage::disk('astolfo')->url("thumbnails/{$this->getThumbnailFileName()}");
     }
