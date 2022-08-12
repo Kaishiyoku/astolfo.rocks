@@ -6,7 +6,10 @@
                     {{ __('Images') }}
                 </x-page-header.headline>
 
-                <div>{{ trans_choice('image.total_number_of_images', $totalImageCount) }}</div>
+
+                <x-page-header.sub-headline>
+                    {{ trans_choice('image.total_number_of_images', $totalImageCount) }}
+                </x-page-header.sub-headline>
             </div>
 
             <x-secondary-button-link :href="route('images.create')">{{ __('Add image') }}</x-secondary-button-link>
@@ -14,15 +17,15 @@
     </x-slot>
 
     <div class="flex space-x-2 pb-8">
-        <x-button-link :href="route('images.index')" class="{{ classNames(['text-pink-300 bg-pink-800 hover:bg-pink-900' => !request()->route()->parameter('rating')]) }}">
+        <x-button-link :href="route('images.index')" class="{{ classNames(['text-pink-300 dark:text-pink-200 bg-pink-800 dark:bg-pink-800 hover:bg-pink-900 dark:hover:bg-pink-700' => !request()->route()->parameter('rating')]) }}">
             {{ __('All') }}
         </x-button-link>
 
         @foreach (\App\Enums\ImageRating::getValues() as $imageRating)
-            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames('group', ['text-pink-300 bg-pink-800 hover:bg-pink-900' => request()->route()->parameter('rating') === $imageRating]) }}">
+            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames('group', ['text-pink-300 dark:text-pink-200 bg-pink-800 dark:bg-pink-800 hover:bg-pink-900 dark:hover:bg-pink-700' => request()->route()->parameter('rating') === $imageRating]) }}">
                 <span>{{ $imageRating }}</span>
 
-                <x-badge class="{{ classNames('transition', ['bg-pink-700 group-hover:bg-pink-600' => request()->route()->parameter('rating') === $imageRating, 'group-hover:bg-gray-600' => request()->route()->parameter('rating') !== $imageRating]) }}">
+                <x-badge class="{{ classNames('transition', ['bg-pink-700 dark:bg-pink-700 group-hover:bg-pink-600' => request()->route()->parameter('rating') === $imageRating, 'group-hover:bg-gray-600' => request()->route()->parameter('rating') !== $imageRating]) }}">
                     {{ $imagesByRatingCounts->get($imageRating) }}
                 </x-badge>
             </x-button-link>

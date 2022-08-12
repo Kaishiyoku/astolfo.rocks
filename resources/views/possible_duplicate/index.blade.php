@@ -4,7 +4,9 @@
             {{ __('Possible duplicates') }}
         </x-page-header.container>
 
-        <div>{{ trans_choice('image.total_number_of_images', $totalImageCount) }}</div>
+        <x-page-header.sub-headline>
+            {{ trans_choice('image.total_number_of_images', $totalImageCount) }}
+        </x-page-header.sub-headline>
     </x-slot>
 
     @if ($possibleDuplicates->isNotEmpty())
