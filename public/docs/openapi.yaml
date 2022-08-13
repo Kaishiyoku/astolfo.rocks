@@ -1,0 +1,485 @@
+openapi: 3.0.3
+info:
+  title: 'Astolfo Rocks!'
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+paths:
+  /api/v1/health_check:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example: []
+      tags:
+        - Home
+      security: []
+  /api/v1/version:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example: {  }
+                properties: {  }
+      tags:
+        - Home
+      security: []
+  /api/v1/stats:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  images:
+                    total: 2103
+                    '': 0
+                  tags:
+                    total: 711
+                properties:
+                  images:
+                    type: object
+                    example:
+                      total: 2103
+                      '': 0
+                  tags:
+                    type: object
+                    example:
+                      total: 711
+      tags:
+        - Home
+      security: []
+  '/api/v1/images/random/{rating}':
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 4246
+                  rating: safe
+                  created_at: '2021-12-06T08:30:38.000000Z'
+                  updated_at: '2021-12-06T08:30:38.000000Z'
+                  views: 0
+                  source: 'https://www.pixiv.net/en/artworks/86487950'
+                  file_extension: jpeg
+                  mimetype: image/jpeg
+                  file_size: 421671
+                  width: 1414
+                  height: 2000
+                  tags: []
+                properties:
+                  id:
+                    type: integer
+                    example: 4246
+                  rating:
+                    type: string
+                    example: safe
+                  created_at:
+                    type: string
+                    example: '2021-12-06T08:30:38.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2021-12-06T08:30:38.000000Z'
+                  views:
+                    type: integer
+                    example: 0
+                  source:
+                    type: string
+                    example: 'https://www.pixiv.net/en/artworks/86487950'
+                  file_extension:
+                    type: string
+                    example: jpeg
+                  mimetype:
+                    type: string
+                    example: image/jpeg
+                  file_size:
+                    type: integer
+                    example: 421671
+                  width:
+                    type: integer
+                    example: 1414
+                  height:
+                    type: integer
+                    example: 2000
+                  tags:
+                    type: array
+                    example: []
+      tags:
+        - Image
+      security: []
+    parameters:
+      -
+        in: path
+        name: rating
+        description: '```unknown, safe, questionable, explicit```.'
+        example: safe
+        required: true
+        schema:
+          type: string
+  '/api/v1/images/{id}':
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 4246
+                  rating: safe
+                  created_at: '2021-12-06T08:30:38.000000Z'
+                  updated_at: '2021-12-06T08:30:38.000000Z'
+                  views: 0
+                  source: 'https://www.pixiv.net/en/artworks/86487950'
+                  file_extension: jpeg
+                  mimetype: image/jpeg
+                  file_size: 421671
+                  width: 1414
+                  height: 2000
+                  tags: []
+                properties:
+                  id:
+                    type: integer
+                    example: 4246
+                  rating:
+                    type: string
+                    example: safe
+                  created_at:
+                    type: string
+                    example: '2021-12-06T08:30:38.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2021-12-06T08:30:38.000000Z'
+                  views:
+                    type: integer
+                    example: 0
+                  source:
+                    type: string
+                    example: 'https://www.pixiv.net/en/artworks/86487950'
+                  file_extension:
+                    type: string
+                    example: jpeg
+                  mimetype:
+                    type: string
+                    example: image/jpeg
+                  file_size:
+                    type: integer
+                    example: 421671
+                  width:
+                    type: integer
+                    example: 1414
+                  height:
+                    type: integer
+                    example: 2000
+                  tags:
+                    type: array
+                    example: []
+      tags:
+        - Image
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the image.'
+        example: 4246
+        required: true
+        schema:
+          type: integer
+  /api/v1/images:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 4246
+                    rating: safe
+                    created_at: '2021-12-06T08:30:38.000000Z'
+                    updated_at: '2021-12-06T08:30:38.000000Z'
+                    views: 0
+                    source: 'https://www.pixiv.net/en/artworks/86487950'
+                    file_extension: jpeg
+                    mimetype: image/jpeg
+                    file_size: 421671
+                    width: 1414
+                    height: 2000
+                    tags: []
+      tags:
+        - Image
+      security: []
+  '/api/v1/images/rating/{rating}':
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 4246
+                    rating: safe
+                    created_at: '2021-12-06T08:30:38.000000Z'
+                    updated_at: '2021-12-06T08:30:38.000000Z'
+                    views: 0
+                    source: 'https://www.pixiv.net/en/artworks/86487950'
+                    file_extension: jpeg
+                    mimetype: image/jpeg
+                    file_size: 421671
+                    width: 1414
+                    height: 2000
+                    tags: []
+      tags:
+        - Image
+      security: []
+    parameters:
+      -
+        in: path
+        name: rating
+        description: 'The rating.'
+        example: aliquid
+        required: true
+        schema:
+          type: string
+  /api/v1/tags:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                example:
+                  -
+                    id: 512
+                    name: astolfo
+      tags:
+        - Tag
+      security: []
+  '/api/v1/tags/{id}':
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  id: 512
+                  name: astolfo
+                properties:
+                  id:
+                    type: integer
+                    example: 512
+                  name:
+                    type: string
+                    example: astolfo
+      tags:
+        - Tag
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the tag.'
+        example: 512
+        required: true
+        schema:
+          type: integer
+tags:
+  -
+    name: Home
+    description: ''
+  -
+    name: Image
+    description: ''
+  -
+    name: Tag
+    description: ''

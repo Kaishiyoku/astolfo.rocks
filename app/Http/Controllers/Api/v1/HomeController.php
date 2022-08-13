@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Tag;
 
+/**
+ * @group Home
+ */
 class HomeController extends Controller
 {
     /**

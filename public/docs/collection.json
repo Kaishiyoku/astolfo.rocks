@@ -1,0 +1,450 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "Astolfo Rocks!",
+        "_postman_id": "c9c7d5e2-f9d2-4afe-a7a4-a3b103a6f72f",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Home",
+            "description": "",
+            "item": [
+                {
+                    "name": "api\/v1\/health_check",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/health_check",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/health_check"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "59"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "[]",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/version",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/version",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/version"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "58"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/stats",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/stats",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/stats"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "57"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"images\":{\"total\":2103,\"\":0},\"tags\":{\"total\":711}}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Image",
+            "description": "",
+            "item": [
+                {
+                    "name": "api\/v1\/images\/random\/{rating?}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/images\/random\/:rating",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/images\/random\/:rating",
+                            "variable": [
+                                {
+                                    "id": "rating",
+                                    "key": "rating",
+                                    "value": "safe",
+                                    "description": "```unknown, safe, questionable, explicit```."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 4246,\n     \"rating\": \"safe\",\n     \"created_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"updated_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"views\": 0,\n     \"source\": \"https:\/\/www.pixiv.net\/en\/artworks\/86487950\",\n     \"file_extension\": \"jpeg\",\n     \"mimetype\": \"image\/jpeg\",\n     \"file_size\": 421671,\n     \"width\": 1414,\n     \"height\": 2000,\n     \"tags\": []\n }",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/images\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/images\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/images\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "4246",
+                                    "description": "The ID of the image."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 4246,\n     \"rating\": \"safe\",\n     \"created_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"updated_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"views\": 0,\n     \"source\": \"https:\/\/www.pixiv.net\/en\/artworks\/86487950\",\n     \"file_extension\": \"jpeg\",\n     \"mimetype\": \"image\/jpeg\",\n     \"file_size\": 421671,\n     \"width\": 1414,\n     \"height\": 2000,\n     \"tags\": []\n }",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/images",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/images",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/images"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[\n {\n     \"id\": 4246,\n     \"rating\": \"safe\",\n     \"created_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"updated_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"views\": 0,\n     \"source\": \"https:\/\/www.pixiv.net\/en\/artworks\/86487950\",\n     \"file_extension\": \"jpeg\",\n     \"mimetype\": \"image\/jpeg\",\n     \"file_size\": 421671,\n     \"width\": 1414,\n     \"height\": 2000,\n     \"tags\": []\n }\n]",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/images\/rating\/{rating}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/images\/rating\/:rating",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/images\/rating\/:rating",
+                            "variable": [
+                                {
+                                    "id": "rating",
+                                    "key": "rating",
+                                    "value": "aliquid",
+                                    "description": "The rating."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[\n {\n     \"id\": 4246,\n     \"rating\": \"safe\",\n     \"created_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"updated_at\": \"2021-12-06T08:30:38.000000Z\",\n     \"views\": 0,\n     \"source\": \"https:\/\/www.pixiv.net\/en\/artworks\/86487950\",\n     \"file_extension\": \"jpeg\",\n     \"mimetype\": \"image\/jpeg\",\n     \"file_size\": 421671,\n     \"width\": 1414,\n     \"height\": 2000,\n     \"tags\": []\n }\n]",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Tag",
+            "description": "",
+            "item": [
+                {
+                    "name": "api\/v1\/tags",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tags",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tags"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "[\n {\n     \"id\": 512,\n     \"name\": \"astolfo\"\n }\n]",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "api\/v1\/tags\/{id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/tags\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/tags\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "512",
+                                    "description": "The ID of the tag."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"id\": 512,\n     \"name\": \"astolfo\"\n }",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
