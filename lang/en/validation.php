@@ -158,11 +158,9 @@ return [
     */
 
     'attributes' => [
-        'attributes' => [
-            'rating' => 'Rating',
-            'source' => 'Source',
-            'image' => 'Image',
-        ],
+        'rating' => 'Rating',
+        'source' => 'Source',
+        'image' => 'Image',
     ],
 
 ];
