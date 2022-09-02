@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.26.1.
+ * Generated for Laravel 9.27.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -16799,6 +16799,17 @@
         {
                         /** @var \Illuminate\Foundation\Vite $instance */
                         return $instance->withEntryPoints($entryPoints);
+        }
+                    /**
+         * Get the Vite "hot" file path.
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function hotFile()
+        {
+                        /** @var \Illuminate\Foundation\Vite $instance */
+                        return $instance->hotFile();
         }
                     /**
          * Set the Vite "hot" file path.
