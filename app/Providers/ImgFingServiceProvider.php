@@ -16,7 +16,7 @@ class ImgFingServiceProvider extends ServiceProvider
     {
         $this->app->bind('img_fing', function ($app) {
             return new ImgFing([
-                'bitSize' => 3000,
+                'bitSize' => 1200,
                 'avgColorAdjust' => 50,
                 'cropFit' => false,
                 'adapters' => [
