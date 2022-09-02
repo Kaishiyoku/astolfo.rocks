@@ -23,6 +23,8 @@ class CheckForDuplicateImages extends Command
      */
     protected $description = 'Check for duplicate images';
 
+    protected $startDate;
+
     /**
      * Create a new command instance.
      *
@@ -40,6 +42,8 @@ class CheckForDuplicateImages extends Command
      */
     public function handle()
     {
+        $this->startDate = now();
+
         PossibleDuplicate::where('is_false_positive', false)->delete();
 
         $falsePositiveImageIds = PossibleDuplicate::where('is_false_positive', true)->get()->map(function (PossibleDuplicate $possibleDuplicate) {
@@ -72,6 +76,10 @@ class CheckForDuplicateImages extends Command
 
             $this->line(($i + 1) . ' images checked');
         });
+
+        $durationInSeconds = now()->diffInSeconds($this->startDate);
+
+        $this->logInfo("duplicate image checker duration: {$durationInSeconds} seconds");
 
         return Command::SUCCESS;
     }
