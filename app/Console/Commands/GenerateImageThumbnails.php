@@ -43,7 +43,7 @@ class GenerateImageThumbnails extends Command
         $images = Image::orderBy('id');
 
         // clean up directory first
-        Storage::disk('astolfo')->deleteDir('thumbnails');
+        Storage::disk('astolfo')->deleteDirectory('thumbnails');
 
         $images->each(fn(Image $image) => ImageController::saveThumbnail($image));
 
