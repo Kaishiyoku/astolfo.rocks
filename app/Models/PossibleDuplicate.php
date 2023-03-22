@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\File;
  * @property int $id
  * @property int $image_id_left
  * @property int $image_id_right
+ * @property int $is_false_positive
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Image $imageLeft
+ * @property-read \App\Models\Image $imageRight
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate query()
@@ -21,12 +24,9 @@ use Illuminate\Support\Facades\File;
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdLeft($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdRight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereIsFalsePositive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \App\Models\Image $imageLeft
- * @property-read \App\Models\Image $imageRight
- * @property int $is_false_positive
- * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereIsFalsePositive($value)
  */
 class PossibleDuplicate extends Model
 {

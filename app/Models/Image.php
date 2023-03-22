@@ -20,13 +20,18 @@ use Storage;
  * @property string|null $source
  * @property string $file_extension
  * @property string|null $mimetype
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property int $file_size
+ * @property int $width
+ * @property int $height
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
  * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereFileExtension($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereFileSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifier($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifierImage($value)
@@ -35,13 +40,8 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereSource($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereViews($value)
- * @mixin \Eloquent
- * @property int $file_size
- * @property int $width
- * @property int $height
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereFileSize($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
+ * @mixin \Eloquent
  */
 class Image extends Model
 {
