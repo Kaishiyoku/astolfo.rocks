@@ -8,7 +8,7 @@ use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use ImgFing;
+use ImageHash;
 use Intervention\Image\Constraint;
 
 class ImageController extends Controller
@@ -162,9 +162,7 @@ class ImageController extends Controller
 
         $imageFile->storeAs('astolfo', "{$image->id}.{$fileExtension}");
 
-        $imageData = $image->getImageDataFromStorage();
-        $image->identifier = ImgFing::identifyString($imageData);
-        $image->identifier_image = ImgFing::createIdentityImageFromString($imageData);
+        $image->identifier = ImageHash::hash($image->getImageFilePath());
         $image->save();
 
         static::saveThumbnail($image);

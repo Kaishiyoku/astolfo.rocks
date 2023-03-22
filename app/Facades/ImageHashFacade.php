@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class ImgFingFacade extends Facade
+class ImageHashFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -15,6 +15,6 @@ class ImgFingFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'img_fing';
+        return 'image_hash';
     }
 }

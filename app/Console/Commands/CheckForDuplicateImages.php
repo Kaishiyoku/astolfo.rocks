@@ -5,7 +5,8 @@ namespace App\Console\Commands;
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
 use Illuminate\Console\Command;
-use ImgFing;
+use Illuminate\Database\Eloquent\Builder;
+use Jenssegers\ImageHash\Hash;
 
 class CheckForDuplicateImages extends Command
 {
@@ -59,10 +60,19 @@ class CheckForDuplicateImages extends Command
                     return;
                 }
 
-                if (ImgFing::matchScore($imageAsc->identifier, $imageDesc->identifier) > config('astolfo.duplicate_checker_threshold')) {
+                $imageHashAsc = Hash::fromBits($imageAsc->identifier);
+                $imageHashDesc = Hash::fromBits($imageDesc->identifier);
+
+                if ($imageHashAsc->distance($imageHashDesc) < config('astolfo.duplicate_checker_threshold')) {
                     $alreadyInsertedPossibleDuplicateCount = PossibleDuplicate::query()
-                        ->where('image_id_left', $imageDesc->id)
-                        ->where('image_id_right', $imageAsc->id)
+                        ->where(function (Builder $query) use ($imageAsc, $imageDesc) {
+                            $query->where('image_id_left', $imageAsc->id);
+                            $query->where('image_id_right', $imageDesc->id);
+                        })
+                        ->orWhere(function (Builder $query) use ($imageAsc, $imageDesc) {
+                            $query->where('image_id_left', $imageDesc->id);
+                            $query->where('image_id_right', $imageAsc->id);
+                        })
                         ->count();
 
                     if ($alreadyInsertedPossibleDuplicateCount === 0) {

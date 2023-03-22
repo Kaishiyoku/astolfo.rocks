@@ -11,7 +11,6 @@ use Storage;
  * App\Models\Image
  *
  * @property int $id
- * @property mixed|null $identifier_image
  * @property string|null $identifier
  * @property string $rating
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -34,7 +33,6 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereHeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifier($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Image whereIdentifierImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereMimetype($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereRating($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereSource($value)
@@ -68,7 +66,6 @@ class Image extends Model
      */
     protected $hidden = [
         'identifier',
-        'identifier_image',
     ];
 
     /**
@@ -112,6 +109,11 @@ class Image extends Model
         return Storage::disk('astolfo')->url("thumbnails/{$this->getThumbnailFileName()}");
     }
 
+    public function getImageFilePath(): string
+    {
+        return Storage::disk('astolfo')->path($this->getFileName());
+    }
+
     public function getImageFromStorage(): ?\Intervention\Image\Image
     {
         if (!$this->mimetype) {
@@ -119,7 +121,7 @@ class Image extends Model
         }
 
         try {
-            return ImageManager::make(Storage::disk('astolfo')->path($this->getFileName()));
+            return ImageManager::make($this->getImageFilePath());
         } catch (NotReadableException $e) {
             return null;
         }

@@ -17766,48 +17766,41 @@
      * 
      *
      */ 
-        class ImgFingFacade {
+        class ImageHashFacade {
                     /**
-         * 
+         * Calculate a perceptual hash of an image.
          *
-         * @throws \Exception
+         * @param mixed $image
+         * @return \Hash 
          * @static 
          */ 
-        public static function identifyFile($path)
+        public static function hash($image)
         {
-                        /** @var \ImgFing\ImgFing $instance */
-                        return $instance->identifyFile($path);
+                        /** @var \Jenssegers\ImageHash\ImageHash $instance */
+                        return $instance->hash($image);
+        }
+                    /**
+         * Compare 2 images and get the hamming distance.
+         *
+         * @param mixed $resource1
+         * @param mixed $resource2
+         * @return int 
+         * @static 
+         */ 
+        public static function compare($resource1, $resource2)
+        {
+                        /** @var \Jenssegers\ImageHash\ImageHash $instance */
+                        return $instance->compare($resource1, $resource2);
         }
                     /**
          * 
          *
          * @static 
          */ 
-        public static function createIdentityImageFromString($imgString)
+        public static function distance($hash1, $hash2)
         {
-                        /** @var \ImgFing\ImgFing $instance */
-                        return $instance->createIdentityImageFromString($imgString);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function identifyString($imgString)
-        {
-                        /** @var \ImgFing\ImgFing $instance */
-                        return $instance->identifyString($imgString);
-        }
-                    /**
-         * 
-         *
-         * @throws \Exception
-         * @static 
-         */ 
-        public static function matchScore($str1, $str2)
-        {
-                        /** @var \ImgFing\ImgFing $instance */
-                        return $instance->matchScore($str1, $str2);
+                        /** @var \Jenssegers\ImageHash\ImageHash $instance */
+                        return $instance->distance($hash1, $hash2);
         }
          
     }
@@ -23476,7 +23469,7 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class ImageManager extends \App\Facades\ImageManagerFacade {}
-            class ImgFing extends \App\Facades\ImgFingFacade {}
+            class ImageHash extends \App\Facades\ImageHashFacade {}
             class ByteFormatter extends \App\Facades\ByteFormatterFacade {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Image extends \Intervention\Image\Facades\Image {}

@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ImageManagerServiceProvider::class,
-        App\Providers\ImgFingServiceProvider::class,
+        App\Providers\ImageHashServiceProvider::class,
         App\Providers\ByteFormatterServiceProvider::class,
 
     ],
@@ -195,7 +195,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'ImageManager' => App\Facades\ImageManagerFacade::class,
-        'ImgFing' => App\Facades\ImgFingFacade::class,
+        'ImageHash' => App\Facades\ImageHashFacade::class,
         'ByteFormatter' => App\Facades\ByteFormatterFacade::class,
     ])->toArray(),
 

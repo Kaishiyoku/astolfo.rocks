@@ -11,13 +11,13 @@
         "cjstroud/classnames-php": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
+        "jenssegers/imagehash": "^0.9.0",
         "knuckleswtf/scribe": "^3.36",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "scriptfusion/byte-formatter": "^4.1",
-        "spatie/laravel-html": "^3.1",
-        "tioga-tours/php-imgfing": "^0.3.0"
+        "spatie/laravel-html": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
