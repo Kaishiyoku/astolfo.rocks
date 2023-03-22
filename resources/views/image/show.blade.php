@@ -61,11 +61,6 @@
                         {{ __('Updated at') }}:
                         {{ formatDateTime($image->updated_at) }}
                     </div>
-
-                    <div class="pt-4 md:pt-0">
-                        <div class="pb-2">{{ __('Identifier image') }}:</div>
-                        <img src="data:{{ $image->mimetype }};base64,{{ base64_encode($image->identifier_image) }}" alt="Identifier image" class="w-[150px] h-[150px] image-rendering-none"/>
-                    </div>
                 </div>
             </div>
 

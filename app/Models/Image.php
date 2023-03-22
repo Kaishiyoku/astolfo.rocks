@@ -127,13 +127,6 @@ class Image extends Model
         }
     }
 
-    public function getImageDataFromStorage(): ?string
-    {
-        return optional($this->getImageFromStorage(), function ($data) {
-            return $data->psrResponse()->getBody()->getContents();
-        });
-    }
-
     public function getMimetypeFromStorage(): ?string
     {
         if (Storage::disk('astolfo')->exists($this->getFileName())) {
