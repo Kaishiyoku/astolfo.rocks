@@ -15,7 +15,7 @@ class CreateAdminUser extends Command
      *
      * @var string
      */
-    protected $signature = 'user:create-admin' .
+    protected $signature = 'user:create-admin'.
     '';
 
     /**
@@ -27,10 +27,8 @@ class CreateAdminUser extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->ask('Name');
         $email = $this->ask('Email');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PossibleDuplicateController extends Controller
 {
@@ -12,7 +14,7 @@ class PossibleDuplicateController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index()
+    public function index(): View
     {
         return view('possible_duplicate.index', [
             'totalImageCount' => Image::count(),
@@ -23,17 +25,16 @@ class PossibleDuplicateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PossibleDuplicate  $possibleDuplicate
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(PossibleDuplicate $possibleDuplicate)
+    public function show(PossibleDuplicate $possibleDuplicate): View
     {
         return view('possible_duplicate.show', [
             'possibleDuplicate' => $possibleDuplicate,
         ]);
     }
 
-    public function ignore(PossibleDuplicate $possibleDuplicate)
+    public function ignore(PossibleDuplicate $possibleDuplicate): RedirectResponse
     {
         $possibleDuplicate->is_false_positive = true;
 
@@ -42,7 +43,7 @@ class PossibleDuplicateController extends Controller
         return redirect()->route('possible_duplicates.index');
     }
 
-    public function keepImage(PossibleDuplicate $possibleDuplicate, Image $image)
+    public function keepImage(PossibleDuplicate $possibleDuplicate, Image $image): RedirectResponse
     {
         $imageToBeDeleted = $possibleDuplicate->image_id_left === $image->id ? $possibleDuplicate->imageRight : $possibleDuplicate->imageLeft;
 
@@ -54,11 +55,8 @@ class PossibleDuplicateController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PossibleDuplicate  $possibleDuplicate
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(PossibleDuplicate $possibleDuplicate)
+    public function destroy(PossibleDuplicate $possibleDuplicate): RedirectResponse
     {
         $possibleDuplicate->delete();
 

@@ -24,6 +24,7 @@ use Storage;
  * @property int $height
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Image newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Image query()
@@ -39,6 +40,7 @@ use Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereViews($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Image whereWidth($value)
+ *
  * @mixin \Eloquent
  */
 class Image extends Model
@@ -116,7 +118,7 @@ class Image extends Model
 
     public function getImageFromStorage(): ?\Intervention\Image\Image
     {
-        if (!$this->mimetype) {
+        if (! $this->mimetype) {
             return null;
         }
 

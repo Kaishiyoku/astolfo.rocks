@@ -4,14 +4,12 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImageMetadataToImagesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('images', function (Blueprint $table) {
             $table->unsignedBigInteger('file_size');
@@ -19,7 +17,7 @@ class AddImageMetadataToImagesTable extends Migration
             $table->unsignedBigInteger('height');
         });
 
-        \App\Models\Image::all()->each(function (\App\Models\Image $image) {
+        \App\Models\Image::all()->each(function (App\Models\Image $image) {
             $imageData = $image->getImageFromStorage();
 
             if ($imageData) {
@@ -34,10 +32,8 @@ class AddImageMetadataToImagesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('images', function (Blueprint $table) {
             $table->dropColumn('file_size');
@@ -45,4 +41,4 @@ class AddImageMetadataToImagesTable extends Migration
             $table->dropColumn('height');
         });
     }
-}
+};

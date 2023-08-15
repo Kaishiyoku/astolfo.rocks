@@ -38,10 +38,8 @@ class CheckForDuplicateImages extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $this->startDate = now();
 
@@ -84,7 +82,7 @@ class CheckForDuplicateImages extends Command
                 }
             });
 
-            $this->line(($i + 1) . ' images checked');
+            $this->line(($i + 1).' images checked');
         });
 
         $durationInSeconds = now()->diffInSeconds($this->startDate);

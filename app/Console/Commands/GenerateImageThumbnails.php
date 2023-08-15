@@ -35,17 +35,15 @@ class GenerateImageThumbnails extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $images = Image::orderBy('id');
 
         // clean up directory first
         Storage::disk('astolfo')->deleteDirectory('thumbnails');
 
-        $images->each(fn(Image $image) => ImageController::saveThumbnail($image));
+        $images->each(fn (Image $image) => ImageController::saveThumbnail($image));
 
         return Command::SUCCESS;
     }

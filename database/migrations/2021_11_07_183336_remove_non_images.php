@@ -3,27 +3,23 @@
 use App\Http\Controllers\ImageController;
 use Illuminate\Database\Migrations\Migration;
 
-class RemoveNonImages extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        \App\Models\Image::where('mimetype', 'like', 'video/%')->each(function (\App\Models\Image $image) {
+        \App\Models\Image::where('mimetype', 'like', 'video/%')->each(function (App\Models\Image $image) {
             ImageController::deleteImage($image);
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         //
     }
-}
+};

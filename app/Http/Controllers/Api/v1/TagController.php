@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use Illuminate\Http\JsonResponse;
 
 /**
  * @group Tag
@@ -17,10 +18,8 @@ class TagController extends Controller
      *      "name": "astolfo"
      *  }
      * ]
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $tags = Tag::all();
 
@@ -34,11 +33,8 @@ class TagController extends Controller
      *      "id": 512,
      *      "name": "astolfo"
      *  }
-     *
-     * @param Tag $tag
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag): JsonResponse
     {
         return response()->json($tag);
     }

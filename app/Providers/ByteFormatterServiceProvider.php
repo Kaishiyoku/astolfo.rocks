@@ -9,10 +9,8 @@ class ByteFormatterServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind('byte_formatter', function ($app) {
             return new ByteFormatter();
@@ -21,10 +19,8 @@ class ByteFormatterServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

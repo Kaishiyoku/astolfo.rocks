@@ -3,16 +3,14 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\File;
 
-class FillImageFileExtensionFields extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        \App\Models\Image::all()->each(function (\App\Models\Image $image) {
+        \App\Models\Image::all()->each(function (App\Models\Image $image) {
             $image->file_extension = File::extension($image->url);
 
             $image->save();
@@ -21,11 +19,9 @@ class FillImageFileExtensionFields extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         //
     }
-}
+};

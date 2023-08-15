@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\ImageRating;
 use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use ImageHash;
 use Intervention\Image\Constraint;
 
@@ -16,21 +18,19 @@ class ImageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string|null $rating
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request, $rating = null)
+    public function index(Request $request, string $rating = null): View
     {
         $this->validateRating($request, $rating);
 
         $images = Image::query()
-            ->when($rating, fn($query) => $query->whereRating($rating))
+            ->when($rating, fn ($query) => $query->whereRating($rating))
             ->orderBy('id', 'desc')
             ->paginate();
 
         $ratingCounts = collect(ImageRating::getValues())
-            ->mapWithKeys(fn($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
+            ->mapWithKeys(fn ($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
 
         return view('image.index', [
             'totalImageCount' => Image::count(),
@@ -44,7 +44,7 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function create()
+    public function create(): View
     {
         return view('image.create', [
             'image' => new Image(),
@@ -53,11 +53,8 @@ class ImageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'rating' => ['required', new EnumValue(ImageRating::class)],
@@ -73,10 +70,9 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function show(Image $image)
+    public function show(Image $image): View
     {
         return view('image.show', [
             'image' => $image,
@@ -86,10 +82,9 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function edit(Image $image)
+    public function edit(Image $image): View
     {
         return view('image.edit', [
             'image' => $image,
@@ -98,12 +93,8 @@ class ImageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Image $image
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Image $image)
+    public function update(Request $request, Image $image): RedirectResponse
     {
         $validated = $request->validate([
             'rating' => ['required', new EnumValue(ImageRating::class)],
@@ -126,11 +117,8 @@ class ImageController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Image $image
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Image $image)
+    public function destroy(Image $image): RedirectResponse
     {
         PossibleDuplicateController::deletePossibleDuplicatesForImage($image);
         static::deleteImage($image);
@@ -151,7 +139,7 @@ class ImageController extends Controller
         $fileExtension = $imageFile->getClientOriginalExtension();
         [$width, $height] = getimagesize($imageFile->getRealPath());
 
-        $image = Image::updateOrCreate(['id' => optional($image)->id],
+        $image = Image::updateOrCreate(['id' => $image?->id],
             array_merge($validated, [
                 'file_extension' => $fileExtension,
                 'mimetype' => $imageFile->getMimeType(),

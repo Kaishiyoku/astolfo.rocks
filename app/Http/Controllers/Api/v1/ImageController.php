@@ -6,6 +6,7 @@ use App\Enums\ImageRating;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -30,11 +31,8 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      * ]
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $this->validateRating($request);
 
@@ -62,12 +60,8 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      * ]
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param string $rating
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexRating(Request $request, $rating)
+    public function indexRating(Request $request, string $rating): JsonResponse
     {
         $this->validateRating($request);
 
@@ -97,11 +91,8 @@ class ImageController extends Controller
      *      "height": 2000,
      *      "tags": []
      *  }
-     *
-     * @param Image $image
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Image $image)
+    public function show(Image $image): JsonResponse
     {
         return response()->json($image);
     }
@@ -124,11 +115,9 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string|null $rating
      * @retun \Illuminate\Http\JsonResponse
      */
-    public function showRandom(Request $request, $rating = null)
+    public function showRandom(Request $request, string $rating = null): JsonResponse
     {
         $this->validateRating($request);
 
