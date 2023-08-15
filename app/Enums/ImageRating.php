@@ -13,7 +13,10 @@ use BenSampo\Enum\Enum;
 final class ImageRating extends Enum
 {
     const Unknown = 'unknown';
+
     const Safe = 'safe';
+
     const Questionable = 'questionable';
+
     const Explicit = 'explicit';
 }

@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon $created_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|UpdateLog newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UpdateLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|UpdateLog query()
  * @method static \Illuminate\Database\Eloquent\Builder|UpdateLog whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UpdateLog whereId($value)
+ *
  * @mixin \Eloquent
  */
 class UpdateLog extends Model

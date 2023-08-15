@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
 
 /**
  * App\Models\PossibleDuplicate
@@ -17,6 +16,7 @@ use Illuminate\Support\Facades\File;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Image $imageLeft
  * @property-read \App\Models\Image $imageRight
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate query()
@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\File;
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdRight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereIsFalsePositive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class PossibleDuplicate extends Model

@@ -35,7 +35,7 @@ class HomeController extends Controller
             ], $statsPerRating),
             'tags' => [
                 'total' => Tag::count(),
-            ]
+            ],
         ];
 
         return response()->json($stats);

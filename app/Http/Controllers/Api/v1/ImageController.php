@@ -31,7 +31,6 @@ class ImageController extends Controller
      *  }
      * ]
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -63,8 +62,7 @@ class ImageController extends Controller
      *  }
      * ]
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string $rating
+     * @param  string  $rating
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexRating(Request $request, $rating)
@@ -98,7 +96,6 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      *
-     * @param Image $image
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Image $image)
@@ -124,8 +121,8 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string|null $rating
+     * @param  string|null  $rating
+     *
      * @retun \Illuminate\Http\JsonResponse
      */
     public function showRandom(Request $request, $rating = null)

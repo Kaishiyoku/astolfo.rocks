@@ -35,7 +35,6 @@ class TagController extends Controller
      *      "name": "astolfo"
      *  }
      *
-     * @param Tag $tag
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Tag $tag)

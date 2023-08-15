@@ -12,7 +12,7 @@ class RemoveNonImages extends Migration
      */
     public function up()
     {
-        \App\Models\Image::where('mimetype', 'like', 'video/%')->each(function (\App\Models\Image $image) {
+        \App\Models\Image::where('mimetype', 'like', 'video/%')->each(function (App\Models\Image $image) {
             ImageController::deleteImage($image);
         });
     }

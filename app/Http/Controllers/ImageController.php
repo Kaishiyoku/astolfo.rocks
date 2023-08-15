@@ -16,8 +16,7 @@ class ImageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param string|null $rating
+     * @param  string|null  $rating
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(Request $request, $rating = null)
@@ -25,12 +24,12 @@ class ImageController extends Controller
         $this->validateRating($request, $rating);
 
         $images = Image::query()
-            ->when($rating, fn($query) => $query->whereRating($rating))
+            ->when($rating, fn ($query) => $query->whereRating($rating))
             ->orderBy('id', 'desc')
             ->paginate();
 
         $ratingCounts = collect(ImageRating::getValues())
-            ->mapWithKeys(fn($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
+            ->mapWithKeys(fn ($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
 
         return view('image.index', [
             'totalImageCount' => Image::count(),
@@ -54,7 +53,6 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
@@ -73,7 +71,6 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(Image $image)
@@ -86,7 +83,6 @@ class ImageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Image $image
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(Image $image)
@@ -99,8 +95,6 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Image $image
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Image $image)
@@ -127,7 +121,6 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Image $image
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Image $image)

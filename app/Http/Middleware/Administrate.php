@@ -10,13 +10,11 @@ class Administrate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->is_admin) {
+        if (! $request->user()->is_admin) {
             abort(403);
         }
 

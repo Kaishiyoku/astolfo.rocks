@@ -45,7 +45,7 @@ class GenerateImageThumbnails extends Command
         // clean up directory first
         Storage::disk('astolfo')->deleteDirectory('thumbnails');
 
-        $images->each(fn(Image $image) => ImageController::saveThumbnail($image));
+        $images->each(fn (Image $image) => ImageController::saveThumbnail($image));
 
         return Command::SUCCESS;
     }

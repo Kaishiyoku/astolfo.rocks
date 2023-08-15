@@ -12,7 +12,7 @@ class FillImageFileExtensionFields extends Migration
      */
     public function up()
     {
-        \App\Models\Image::all()->each(function (\App\Models\Image $image) {
+        \App\Models\Image::all()->each(function (App\Models\Image $image) {
             $image->file_extension = File::extension($image->url);
 
             $image->save();

@@ -19,7 +19,7 @@ class AddImageMetadataToImagesTable extends Migration
             $table->unsignedBigInteger('height');
         });
 
-        \App\Models\Image::all()->each(function (\App\Models\Image $image) {
+        \App\Models\Image::all()->each(function (App\Models\Image $image) {
             $imageData = $image->getImageFromStorage();
 
             if ($imageData) {

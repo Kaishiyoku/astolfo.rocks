@@ -1,10 +1,10 @@
 <?php
 
 use App\Enums\ImageRating;
+use App\Models\Image;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Image;
 use Illuminate\Support\Str;
 
 class AdjustRatingAtImagesTable extends Migration

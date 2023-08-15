@@ -23,7 +23,6 @@ class PossibleDuplicateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\PossibleDuplicate  $possibleDuplicate
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(PossibleDuplicate $possibleDuplicate)
@@ -55,7 +54,6 @@ class PossibleDuplicateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\PossibleDuplicate  $possibleDuplicate
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(PossibleDuplicate $possibleDuplicate)

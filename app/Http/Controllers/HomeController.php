@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\ImageRating;
 use App\Models\Image;
-use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
