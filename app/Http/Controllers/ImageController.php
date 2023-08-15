@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Enums\ImageRating;
 use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use ImageHash;
 use Intervention\Image\Constraint;
 
@@ -20,7 +20,7 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request, ?string $rating = null): View
+    public function index(Request $request, string $rating = null): View
     {
         $this->validateRating($request, $rating);
 

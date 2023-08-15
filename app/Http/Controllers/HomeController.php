@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
 use App\Enums\ImageRating;
 use App\Models\Image;
+use Illuminate\View\View;
 
 class HomeController extends Controller
 {

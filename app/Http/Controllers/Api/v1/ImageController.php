@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use Illuminate\Http\JsonResponse;
 use App\Enums\ImageRating;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use BenSampo\Enum\Rules\EnumValue;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
@@ -115,10 +115,9 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      *
-     *
      * @retun \Illuminate\Http\JsonResponse
      */
-    public function showRandom(Request $request, ?string $rating = null): JsonResponse
+    public function showRandom(Request $request, string $rating = null): JsonResponse
     {
         $this->validateRating($request);
 

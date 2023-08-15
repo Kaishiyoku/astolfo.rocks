@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Image;
 use App\Models\PossibleDuplicate;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PossibleDuplicateController extends Controller
 {
