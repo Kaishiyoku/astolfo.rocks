@@ -22,7 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::group(['middleware' => ['auth', 'administrate']], function () {
+Route::middleware('auth', 'administrate')->group(function () {
     Route::put('/possible_duplicates/{possibleDuplicate}/ignore', [PossibleDuplicateController::class, 'ignore'])->name('possible_duplicates.ignore');
     Route::put('/possible_duplicates/{possibleDuplicate}/{image}', [PossibleDuplicateController::class, 'keepImage'])->name('possible_duplicates.keep_image');
     Route::resource('possible_duplicates', PossibleDuplicateController::class)->only(['index', 'show', 'destroy']);
