@@ -55,8 +55,6 @@ class PossibleDuplicateController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(PossibleDuplicate $possibleDuplicate): RedirectResponse
     {

@@ -31,8 +31,6 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      * ]
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
@@ -62,9 +60,6 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      * ]
-     *
-     * @param  string  $rating
-     * @return \Illuminate\Http\JsonResponse
      */
     public function indexRating(Request $request, string $rating): JsonResponse
     {
@@ -96,8 +91,6 @@ class ImageController extends Controller
      *      "height": 2000,
      *      "tags": []
      *  }
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Image $image): JsonResponse
     {
@@ -122,7 +115,6 @@ class ImageController extends Controller
      *      "tags": []
      *  }
      *
-     * @param  string|null  $rating
      *
      * @retun \Illuminate\Http\JsonResponse
      */

@@ -12,9 +12,6 @@ use App\Models\Tag;
  */
 class HomeController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function healthCheck(): JsonResponse
     {
         return response()->json();

@@ -18,7 +18,6 @@ class ImageController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  string|null  $rating
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(Request $request, ?string $rating = null): View
@@ -54,8 +53,6 @@ class ImageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -96,8 +93,6 @@ class ImageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Image $image): RedirectResponse
     {
@@ -122,8 +117,6 @@ class ImageController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Image $image): RedirectResponse
     {

@@ -18,8 +18,6 @@ class TagController extends Controller
      *      "name": "astolfo"
      *  }
      * ]
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
     {
@@ -35,8 +33,6 @@ class TagController extends Controller
      *      "id": 512,
      *      "name": "astolfo"
      *  }
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Tag $tag): JsonResponse
     {
