@@ -12,11 +12,11 @@
         "bensampo/laravel-enum": "^6.3",
         "blade-ui-kit/blade-heroicons": "^2.1",
         "cjstroud/classnames-php": "^1.0",
+        "dedoc/scramble": "^0.8.2",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "jenssegers/imagehash": "^0.9.0",
-        "knuckleswtf/scribe": "^4.15",
         "laravel/framework": "^10.18",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
@@ -67,9 +67,6 @@
             "php artisan ide-helper:generate",
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models --dir=\"app/Models\" --write --reset"
-        ],
-        "post-install-cmd": [
-            "php artisan scribe:generate"
         ]
     },
     "extra": {
