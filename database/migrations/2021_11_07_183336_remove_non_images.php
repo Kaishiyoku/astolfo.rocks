@@ -3,7 +3,7 @@
 use App\Http\Controllers\ImageController;
 use Illuminate\Database\Migrations\Migration;
 
-class RemoveNonImages extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -26,4 +26,4 @@ class RemoveNonImages extends Migration
     {
         //
     }
-}
+};
