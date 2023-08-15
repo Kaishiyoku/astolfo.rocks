@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Tag;
@@ -14,7 +15,7 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Http\JsonResponse
      */
-    public function healthCheck()
+    public function healthCheck(): JsonResponse
     {
         return response()->json();
     }
@@ -41,7 +42,7 @@ class HomeController extends Controller
         return response()->json($stats);
     }
 
-    public function version()
+    public function version(): JsonResponse
     {
         return response()->json(config('app.version'));
     }

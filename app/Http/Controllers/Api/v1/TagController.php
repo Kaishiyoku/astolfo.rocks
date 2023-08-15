@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
 
@@ -20,7 +21,7 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $tags = Tag::all();
 
@@ -37,7 +38,7 @@ class TagController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Tag $tag)
+    public function show(Tag $tag): JsonResponse
     {
         return response()->json($tag);
     }

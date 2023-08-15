@@ -13,7 +13,7 @@ class ByteFormatterFacade extends Facade
      *
      * @throws \RuntimeException
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'byte_formatter';
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use Illuminate\Http\JsonResponse;
 use App\Enums\ImageRating;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
@@ -33,7 +34,7 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $this->validateRating($request);
 
@@ -65,7 +66,7 @@ class ImageController extends Controller
      * @param  string  $rating
      * @return \Illuminate\Http\JsonResponse
      */
-    public function indexRating(Request $request, $rating)
+    public function indexRating(Request $request, string $rating): JsonResponse
     {
         $this->validateRating($request);
 
@@ -98,7 +99,7 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Image $image)
+    public function show(Image $image): JsonResponse
     {
         return response()->json($image);
     }
@@ -125,7 +126,7 @@ class ImageController extends Controller
      *
      * @retun \Illuminate\Http\JsonResponse
      */
-    public function showRandom(Request $request, $rating = null)
+    public function showRandom(Request $request, ?string $rating = null): JsonResponse
     {
         $this->validateRating($request);
 
