@@ -30,7 +30,7 @@ class CreateAdminUser extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         $name = $this->ask('Name');
         $email = $this->ask('Email');

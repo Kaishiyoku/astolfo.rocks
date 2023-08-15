@@ -13,7 +13,7 @@ class ImageHashServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind('image_hash', function ($app) {
             return new ImageHash(new DifferenceHash(config('astolfo.duplicate_checker_size')));
@@ -25,7 +25,7 @@ class ImageHashServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

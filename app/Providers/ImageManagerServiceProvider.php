@@ -12,7 +12,7 @@ class ImageManagerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind('image_manager', function ($app) {
             return new ImageManager();
@@ -24,7 +24,7 @@ class ImageManagerServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }
