@@ -144,7 +144,7 @@ class ImageController extends Controller
         $fileExtension = $imageFile->getClientOriginalExtension();
         [$width, $height] = getimagesize($imageFile->getRealPath());
 
-        $image = Image::updateOrCreate(['id' => optional($image)->id],
+        $image = Image::updateOrCreate(['id' => $image?->id],
             array_merge($validated, [
                 'file_extension' => $fileExtension,
                 'mimetype' => $imageFile->getMimeType(),
