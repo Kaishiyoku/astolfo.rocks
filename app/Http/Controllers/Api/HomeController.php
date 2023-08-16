@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\ImageRating;
 use App\Http\Controllers\Controller;
 use App\Models\Image;
 use App\Models\Tag;
@@ -16,7 +17,7 @@ class HomeController extends Controller
 
     public function stats()
     {
-        $statsPerRating = collect(explode(',', config('astolfo.available_ratings')))->flatMap(function ($rating) {
+        $statsPerRating = collect(ImageRating::getValues())->flatMap(function ($rating) {
             $ratingLowerCase = strtolower($rating);
 
             return [
