@@ -20,9 +20,8 @@ Route::middleware('api')->as('api.')->group(function () {
     Route::get('/health_check', [HomeController::class, 'healthCheck'])->name('health_check');
     Route::get('/version', [HomeController::class, 'version'])->name('version');
 
-    Route::get('/images/random/{rating?}', [ImageController::class, 'showRandom'])->name('images.random');
+    Route::get('/images/random', [ImageController::class, 'showRandom'])->name('images.random');
     Route::get('/images', [ImageController::class, 'index'])->name('images.index');
-    Route::get('/images/rating/{rating}', [ImageController::class, 'index'])->name('images.index_rating');
     Route::get('/images/{image}', [ImageController::class, 'show'])->name('images.show');
 
     Route::resource('/tags', TagController::class)->only(['index', 'show']);

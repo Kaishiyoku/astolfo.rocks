@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ImageRating;
 use Illuminate\Database\Eloquent\Model;
 use ImageManager;
 use Intervention\Image\Exception\NotReadableException;
@@ -74,7 +75,7 @@ class Image extends Model
      * @var array
      */
     protected $casts = [
-        //
+        'rating' => ImageRating::class,
     ];
 
     /**

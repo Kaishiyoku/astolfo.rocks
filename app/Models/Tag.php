@@ -45,6 +45,13 @@ class Tag extends Model
         //
     ];
 
+    /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 24;
+
     public function images()
     {
         return $this->belongsToMany(Image::class);

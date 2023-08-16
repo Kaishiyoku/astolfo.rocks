@@ -10,7 +10,7 @@ class TagController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(Tag::all());
+        return response()->json(Tag::cursorPaginate());
     }
 
     public function show(Tag $tag): JsonResponse
