@@ -17,18 +17,12 @@ class HomeController extends Controller
 
     public function stats()
     {
-        $statsPerRating = collect(ImageRating::getValues())->flatMap(function ($rating) {
-            $ratingLowerCase = strtolower($rating);
-
-            return [
-                $ratingLowerCase => Image::whereRating($rating)->count(),
-            ];
-        })->toArray();
+        $statsPerRating = collect(ImageRating::getValues())->mapWithKeys(fn ($rating) => [
+            strtolower($rating) => Image::whereRating($rating)->count(),
+        ]);
 
         $stats = [
-            'images' => array_merge([
-                'total' => Image::count(),
-            ], $statsPerRating),
+            'images' => collect(['total' => Image::count()])->merge($statsPerRating),
             'tags' => [
                 'total' => Tag::count(),
             ],

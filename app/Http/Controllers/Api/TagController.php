@@ -10,9 +10,7 @@ class TagController extends Controller
 {
     public function index(): JsonResponse
     {
-        $tags = Tag::all();
-
-        return response()->json($tags);
+        return response()->json(Tag::all());
     }
 
     public function show(Tag $tag): JsonResponse
