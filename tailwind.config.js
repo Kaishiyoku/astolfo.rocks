@@ -1,4 +1,4 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
     content: [
@@ -6,11 +6,7 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-    safelist: [
-        'w-5',
-        'h-5',
-    ],
-
+    safelist: ['w-5', 'h-5'],
     theme: {
         extend: {
             fontFamily: {
@@ -18,8 +14,5 @@ module.exports = {
             },
         },
     },
-
-    plugins: [
-        require('@tailwindcss/forms'),
-    ],
-};
+    plugins: [require('@tailwindcss/forms')],
+}
