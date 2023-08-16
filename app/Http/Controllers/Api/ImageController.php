@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
-        $this->validateRating($request);
-
-        $images = Image::orderBy('id', 'desc')->with('tags');
-
-        return response()->json($images->get());
+        return response()->json(Image::query()
+            ->orderBy('id', 'desc')
+            ->with('tags')
+            ->cursorPaginate()
+        );
     }
 
     public function indexRating(Request $request, string $rating): JsonResponse
