@@ -7,9 +7,6 @@ use App\Models\Image;
 use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 
-/**
- * @group Home
- */
 class HomeController extends Controller
 {
     public function healthCheck(): JsonResponse

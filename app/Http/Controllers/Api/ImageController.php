@@ -9,29 +9,8 @@ use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-/**
- * @group Image
- */
 class ImageController extends Controller
 {
-    /**
-     * @response [
-     *  {
-     *      "id": 4246,
-     *      "rating": "safe",
-     *      "created_at": "2021-12-06T08:30:38.000000Z",
-     *      "updated_at": "2021-12-06T08:30:38.000000Z",
-     *      "views": 0,
-     *      "source": "https://www.pixiv.net/en/artworks/86487950",
-     *      "file_extension": "jpeg",
-     *      "mimetype": "image/jpeg",
-     *      "file_size": 421671,
-     *      "width": 1414,
-     *      "height": 2000,
-     *      "tags": []
-     *  }
-     * ]
-     */
     public function index(Request $request): JsonResponse
     {
         $this->validateRating($request);
@@ -41,26 +20,6 @@ class ImageController extends Controller
         return response()->json($images->get());
     }
 
-    /**
-     * @urlParam rating string ```unknown, safe, questionable, explicit```. Example: safe
-     *
-     * @response [
-     *  {
-     *      "id": 4246,
-     *      "rating": "safe",
-     *      "created_at": "2021-12-06T08:30:38.000000Z",
-     *      "updated_at": "2021-12-06T08:30:38.000000Z",
-     *      "views": 0,
-     *      "source": "https://www.pixiv.net/en/artworks/86487950",
-     *      "file_extension": "jpeg",
-     *      "mimetype": "image/jpeg",
-     *      "file_size": 421671,
-     *      "width": 1414,
-     *      "height": 2000,
-     *      "tags": []
-     *  }
-     * ]
-     */
     public function indexRating(Request $request, string $rating): JsonResponse
     {
         $this->validateRating($request);
@@ -74,49 +33,11 @@ class ImageController extends Controller
         return response()->json($images->get());
     }
 
-    /**
-     * @urlParam id integer required The ID of the image. Example: 4246
-     *
-     * @response {
-     *      "id": 4246,
-     *      "rating": "safe",
-     *      "created_at": "2021-12-06T08:30:38.000000Z",
-     *      "updated_at": "2021-12-06T08:30:38.000000Z",
-     *      "views": 0,
-     *      "source": "https://www.pixiv.net/en/artworks/86487950",
-     *      "file_extension": "jpeg",
-     *      "mimetype": "image/jpeg",
-     *      "file_size": 421671,
-     *      "width": 1414,
-     *      "height": 2000,
-     *      "tags": []
-     *  }
-     */
     public function show(Image $image): JsonResponse
     {
         return response()->json($image);
     }
 
-    /**
-     * @urlParam rating string required ```unknown, safe, questionable, explicit```. Example: safe
-     *
-     * @response {
-     *      "id": 4246,
-     *      "rating": "safe",
-     *      "created_at": "2021-12-06T08:30:38.000000Z",
-     *      "updated_at": "2021-12-06T08:30:38.000000Z",
-     *      "views": 0,
-     *      "source": "https://www.pixiv.net/en/artworks/86487950",
-     *      "file_extension": "jpeg",
-     *      "mimetype": "image/jpeg",
-     *      "file_size": 421671,
-     *      "width": 1414,
-     *      "height": 2000,
-     *      "tags": []
-     *  }
-     *
-     * @retun \Illuminate\Http\JsonResponse
-     */
     public function showRandom(Request $request, string $rating = null): JsonResponse
     {
         $this->validateRating($request);
