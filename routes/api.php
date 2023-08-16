@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\v1\HomeController;
-use App\Http\Controllers\Api\v1\ImageController;
-use App\Http\Controllers\Api\v1\TagController;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
