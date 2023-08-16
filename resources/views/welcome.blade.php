@@ -6,11 +6,11 @@
                     <img src="{{ asset('img/astolfo.png') }}" class="max-h-[400px]" alt="Astolfo"/>
                 </div>
 
-                <div class="py-4">
+                <div class="sm:flex py-4">
                     @foreach (getSocialMediaLinks() as $link)
-                        <x-button-link :href="$link['url']">
+                        <x-button :href="$link['url']" class="sm:mr-2 mb-2 w-full sm:w-auto">
                             {{ $link['title'] }}
-                        </x-button-link>
+                        </x-button>
                     @endforeach
                 </div>
             </div>

@@ -12,23 +12,39 @@
                 </x-page-header.sub-headline>
             </div>
 
-            <x-secondary-button-link :href="route('images.create')">{{ __('Add image') }}</x-secondary-button-link>
+            <x-secondary-button :href="route('images.create')">{{ __('Add image') }}</x-secondary-button>
         </x-page-header.flex-container>
     </x-slot>
 
     <div class="flex space-x-2 pb-8">
-        <x-button-link :href="route('images.index')" class="{{ classNames(['text-pink-300 dark:text-pink-200 bg-pink-800 dark:bg-pink-800 hover:bg-pink-900 dark:hover:bg-pink-700' => !request()->route()->parameter('rating')]) }}">
-            {{ __('All') }}
-        </x-button-link>
+        @if (!request()->route()->parameter('rating'))
+            <x-button :href="route('images.index')">
+                {{ __('All') }}
+            </x-button>
+        @else
+            <x-secondary-button :href="route('images.index')">
+                {{ __('All') }}
+            </x-secondary-button>
+        @endif
 
         @foreach (\App\Enums\ImageRating::getValues() as $imageRating)
-            <x-button-link :href="route('images.index_by_rating', $imageRating)" class="{{ classNames('group', ['text-pink-300 dark:text-pink-200 bg-pink-800 dark:bg-pink-800 hover:bg-pink-900 dark:hover:bg-pink-700' => request()->route()->parameter('rating') === $imageRating]) }}">
-                <span>{{ $imageRating }}</span>
+            @if (request()->route()->parameter('rating') === $imageRating)
+                <x-button :href="route('images.index_by_rating', $imageRating)">
+                    <span>{{ $imageRating }}</span>
 
-                <x-badge class="{{ classNames('transition', ['bg-pink-700 dark:bg-pink-700 group-hover:bg-pink-600' => request()->route()->parameter('rating') === $imageRating, 'group-hover:bg-gray-600' => request()->route()->parameter('rating') !== $imageRating]) }}">
-                    {{ $imagesByRatingCounts->get($imageRating) }}
-                </x-badge>
-            </x-button-link>
+                    <x-badge class="ml-2">
+                        {{ $imagesByRatingCounts->get($imageRating) }}
+                    </x-badge>
+                </x-button>
+            @else
+                <x-secondary-button :href="route('images.index_by_rating', $imageRating)">
+                    <span>{{ $imageRating }}</span>
+
+                    <x-badge class="ml-2">
+                        {{ $imagesByRatingCounts->get($imageRating) }}
+                    </x-badge>
+                </x-secondary-button>
+            @endif
         @endforeach
     </div>
 

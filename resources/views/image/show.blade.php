@@ -49,7 +49,11 @@
 
                     <div>
                         {{ __('Source') }}:
-                        {{ $image->source }}
+                        @if ($image->source)
+                            <x-link :href="$image->source">
+                                {{ $image->source }}
+                            </x-link>
+                        @endif
                     </div>
 
                     <div>
@@ -65,9 +69,9 @@
             </div>
 
             <div class="flex justify-between pt-4">
-                <x-button-link :href="route('images.edit', $image)">
+                <x-button :href="route('images.edit', $image)">
                     {{ __('Edit') }}
-                </x-button-link>
+                </x-button>
 
                 <x-delete-button :action="route('images.destroy', $image)"/>
             </div>
