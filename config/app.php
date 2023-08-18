@@ -185,7 +185,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'ImageManager' => App\Facades\ImageManagerFacade::class,
+        'ImageHash' => App\Facades\ImageHashFacade::class,
+        'ByteFormatter' => App\Facades\ByteFormatterFacade::class,
     ])->toArray(),
 
 ];

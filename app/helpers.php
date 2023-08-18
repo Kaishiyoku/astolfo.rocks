@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\ImageRating;
-use App\Facades\ByteFormatterFacade;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -37,7 +36,7 @@ if (! function_exists('getSocialMediaLinks')) {
 if (! function_exists('formatFileSize')) {
     function formatFileSize(int $fileSize): string
     {
-        return ByteFormatterFacade::format($fileSize);
+        return ByteFormatter::format($fileSize);
     }
 }
 
