@@ -13,7 +13,7 @@ use Storage;
  *
  * @property int $id
  * @property string|null $identifier
- * @property string $rating
+ * @property \BenSampo\Enum\Enum|null $rating
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $views
