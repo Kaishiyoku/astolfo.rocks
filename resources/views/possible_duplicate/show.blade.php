@@ -2,10 +2,6 @@
     <x-slot name="header">
         <x-page-header.container>
             <x-page-header.back-link :href="route('possible_duplicates.index')"/>
-
-            <x-page-header.headline>
-                {{ __('Possible duplicate') }}
-            </x-page-header.headline>
         </x-page-header.container>
     </x-slot>
 

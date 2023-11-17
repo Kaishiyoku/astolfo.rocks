@@ -2,10 +2,6 @@
     <x-slot name="header">
         <x-page-header.container>
             <x-page-header.back-link :href="route('images.index')"/>
-
-            <x-page-header.headline>
-                {{ __('Image details') }}
-            </x-page-header.headline>
         </x-page-header.container>
     </x-slot>
 
