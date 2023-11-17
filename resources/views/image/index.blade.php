@@ -2,11 +2,6 @@
     <x-slot name="header">
         <x-page-header.flex-container>
             <div>
-                <x-page-header.headline>
-                    {{ __('Images') }}
-                </x-page-header.headline>
-
-
                 <x-page-header.sub-headline>
                     {{ trans_choice('image.total_number_of_images', $totalImageCount) }}
                 </x-page-header.sub-headline>

@@ -1,14 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <x-page-header.container>
-            {{ __('Possible duplicates') }}
-        </x-page-header.container>
-
-        <x-page-header.sub-headline>
-            {{ trans_choice('image.total_number_of_images', $totalImageCount) }}
-        </x-page-header.sub-headline>
-    </x-slot>
-
     @if ($possibleDuplicates->isNotEmpty())
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($possibleDuplicates as $possibleDuplicate)
