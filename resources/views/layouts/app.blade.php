@@ -26,7 +26,7 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="max-w-7xl mx-auto font-semibold text-lg px-4 pt-8">
+                <header class="max-w-7xl mx-auto font-semibold px-4 pt-8">
                     {{ $header }}
                 </header>
             @endif
