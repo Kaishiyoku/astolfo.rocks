@@ -26,14 +26,14 @@
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="max-w-7xl mx-auto px-4 py-4">
+                <header class="max-w-7xl mx-auto font-semibold text-lg px-4 pt-8">
                     {{ $header }}
                 </header>
             @endif
 
             <!-- Page Content -->
             <main>
-                <div class="py-12">
+                <div class="py-8">
                     <div class="max-w-7xl mx-auto px-4">
                         {{ $slot }}
                     </div>

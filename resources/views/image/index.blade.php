@@ -1,9 +1,11 @@
 <x-app-layout>
-    <div class="pb-8">
-        <x-link :href="route('images.create')">
-            {{ __('Add image') }}
-        </x-link>
-    </div>
+    <x-slot:header>
+        <x-icon-link :href="route('images.create')">
+            <x-heroicon-o-plus/>
+
+            <span>{{ __('Add image') }}</span>
+        </x-icon-link>
+    </x-slot:header>
 
     <x-tabs.bar class="mb-8">
         <x-tabs.link :href="route('images.index')" :active="!request()->route()->parameter('rating')">

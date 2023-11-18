@@ -1,8 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <x-page-header.container>
-            <x-page-header.back-link :href="route('images.index')"/>
-        </x-page-header.container>
+        <x-page-header.back-link :href="route('images.index')"/>
     </x-slot>
 
     <x-card.card>
