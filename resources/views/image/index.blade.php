@@ -1,24 +1,28 @@
 <x-app-layout>
-    <x-slot name="header">
-        <x-page-header.flex-container>
-            <div>
-                <x-page-header.sub-headline>
-                    {{ trans_choice('image.total_number_of_images', $totalImageCount) }}
-                </x-page-header.sub-headline>
-            </div>
-
-            <x-secondary-button :href="route('images.create')">{{ __('Add image') }}</x-secondary-button>
-        </x-page-header.flex-container>
-    </x-slot>
+    <div class="pb-8">
+        <x-secondary-button :href="route('images.create')">{{ __('Add image') }}</x-secondary-button>
+    </div>
 
     <div class="flex space-x-2 pb-8">
         @if (!request()->route()->parameter('rating'))
             <x-button :href="route('images.index')">
-                {{ __('All') }}
+                <span>
+                    {{ __('All') }}
+                </span>
+
+                <x-badge class="ml-2">
+                    {{ $totalImageCount }}
+                </x-badge>
             </x-button>
         @else
             <x-secondary-button :href="route('images.index')">
-                {{ __('All') }}
+                <span>
+                    {{ __('All') }}
+                </span>
+
+                <x-badge class="ml-2">
+                    {{ $totalImageCount }}
+                </x-badge>
             </x-secondary-button>
         @endif
 
