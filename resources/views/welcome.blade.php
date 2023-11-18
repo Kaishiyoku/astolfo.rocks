@@ -19,7 +19,7 @@
                 <div class="text-xl pt-8 pb-2">{{ __('Random Astolfo') }}</div>
 
                 <a href="{{ $randomImage->getUrl() }}" class="block">
-                    <img src="{{ $randomImage->getThumbnailUrl() }}" class="rounded-lg border-8 border-fuchsia-200 opacity-50 p-2 hover:opacity-100 max-h-[400px] transition-all duration-300" alt="{{ __('random Astolfo image') }}"/>
+                    <img src="{{ $randomImage->getThumbnailUrl() }}" class="opacity-50 hover:opacity-100 max-h-[400px] rounded-lg shadow-md dark:shadow-black/25 transition duration-300" alt="{{ __('random Astolfo image') }}"/>
                 </a>
             </div>
         </div>

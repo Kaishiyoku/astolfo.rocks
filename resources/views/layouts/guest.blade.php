@@ -20,7 +20,7 @@
         <!-- Scripts -->
         @vite('resources/js/app.js')
     </head>
-    <body class="font-sans text-gray-900 dark:text-gray-300 dark:bg-gray-900 antialiased">
+    <body class="font-sans text-gray-900 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 antialiased">
         <div class="">
             {{ $slot }}
         </div>
