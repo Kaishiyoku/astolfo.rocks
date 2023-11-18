@@ -8,9 +8,9 @@
 
                 <div class="sm:flex py-4">
                     @foreach (getSocialMediaLinks() as $link)
-                        <x-button :href="$link['url']" class="sm:mr-2 mb-2 w-full sm:w-auto">
+                        <x-icon-link :href="$link['url']" class="sm:mr-2 mb-2 w-full sm:w-auto">
                             {{ $link['title'] }}
-                        </x-button>
+                        </x-icon-link>
                     @endforeach
                 </div>
             </div>
