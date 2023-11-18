@@ -6,7 +6,6 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-    safelist: ['w-5', 'h-5'],
     theme: {
         extend: {
             fontFamily: {
