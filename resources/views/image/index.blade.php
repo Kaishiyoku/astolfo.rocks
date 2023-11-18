@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="pb-8">
-        <x-secondary-button :href="route('images.create')">{{ __('Add image') }}</x-secondary-button>
+        <x-link :href="route('images.create')">
+            {{ __('Add image') }}
+        </x-link>
     </div>
 
     <div class="flex space-x-2 pb-8">
