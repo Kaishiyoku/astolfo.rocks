@@ -5,49 +5,25 @@
         </x-link>
     </div>
 
-    <div class="flex space-x-2 pb-8">
-        @if (!request()->route()->parameter('rating'))
-            <x-button :href="route('images.index')">
-                <span>
-                    {{ __('All') }}
-                </span>
+    <x-tabs.bar class="mb-8">
+        <x-tabs.link :href="route('images.index')" :active="!request()->route()->parameter('rating')">
+            {{ __('All') }}
 
-                <x-badge class="ml-2">
-                    {{ $totalImageCount }}
-                </x-badge>
-            </x-button>
-        @else
-            <x-secondary-button :href="route('images.index')">
-                <span>
-                    {{ __('All') }}
-                </span>
-
-                <x-badge class="ml-2">
-                    {{ $totalImageCount }}
-                </x-badge>
-            </x-secondary-button>
-        @endif
+            <x-slot:badge>
+                {{ $totalImageCount }}
+            </x-slot:badge>
+        </x-tabs.link>
 
         @foreach (\App\Enums\ImageRating::getValues() as $imageRating)
-            @if (request()->route()->parameter('rating') === $imageRating)
-                <x-button :href="route('images.index_by_rating', $imageRating)">
-                    <span>{{ $imageRating }}</span>
+            <x-tabs.link :href="route('images.index_by_rating', $imageRating)" :active="request()->route()->parameter('rating') === $imageRating">
+                {{ Str::ucfirst($imageRating) }}
 
-                    <x-badge class="ml-2">
-                        {{ $imagesByRatingCounts->get($imageRating) }}
-                    </x-badge>
-                </x-button>
-            @else
-                <x-secondary-button :href="route('images.index_by_rating', $imageRating)">
-                    <span>{{ $imageRating }}</span>
-
-                    <x-badge class="ml-2">
-                        {{ $imagesByRatingCounts->get($imageRating) }}
-                    </x-badge>
-                </x-secondary-button>
-            @endif
+                <x-slot:badge>
+                    {{ $imagesByRatingCounts->get($imageRating) }}
+                </x-slot:badge>
+            </x-tabs.link>
         @endforeach
-    </div>
+    </x-tabs.bar>
 
     @if ($images->isNotEmpty())
         <div class="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
