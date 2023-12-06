@@ -14,7 +14,7 @@
 
         <div>
             {{ __('File size') }}:
-            {{ formatFileSize($image->file_size) }}
+            {{ Number::fileSize($image->file_size) }}
         </div>
 
         <div>

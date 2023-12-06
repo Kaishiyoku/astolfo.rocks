@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6d6f517fd90b31e4401cdde7df027ed",
+    "content-hash": "087bb5d29e45b3b082359653d366942f",
     "packages": [
         {
             "name": "bensampo/laravel-enum",
@@ -4342,88 +4342,6 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
-        },
-        {
-            "name": "scriptfusion/byte-formatter",
-            "version": "4.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ScriptFUSION/ByteFormatter.git",
-                "reference": "aa943ef991c32546437ddec8d0c81059456b9ca3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ScriptFUSION/ByteFormatter/zipball/aa943ef991c32546437ddec8d0c81059456b9ca3",
-                "reference": "aa943ef991c32546437ddec8d0c81059456b9ca3",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8",
-                "scriptfusion/static-class": "^1"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.4",
-                "phpunit/phpunit": "^9"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "ScriptFUSION\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bilge",
-                    "email": "bilge@scriptfusion.com"
-                }
-            ],
-            "description": "Formats byte values as human-readable strings.",
-            "support": {
-                "issues": "https://github.com/ScriptFUSION/ByteFormatter/issues",
-                "source": "https://github.com/ScriptFUSION/ByteFormatter/tree/4.1.1"
-            },
-            "time": "2022-12-13T03:14:05+00:00"
-        },
-        {
-            "name": "scriptfusion/static-class",
-            "version": "1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ScriptFUSION/StaticClass.git",
-                "reference": "33e00f623c65c4a5164be3a5126b0d4b16fdff86"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ScriptFUSION/StaticClass/zipball/33e00f623c65c4a5164be3a5126b0d4b16fdff86",
-                "reference": "33e00f623c65c4a5164be3a5126b0d4b16fdff86",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "ScriptFUSION\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bilge",
-                    "email": "bilge@scriptfusion.com"
-                }
-            ],
-            "description": "Prevents class instantiation.",
-            "support": {
-                "issues": "https://github.com/ScriptFUSION/StaticClass/issues",
-                "source": "https://github.com/ScriptFUSION/StaticClass/tree/1.1.0"
-            },
-            "time": "2022-11-01T19:07:52+00:00"
         },
         {
             "name": "spatie/laravel-html",
