@@ -1,7 +1,7 @@
 <div class="mb-4">
     <x-label for="rating" :value="__('validation.attributes.rating')" required/>
 
-    <x-select id="rating" class="block mt-1 w-full" name="rating" :value="old('rating', $image->rating)" :options="getAvailableImageRatingOptions()" required/>
+    <x-select id="rating" class="block mt-1 w-full" name="rating" :value="old('rating', $image->rating?->value)" :options="getAvailableImageRatingOptions()" required/>
 
     <x-validation-error for="rating"/>
 </div>
