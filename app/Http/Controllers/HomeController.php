@@ -10,8 +10,8 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $randomImage = Image::whereRating(ImageRating::Safe())->inRandomOrder()->first();
-
-        return view('welcome', compact('randomImage'));
+        return view('welcome')->with([
+            'randomImage' => Image::whereRating(ImageRating::Safe())->inRandomOrder()->first(),
+        ]);
     }
 }

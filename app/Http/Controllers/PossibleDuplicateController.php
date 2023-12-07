@@ -16,7 +16,7 @@ class PossibleDuplicateController extends Controller
      */
     public function index(): View
     {
-        return view('possible_duplicate.index', [
+        return view('possible_duplicate.index')->with([
             'totalImageCount' => Image::count(),
             'possibleDuplicates' => PossibleDuplicate::where('is_false_positive', false)->orderBy('created_at', 'desc')->paginate(),
         ]);
@@ -29,7 +29,7 @@ class PossibleDuplicateController extends Controller
      */
     public function show(PossibleDuplicate $possibleDuplicate): View
     {
-        return view('possible_duplicate.show', [
+        return view('possible_duplicate.show')->with([
             'possibleDuplicate' => $possibleDuplicate,
         ]);
     }

@@ -32,7 +32,7 @@ class ImageController extends Controller
         $ratingCounts = collect(ImageRating::getValues())
             ->mapWithKeys(fn ($imageRating) => [$imageRating => Image::whereRating($imageRating)->count()]);
 
-        return view('image.index', [
+        return view('image.index')->with([
             'totalImageCount' => Image::count(),
             'imagesByRatingCounts' => $ratingCounts,
             'images' => $images,
@@ -46,7 +46,7 @@ class ImageController extends Controller
      */
     public function create(): View
     {
-        return view('image.create', [
+        return view('image.create')->with([
             'image' => new Image(),
         ]);
     }
@@ -74,7 +74,7 @@ class ImageController extends Controller
      */
     public function show(Image $image): View
     {
-        return view('image.show', [
+        return view('image.show')->with([
             'image' => $image,
         ]);
     }
@@ -86,7 +86,7 @@ class ImageController extends Controller
      */
     public function edit(Image $image): View
     {
-        return view('image.edit', [
+        return view('image.edit')->with([
             'image' => $image,
         ]);
     }
