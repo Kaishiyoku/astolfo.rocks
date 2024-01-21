@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Image $imageLeft
  * @property-read \App\Models\Image $imageRight
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate query()
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereImageIdRight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereIsFalsePositive($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PossibleDuplicate whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class PossibleDuplicate extends Model

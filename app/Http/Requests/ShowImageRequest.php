@@ -21,6 +21,7 @@ class ShowImageRequest extends FormRequest
              * Available values: `unknown`, `safe`, `questionable`, `explicit`
              *
              * @var string|null
+             *
              * @example safe
              */
             'rating' => ['nullable', new EnumValue(ImageRating::class)],

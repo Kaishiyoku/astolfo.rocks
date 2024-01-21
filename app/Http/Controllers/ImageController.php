@@ -20,7 +20,7 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function index(Request $request, string $rating = null): View
+    public function index(Request $request, ?string $rating = null): View
     {
         $this->validateRating($request, $rating);
 
@@ -126,7 +126,7 @@ class ImageController extends Controller
         return redirect()->route('images.index');
     }
 
-    private function validateRating(Request $request, string $rating = null)
+    private function validateRating(Request $request, ?string $rating = null)
     {
         $request->merge(['rating' => $rating]);
         $request->validate([
@@ -134,7 +134,7 @@ class ImageController extends Controller
         ]);
     }
 
-    private function saveAndUploadImage($validated, UploadedFile $imageFile, Image $image = null)
+    private function saveAndUploadImage($validated, UploadedFile $imageFile, ?Image $image = null)
     {
         $fileExtension = $imageFile->getClientOriginalExtension();
         [$width, $height] = getimagesize($imageFile->getRealPath());
