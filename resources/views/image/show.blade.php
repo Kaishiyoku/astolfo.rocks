@@ -11,54 +11,31 @@
                 </a>
 
                 <div>
-                    <div>
-                        {{ __('ID') }}:
-                        {{ $image->id }}
-                    </div>
+                    <x-labeled-item :label="__('ID')" :description="$image->id"/>
 
-                    <div>
-                        {{ __('Mime type') }}:
-                        {{ $image->mimetype }}
-                    </div>
+                    <x-labeled-item :label="__('Rating')" :description="$image->rating"/>
 
-                    <div>
-                        {{ __('File size') }}:
-                        {{ Number::fileSize($image->file_size) }}
-                    </div>
+                    <x-labeled-item :label="__('Image dimensions')" :description="$image->width . 'x' . $image->height"/>
 
-                    <div>
-                        {{ __('Image dimensions') }}:
-                        {{ $image->width }}x{{ $image->height }}
-                    </div>
+                    <x-labeled-item :label="__('Mime type')" :description="$image->mimetype"/>
 
-                    <div>
-                        {{ __('Rating') }}:
-                        {{ $image->rating }}
-                    </div>
+                    <x-labeled-item :label="__('File size')" :description="Number::fileSize($image->file_size)"/>
 
-                    <div>
-                        {{ __('Views') }}:
-                        {{ $image->views }}
-                    </div>
+                    <x-labeled-item :label="__('Views')" :description="$image->views"/>
 
-                    <div>
-                        {{ __('Source') }}:
+                    <x-labeled-item :label="__('Source')">
                         @if ($image->source)
                             <x-link :href="$image->source">
                                 {{ $image->source }}
                             </x-link>
+                        @else
+                            /
                         @endif
-                    </div>
+                    </x-labeled-item>
 
-                    <div>
-                        {{ __('Created at') }}:
-                        {{ formatDateTime($image->created_at) }}
-                    </div>
+                    <x-labeled-item :label="__('Created at')" :description="formatDateTime($image->created_at)"/>
 
-                    <div>
-                        {{ __('Updated at') }}:
-                        {{ formatDateTime($image->updated_at) }}
-                    </div>
+                    <x-labeled-item :label="__('Updated at')" :description="formatDateTime($image->updated_at)"/>
                 </div>
             </div>
 
