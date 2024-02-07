@@ -11,8 +11,6 @@ class PossibleDuplicateController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(): View
     {
@@ -24,8 +22,6 @@ class PossibleDuplicateController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(PossibleDuplicate $possibleDuplicate): View
     {

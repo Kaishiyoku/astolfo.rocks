@@ -17,8 +17,6 @@ class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(Request $request, ?string $rating = null): View
     {
@@ -41,8 +39,6 @@ class ImageController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function create(): View
     {
@@ -69,8 +65,6 @@ class ImageController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function show(Image $image): View
     {
@@ -81,8 +75,6 @@ class ImageController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function edit(Image $image): View
     {

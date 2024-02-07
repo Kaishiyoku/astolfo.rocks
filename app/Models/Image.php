@@ -49,7 +49,7 @@ class Image extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'rating',
@@ -65,7 +65,7 @@ class Image extends Model
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'identifier',
@@ -74,7 +74,7 @@ class Image extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'rating' => ImageRating::class,

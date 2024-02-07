@@ -5,8 +5,8 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class CreateAdminUser extends Command
 {
@@ -43,7 +43,7 @@ class CreateAdminUser extends Command
         ], [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'password' => ['required', 'confirmed', Password::default()],
         ]);
 
         if ($validator->fails()) {

@@ -36,12 +36,21 @@ class PossibleDuplicate extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'image_id_left',
         'image_id_right',
         'is_false_positive',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'is_false_positive' => 'bool',
     ];
 
     /**
