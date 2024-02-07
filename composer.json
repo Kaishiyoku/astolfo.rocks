@@ -26,6 +26,7 @@
         "barryvdh/laravel-debugbar": "^3.8",
         "barryvdh/laravel-ide-helper": "^2.13",
         "fakerphp/faker": "^1.9.1",
+        "larastan/larastan": "^2.8",
         "laravel/envoy": "^2.8",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.18",
@@ -68,6 +69,7 @@
             "php artisan ide-helper:meta",
             "php artisan ide-helper:models --dir=\"app/Models\" --write --reset"
         ],
+        "analyze": "./vendor/bin/phpstan analyse",
         "pint": "./vendor/bin/pint"
     },
     "extra": {
