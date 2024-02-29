@@ -32,9 +32,9 @@ class PossibleDuplicateController extends Controller
 
     public function ignore(PossibleDuplicate $possibleDuplicate): RedirectResponse
     {
-        $possibleDuplicate->is_false_positive = true;
-
-        $possibleDuplicate->save();
+        $possibleDuplicate->update([
+            'is_false_positive' => true,
+        ]);
 
         return redirect()->route('possible_duplicates.index');
     }
