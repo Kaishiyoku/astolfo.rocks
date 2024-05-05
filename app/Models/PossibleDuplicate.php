@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $image_id_left
  * @property int $image_id_right
- * @property int $is_false_positive
+ * @property bool $is_false_positive
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Image $imageLeft
