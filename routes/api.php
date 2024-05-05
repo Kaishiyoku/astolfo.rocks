@@ -30,5 +30,5 @@ Route::middleware('api')->as('api.')->group(function () {
 });
 
 Route::fallback(function () {
-    return response()->json(['message' => 'Not Found.'], 404);
+    return response()->json(['message' => 'Not found.'], 404);
 })->name('api.fallback.404');
