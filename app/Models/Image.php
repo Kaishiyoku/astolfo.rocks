@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ImageRating;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use ImageManager;
 use Intervention\Image\Exception\NotReadableException;
 use Storage;
@@ -87,7 +88,7 @@ class Image extends Model
      */
     protected $perPage = 24;
 
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class)->orderBy('name');
     }

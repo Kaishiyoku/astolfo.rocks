@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * App\Models\Tag
@@ -54,7 +55,7 @@ class Tag extends Model
      */
     protected $perPage = 24;
 
-    public function images()
+    public function images(): BelongsToMany
     {
         return $this->belongsToMany(Image::class);
     }

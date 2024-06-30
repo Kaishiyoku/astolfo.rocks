@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\PossibleDuplicate
@@ -60,12 +61,12 @@ class PossibleDuplicate extends Model
      */
     protected $perPage = 15;
 
-    public function imageLeft()
+    public function imageLeft(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id_left');
     }
 
-    public function imageRight()
+    public function imageRight(): BelongsTo
     {
         return $this->belongsTo(Image::class, 'image_id_right');
     }
