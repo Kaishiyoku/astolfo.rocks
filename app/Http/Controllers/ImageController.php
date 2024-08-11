@@ -43,7 +43,7 @@ class ImageController extends Controller
     public function create(): View
     {
         return view('image.create')->with([
-            'image' => new Image(),
+            'image' => new Image,
         ]);
     }
 
