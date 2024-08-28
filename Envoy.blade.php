@@ -15,6 +15,7 @@
     $repo = $_ENV['DEPLOY_REPOSITORY'] ?? null;
     $path = $_ENV['DEPLOY_PATH'] ?? null;
     $healthUrl = $_ENV['DEPLOY_HEALTH_CHECK'] ?? null;
+    $phpVersion = $_ENV['DEPLOY_PHP_VERSION'];
 
     if (substr($path, 0, 1) !== '/') {
         throw new Exception('Careful - your deployment path does not begin with /');
@@ -165,7 +166,7 @@
 
 @task('restart_php_fpm')
     echo "Restarting php-fpm..."
-    sudo service php8.2-fpm restart
+    sudo service php{{ $phpVersion }}-fpm restart
 @endtask
 
 @task('health_check')
