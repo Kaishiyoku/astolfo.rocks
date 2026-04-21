@@ -46,20 +46,23 @@ class PossibleDuplicate extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'is_false_positive' => 'bool',
-    ];
-
-    /**
      * The number of models to return for pagination.
      *
      * @var int
      */
     protected $perPage = 15;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'is_false_positive' => 'bool',
+        ];
+    }
 
     public function imageLeft(): BelongsTo
     {

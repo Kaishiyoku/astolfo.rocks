@@ -73,20 +73,23 @@ class Image extends Model
     ];
 
     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'rating' => ImageRating::class,
-    ];
-
-    /**
      * The number of models to return for pagination.
      *
      * @var int
      */
     protected $perPage = 24;
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'rating' => ImageRating::class,
+        ];
+    }
 
     public function tags(): BelongsToMany
     {
