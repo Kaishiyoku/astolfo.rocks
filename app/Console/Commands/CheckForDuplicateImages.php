@@ -85,7 +85,7 @@ class CheckForDuplicateImages extends Command
             $this->line(($i + 1).' images checked');
         });
 
-        $durationInSeconds = now()->diffInSeconds($this->startDate);
+        $durationInSeconds = $this->startDate->diffInSeconds(now());
 
         $this->line("duplicate image checker duration: {$durationInSeconds} seconds");
 
